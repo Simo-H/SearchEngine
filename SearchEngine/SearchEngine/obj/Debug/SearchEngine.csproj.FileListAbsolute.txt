@@ -1,0 +1,51 @@
+D:\Dropbox\Dropbox\אוניברסיטה\שנה ג\אחזור מידע\מנוע חלק א\SearchEngine\SearchEngine\bin\Debug\SearchEngine.exe.config
+D:\Dropbox\Dropbox\אוניברסיטה\שנה ג\אחזור מידע\מנוע חלק א\SearchEngine\SearchEngine\obj\Debug\SearchEngine.exe
+D:\Dropbox\Dropbox\אוניברסיטה\שנה ג\אחזור מידע\מנוע חלק א\SearchEngine\SearchEngine\obj\Debug\SearchEngine.pdb
+F:\My Documents\Dropbox\אוניברסיטה\שנה ג\אחזור מידע\מנוע חלק א\SearchEngine\SearchEngine\bin\Debug\SearchEngine.exe.config
+F:\My Documents\Dropbox\אוניברסיטה\שנה ג\אחזור מידע\מנוע חלק א\SearchEngine\SearchEngine\bin\Debug\SearchEngine.exe
+F:\My Documents\Dropbox\אוניברסיטה\שנה ג\אחזור מידע\מנוע חלק א\SearchEngine\SearchEngine\bin\Debug\SearchEngine.pdb
+F:\My Documents\Dropbox\אוניברסיטה\שנה ג\אחזור מידע\מנוע חלק א\SearchEngine\SearchEngine\obj\Debug\MainWindow.g.cs
+F:\My Documents\Dropbox\אוניברסיטה\שנה ג\אחזור מידע\מנוע חלק א\SearchEngine\SearchEngine\obj\Debug\App.g.cs
+F:\My Documents\Dropbox\אוניברסיטה\שנה ג\אחזור מידע\מנוע חלק א\SearchEngine\SearchEngine\obj\Debug\SearchEngine_MarkupCompile.cache
+F:\My Documents\Dropbox\אוניברסיטה\שנה ג\אחזור מידע\מנוע חלק א\SearchEngine\SearchEngine\obj\Debug\SearchEngine_MarkupCompile.lref
+F:\My Documents\Dropbox\אוניברסיטה\שנה ג\אחזור מידע\מנוע חלק א\SearchEngine\SearchEngine\obj\Debug\MainWindow.baml
+F:\My Documents\Dropbox\אוניברסיטה\שנה ג\אחזור מידע\מנוע חלק א\SearchEngine\SearchEngine\obj\Debug\SearchEngine.g.resources
+F:\My Documents\Dropbox\אוניברסיטה\שנה ג\אחזור מידע\מנוע חלק א\SearchEngine\SearchEngine\obj\Debug\SearchEngine.Properties.Resources.resources
+F:\My Documents\Dropbox\אוניברסיטה\שנה ג\אחזור מידע\מנוע חלק א\SearchEngine\SearchEngine\obj\Debug\SearchEngine.csproj.GenerateResource.Cache
+F:\My Documents\Dropbox\אוניברסיטה\שנה ג\אחזור מידע\מנוע חלק א\SearchEngine\SearchEngine\obj\Debug\SearchEngine.exe
+F:\My Documents\Dropbox\אוניברסיטה\שנה ג\אחזור מידע\מנוע חלק א\SearchEngine\SearchEngine\obj\Debug\SearchEngine.pdb
+F:\My Documents\Dropbox\אוניברסיטה\שנה ג\אחזור מידע\מנוע חלק א\SearchEngine\SearchEngine\obj\Debug\SearchEngine.csprojResolveAssemblyReference.cache
+F:\My Documents\Dropbox\אוניברסיטה\שנה ג\אחזור מידע\מנוע חלק א\SearchEngine\SearchEngine\obj\Debug\ShowDictionary.g.cs
+F:\My Documents\Dropbox\אוניברסיטה\שנה ג\אחזור מידע\מנוע חלק א\SearchEngine\SearchEngine\obj\Debug\ShowDictionary.baml
+D:\Dropbox\אוניברסיטה\שנה ג\אחזור מידע\מנוע חלק א\SearchEngine\SearchEngine\bin\Debug\SearchEngine.exe.config
+D:\Dropbox\אוניברסיטה\שנה ג\אחזור מידע\מנוע חלק א\SearchEngine\SearchEngine\obj\Debug\SearchEngine.exe
+D:\Dropbox\אוניברסיטה\שנה ג\אחזור מידע\מנוע חלק א\SearchEngine\SearchEngine\obj\Debug\SearchEngine.pdb
+D:\Dropbox\אוניברסיטה\שנה ג\אחזור מידע\מנוע חלק א\SearchEngine\SearchEngine\bin\Debug\SearchEngine.exe
+D:\Dropbox\אוניברסיטה\שנה ג\אחזור מידע\מנוע חלק א\SearchEngine\SearchEngine\bin\Debug\SearchEngine.pdb
+D:\Dropbox\אוניברסיטה\שנה ג\אחזור מידע\מנוע חלק א\SearchEngine\SearchEngine\obj\Debug\SearchEngine.csprojResolveAssemblyReference.cache
+D:\Dropbox\אוניברסיטה\שנה ג\אחזור מידע\מנוע חלק א\SearchEngine\SearchEngine\obj\Debug\MainWindow.g.cs
+D:\Dropbox\אוניברסיטה\שנה ג\אחזור מידע\מנוע חלק א\SearchEngine\SearchEngine\obj\Debug\ShowDictionary.g.cs
+D:\Dropbox\אוניברסיטה\שנה ג\אחזור מידע\מנוע חלק א\SearchEngine\SearchEngine\obj\Debug\App.g.cs
+D:\Dropbox\אוניברסיטה\שנה ג\אחזור מידע\מנוע חלק א\SearchEngine\SearchEngine\obj\Debug\SearchEngine_MarkupCompile.cache
+D:\Dropbox\אוניברסיטה\שנה ג\אחזור מידע\מנוע חלק א\SearchEngine\SearchEngine\obj\Debug\SearchEngine_MarkupCompile.lref
+D:\Dropbox\אוניברסיטה\שנה ג\אחזור מידע\מנוע חלק א\SearchEngine\SearchEngine\obj\Debug\MainWindow.baml
+D:\Dropbox\אוניברסיטה\שנה ג\אחזור מידע\מנוע חלק א\SearchEngine\SearchEngine\obj\Debug\ShowDictionary.baml
+D:\Dropbox\אוניברסיטה\שנה ג\אחזור מידע\מנוע חלק א\SearchEngine\SearchEngine\obj\Debug\SearchEngine.g.resources
+D:\Dropbox\אוניברסיטה\שנה ג\אחזור מידע\מנוע חלק א\SearchEngine\SearchEngine\obj\Debug\SearchEngine.Properties.Resources.resources
+D:\Dropbox\אוניברסיטה\שנה ג\אחזור מידע\מנוע חלק א\SearchEngine\SearchEngine\obj\Debug\SearchEngine.csproj.GenerateResource.Cache
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\SearchEngine.exe.config
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.exe
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.pdb
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\SearchEngine.exe
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\SearchEngine.pdb
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.csprojResolveAssemblyReference.cache
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\MainWindow.g.cs
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ShowDictionary.g.cs
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\App.g.cs
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine_MarkupCompile.cache
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine_MarkupCompile.lref
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\MainWindow.baml
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ShowDictionary.baml
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.g.resources
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.Properties.Resources.resources
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.csproj.GenerateResource.Cache

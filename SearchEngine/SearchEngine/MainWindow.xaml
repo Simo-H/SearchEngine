@@ -1,0 +1,111 @@
+﻿<Window x:Class="SearchEngine.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SearchEngine"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="320" Width="500" ResizeMode="NoResize">
+    <StackPanel Margin="10">
+        <Label FontWeight="Bold" FontSize="14">Pre query engine:</Label>
+
+        <CheckBox  Content="Use stemmer" Name="stemmer" 
+		      FontStyle="Oblique" FontWeight="Bold" IsChecked="{Binding StemmerIsChecked , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+		     VerticalAlignment="Top" Checked="stem_isChecked" Unchecked="stem_isChecked"/>        
+        <DockPanel>            
+            <TextBlock HorizontalAlignment="Left" FontStyle="Oblique" FontWeight="Bold"
+                       Text="Selected language : "/>
+            <ComboBox
+	    HorizontalAlignment="Left"	    
+	    VerticalAlignment="Top"
+	    Width="120"
+	    Loaded="ComboBox_Loaded"
+	    SelectionChanged="ComboBox_SelectionChanged"/>
+        </DockPanel>
+        <DockPanel>
+            
+        <Button HorizontalAlignment="Left" Name="LoadDictionaries"
+                    Content="Load Dictionary"
+                    Height="25"
+                    Width="90"
+                    Margin =" 5" Click="LoadDictionary">
+            </Button>
+        <Button HorizontalAlignment="Left" Name="ShowDictionary"
+                    
+                    
+                    Content="Show Dictionary"
+                    Height="25"
+                    Width="90"
+                    Margin =" 5" Click="showDictionary_onClick"></Button>
+        </DockPanel>
+
+        <Label FontWeight="Bold" FontSize="14">Please select file paths :</Label>
+        <DockPanel Width="470" HorizontalAlignment="Left">
+
+            <TextBlock HorizontalAlignment="Left" FontStyle="Oblique" FontWeight="Bold" 
+                       Text="Corpus and Stop-Words files path : " TextAlignment="Center" Height="25"
+                     
+                       />
+            <TextBox x:Name="Path"                     
+                     Width="170"
+                     Text="{Binding CorpusAndStopWordFilesPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Height="35"
+                     VerticalAlignment="Top"
+                     HorizontalAlignment="Left" TextChanged="Path_TextChanged"
+                     
+                     />
+            <Button HorizontalAlignment="Left" x:Name="browse1"  
+                    Content="browse"
+                    Height="30"
+                    Width="66"
+                    Margin =" 5" Click="browse1_onClick"/>
+        </DockPanel>
+        <DockPanel Width="470" HorizontalAlignment="Left">
+            <TextBlock HorizontalAlignment="Left" FontStyle="Oblique" FontWeight="Bold"
+                       Text="Posting and Dictionary save-to folder path : " Height="27"
+                       />
+            <TextBox Name="aPath"                     
+                     Width="119"
+                     Text="{Binding Path=CurrentPath,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Height="35" 
+                     VerticalAlignment="Top"
+                     HorizontalAlignment="Left" TextChanged="aPath_TextChanged"
+                     />
+            <Button HorizontalAlignment="Left" Name="browse2"                    
+                    Content="browse"
+                    Height="30"
+                    Width="70"
+                    Margin =" 5" Click="browse2_onClick">
+            </Button>
+        </DockPanel>
+        
+
+        <StackPanel   Margin="5,0,10,0" Height="49" Orientation="Horizontal"
+                      HorizontalAlignment="Center">
+            <Button HorizontalAlignment="Left" Name="run_engine"                    
+                    Content="Run query engine"
+                    Height="30"
+                    Width="110"
+                    Margin =" 5" Click="run_query_engine_onClick">
+
+            </Button>
+            <Button HorizontalAlignment="Center" Name="reset"
+                    
+                    
+                    Content="Reset"
+                    Height="30"
+                    Width="60" Click="reset_onClick">
+
+            </Button>
+            <Button HorizontalAlignment="Right" Name="Cancel"
+                    
+                    
+                    Content="Cancel"
+                    Height="29"
+                    Width="65" 
+                    Margin="10" Click="Cancel_Click">
+
+            </Button>
+        </StackPanel>
+    </StackPanel>
+</Window>

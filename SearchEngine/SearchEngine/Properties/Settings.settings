@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SearchEngine.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="sourceFilesPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\SearchEngineFiles\corpus</Value>
+    </Setting>
+    <Setting Name="postingFiles" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\SearchEngineFiles\Posting</Value>
+    </Setting>
+    <Setting Name="stopWordFilePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\SearchEngineFiles\corpus</Value>
+    </Setting>
+    <Setting Name="stemmer" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
