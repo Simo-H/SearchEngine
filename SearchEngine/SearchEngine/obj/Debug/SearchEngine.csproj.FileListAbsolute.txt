@@ -49,3 +49,19 @@ F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ShowDic
 F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.g.resources
 F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.Properties.Resources.resources
 F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.csproj.GenerateResource.Cache
+D:\Git\SearchEngine\SearchEngine\SearchEngine\bin\Debug\SearchEngine.exe.config
+D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.exe
+D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.pdb
+D:\Git\SearchEngine\SearchEngine\SearchEngine\bin\Debug\SearchEngine.exe
+D:\Git\SearchEngine\SearchEngine\SearchEngine\bin\Debug\SearchEngine.pdb
+D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.csprojResolveAssemblyReference.cache
+D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\MainWindow.g.cs
+D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ShowDictionary.g.cs
+D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\App.g.cs
+D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine_MarkupCompile.cache
+D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine_MarkupCompile.lref
+D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\MainWindow.baml
+D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ShowDictionary.baml
+D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.g.resources
+D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.Properties.Resources.resources
+D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.csproj.GenerateResource.Cache

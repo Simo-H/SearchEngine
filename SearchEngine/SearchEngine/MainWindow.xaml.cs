@@ -19,6 +19,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.ComponentModel;
 using System.Threading;
+using SearchEngine.PostQuery;
 
 namespace SearchEngine
 {
@@ -243,6 +244,7 @@ namespace SearchEngine
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
+
             Close();
         }
 

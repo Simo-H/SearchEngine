@@ -57,6 +57,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="PostQuery\Searcher.cs" />
     <Compile Include="ShowDictionary.xaml.cs">
       <DependentUpon>ShowDictionary.xaml</DependentUpon>
     </Compile>
