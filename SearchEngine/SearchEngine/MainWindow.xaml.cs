@@ -37,6 +37,15 @@ namespace SearchEngine
             set { corpusAndStopWordFilesPath = value;                
             }
         }
+        string query;
+        public string Query
+        {
+            get { return query; }
+            set
+            {
+                query = value;
+            }
+        }
         string postinAndDictionaryFilesPath = Properties.Settings.Default.postingFiles;
         public string PostinAndDictionaryFilesPath
         {
@@ -57,6 +66,8 @@ namespace SearchEngine
             }
         }
         PreQueryEngine pq;
+        Searcher shearcher;
+        PostQueryEngine postQuery;
         public MainWindow()
         {
             InitializeComponent();
@@ -64,11 +75,11 @@ namespace SearchEngine
             //Properties.Settings.Default.stemmer = StemmerIsChecked;
             //Properties.Settings.Default.Save();
             //pq = new PreQueryEngine();
-            
+
             //CorpusAndStopWordFilesPath = Properties.Settings.Default.sourceFilesPath;
-            //pq.engine();
+            pq=new PreQueryEngine();
 
-
+            shearcher=new Searcher( ref pq.indexer);
 
 
 
@@ -260,6 +271,14 @@ namespace SearchEngine
 
         private void aPath_TextChanged(object sender, TextChangedEventArgs e)
         {
+
+        }
+
+        private void GO_onClick(object sender, RoutedEventArgs e)
+        {
+            Query = searchPath.Text;
+            postQuery = new PostQueryEngine(ref pq.indexer, Query, "noyet");
+            //shearcher.AllQueryPerformances();
 
         }
     }

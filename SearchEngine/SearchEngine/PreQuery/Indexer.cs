@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Runtime.Serialization;
+using Microsoft.VisualBasic.FileIO;
 
 namespace SearchEngine.PreQuery
 {
@@ -78,8 +79,10 @@ namespace SearchEngine.PreQuery
         public void AddToMetaData(Dictionary<string, int> uniqeDictionary, string docName)
         {
             int max = 0;
+            int totalNumOfWord=0;
             foreach (string term in uniqeDictionary.Keys)
             {
+                totalNumOfWord = totalNumOfWord + uniqeDictionary[term];
                 if (uniqeDictionary[term] > max)
                 {
                     max = uniqeDictionary[term];
@@ -88,6 +91,7 @@ namespace SearchEngine.PreQuery
 
             documentDictionary[docName].maxTF = max;
             documentDictionary[docName].uniqueTerms = uniqeDictionary.Count;
+            documentDictionary[docName].totalNumberInDoc = totalNumOfWord;
         }
         /// <summary>
         /// This methods add a term and its information to the main term dictionary or updates the term info if it was already in the dictionary.
@@ -362,7 +366,26 @@ namespace SearchEngine.PreQuery
                     br.ReadString();
                     mainTermDictionary[term].postingfilepointer = position;
                 }
+                fileStream.Flush();
+                fileStream.Close();
+                br.Close();
+
             }
+
+            string newPostingFilePath;
+            if (Properties.Settings.Default.stemmer)
+            {
+
+                newPostingFilePath ="PostingS.bin";
+
+            }
+            else
+            {
+                newPostingFilePath = "Posting.bin";
+
+            }
+ 
+            FileSystem.RenameFile(postingFilePath, newPostingFilePath);
 
         }
         /// <summary>
@@ -416,6 +439,7 @@ namespace SearchEngine.PreQuery
                     bw.Write(item.Value.originalLanguage);
                     bw.Write(item.Value.maxTF);
                     bw.Write(item.Value.title);
+                    bw.Write(item.Value.totalNumberInDoc);
                 }
                 bw.Flush();
             }
@@ -476,7 +500,10 @@ namespace SearchEngine.PreQuery
                     string originalLanguage = br.ReadString();
                     int maxTF = br.ReadInt32();
                     string title = br.ReadString();
-                    documentDictionary[DocNo] = new DocumentInfo(uniqueTerms, originalLanguage, maxTF, title);
+                    int totalnumberofterms = br.ReadInt32();
+
+
+                    documentDictionary[DocNo] = new DocumentInfo(uniqueTerms, originalLanguage, maxTF, title, totalnumberofterms);
                     
                 }
             }

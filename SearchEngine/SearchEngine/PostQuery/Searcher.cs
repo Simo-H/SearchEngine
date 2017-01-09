@@ -1,6 +1,7 @@
 ﻿using SearchEngine.PreQuery;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,10 +12,15 @@ namespace SearchEngine.PostQuery
     {
         Stemmer stemmer;
         Parse parser;
-        public Searcher()
+        public Dictionary<string, Dictionary<string, int>> QueryPerformances;
+        Indexer index;
+
+        public Searcher(ref Indexer index)
         {
             stemmer = new Stemmer();
             parser = new Parse();
+            QueryPerformances= new Dictionary<string, Dictionary<string, int>>();
+            this.index = index;
         }
         public string[] ParseQuery(string query)
         {
@@ -83,6 +89,63 @@ namespace SearchEngine.PostQuery
             string[] q = parseQuery.ToArray();
             return q;
         }
+        public void AllQueryPerformances(string[] parseQuery, string language)
+        {
+            foreach (string term in parseQuery)
+            {
+                if (QueryPerformances.Keys.Contains(term))
+                {
+                    continue;
+                }
+                Dictionary<string, int> DocAndTf = new Dictionary<string, int>();
+                DocAndTf = DicOfDocAndTf(term,language);
+                QueryPerformances[term] = DocAndTf;
+            }
+        }
+        public Dictionary<string,int> DicOfDocAndTf(string term, string language)
+        {
+
+            Dictionary<string, int> DocumentAndShows = new Dictionary<string, int>();
+             string postingFilePath= Properties.Settings.Default.postingFiles;
+            if (Properties.Settings.Default.stemmer)
+            {
+                postingFilePath = postingFilePath + "\\PostingS.bin";
+            }
+            else
+            {
+                postingFilePath = postingFilePath + "\\Posting.bin";
+            }
+            using (FileStream fileStream = new FileStream(postingFilePath, FileMode.Open))
+            {
+                BinaryReader br = new BinaryReader(fileStream);
+                long position = index.mainTermDictionary[term].postingfilepointer;
+                br.BaseStream.Position = position;
+                string term1 = br.ReadString();
+                string AllPerformances= br.ReadString();
+                string[] stringSeparators = new string[] { " ", ">","<", ",", "#" };
+                string[] DocumentAndShowsArray = AllPerformances.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
+                for (int i = 0; i < DocumentAndShowsArray.Count(); i++)
+                {
+                   // if (language.Equals("All languages"))
+                  //  {
+                   //     DocumentAndShows[DocumentAndShowsArray[i]] = Int32.Parse(DocumentAndShowsArray[i + 1]);
+                  //  }
+                  //  else
+                  //  {
+                   //     if (language.Equals(index.documentDictionary[DocumentAndShowsArray[i]].originalLanguage))
+                   //     {
+                            DocumentAndShows[DocumentAndShowsArray[i]] = Int32.Parse(DocumentAndShowsArray[i + 1]);
+                   //     }
+                 //   }
+                    i++;
+                }
+                fileStream.Flush();
+                fileStream.Close();
+                br.Close();
+            }
+            return DocumentAndShows;
+        }
+
 
     }
 }
