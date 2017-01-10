@@ -30,6 +30,7 @@ namespace SearchEngine.PreQuery
         /// <returns>string array containing docs file paths</returns>
         public string[] getCorpusFilesFromSource()
         {
+            sourceFilesPath = Properties.Settings.Default.sourceFilesPath;
             return Directory.GetFiles(sourceFilesPath);
          
         }

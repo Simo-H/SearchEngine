@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,25 +19,35 @@ namespace SearchEngine.PreQuery
         /// a hash set dedicated to hold all the stop words for quick look up
         /// </summary>
         HashSet<string> stopWordsSet;
-        
+
         /// <summary>
         /// ctor of the parser class - reading the stop words from the stop_words.txt file and inserting the to the hash set
         /// </summary>
         public Parse()
         {
             stopWordsSet = new HashSet<string>();
-            
-            string stopWordsPath = Properties.Settings.Default.sourceFilesPath + "\\stop_words.txt";
-            string[] stopWordsText = System.IO.File.ReadAllLines(stopWordsPath);
+        }
 
-            foreach (string word in stopWordsText)
+        public void stopWordSetInit()
+        {
+            string stopWordsPath = Properties.Settings.Default.sourceFilesPath + "\\stop_words.txt";
+            if (File.Exists(stopWordsPath))
             {
-                stopWordsSet.Add(word);
+
+                string[] stopWordsText = System.IO.File.ReadAllLines(stopWordsPath);
+
+                foreach (string word in stopWordsText)
+                {
+                    stopWordsSet.Add(word);
+                }
+                stopWordsSet.Add("");
+                stopWordsSet.Add("$");
+                stopWordsSet.Add("$$$$$$$$");
             }
-            stopWordsSet.Add("");
-            stopWordsSet.Add("$");
-            stopWordsSet.Add("$$$$$$$$");
-            
+            else
+            {
+                throw new Exception("Stop word file was not found. please add the file to the corpus directory.");
+            }
         }
         /// <summary>
         /// parsing a term by the given rules. returning the number of cell needed to be skipped to get to the next term and the parsed term or terms
@@ -49,11 +60,13 @@ namespace SearchEngine.PreQuery
         /// <returns></returns>
         public int parseTerm(ref List<string> docText, int termPosition, out string returnedParsedTerm1, out string returnedParsedTerm2)
         {
+            if (stopWordsSet.Count == 0)
+                stopWordSetInit();
             string term = docText[termPosition];
 
             double number;
             int intNumber;
-            if(term.Length > 2 && term.Substring(0,3).Equals("id="))
+            if (term.Length > 2 && term.Substring(0, 3).Equals("id="))
             {
                 returnedParsedTerm1 = null;
                 returnedParsedTerm2 = null;
@@ -255,7 +268,7 @@ namespace SearchEngine.PreQuery
                             }
                         }
                     }
-                    
+
                 }
 
                 if (term[term.Length - 1].Equals('m'))
@@ -315,11 +328,11 @@ namespace SearchEngine.PreQuery
                             parsedTerm = intNumber + " kilometer";
 
                         }
-                  
-                            returnedParsedTerm1 = parsedTerm;
-                            returnedParsedTerm2 = null;
-                            return 2;
-                        
+
+                        returnedParsedTerm1 = parsedTerm;
+                        returnedParsedTerm2 = null;
+                        return 2;
+
                     }
                 }
                 if (term.Length >= 2 && term.Substring(term.Length - 2, 2).Equals("th") && term.Substring(term.Length - 2, 2).Equals("st") && term.Substring(term.Length - 2, 2).Equals("nd"))
@@ -379,19 +392,19 @@ namespace SearchEngine.PreQuery
                 }
 
             }
-            char[] a = { '\\',',','/',':','?','*' };
+            char[] a = { '\\', ',', '/', ':', '?', '*' };
             int b = term.IndexOfAny(a);
-            if (b != -1 )
+            if (b != -1)
             {
                 int c;
-                if(Int32.TryParse(term.Substring(0, b),out c)&& Int32.TryParse(term.Substring(0, b),out c))
+                if (Int32.TryParse(term.Substring(0, b), out c) && Int32.TryParse(term.Substring(0, b), out c))
                 {
                     returnedParsedTerm1 = term;
                     returnedParsedTerm2 = null;
                     return 0;
                 }
                 docText.Insert(termPosition + 1, term.Substring(0, b));
-                docText.Insert(termPosition + 2, term.Substring(b+1));
+                docText.Insert(termPosition + 2, term.Substring(b + 1));
                 returnedParsedTerm1 = null;
                 returnedParsedTerm2 = null;
                 return -1;
@@ -517,11 +530,11 @@ namespace SearchEngine.PreQuery
         /// <returns></returns>
         public string cutAllsigns(string uncutTerm)
         {
-            char[] charStart = new char[] {'%','`'};
-            char[] charArray = new char[] { '~','_','#','|','\'', '(', '"', '.', ',', '!', ':', '?', '"', '/', '\\', ';', '-', '=', '[', '{', '*', '+', '&', '<', '`', '[',  '.' , ',' , '!', ':','?', '"' , '\'' , '/' ,'\\' , ';' , ')' , '-', '\'' , '=' , ']', '}' ,'*', '+','&' , '>' };
+            char[] charStart = new char[] { '%', '`' };
+            char[] charArray = new char[] { '~', '_', '#', '|', '\'', '(', '"', '.', ',', '!', ':', '?', '"', '/', '\\', ';', '-', '=', '[', '{', '*', '+', '&', '<', '`', '[', '.', ',', '!', ':', '?', '"', '\'', '/', '\\', ';', ')', '-', '\'', '=', ']', '}', '*', '+', '&', '>' };
             uncutTerm = uncutTerm.TrimStart(charStart);
             return uncutTerm.Trim(charArray);
         }
-        
+
     }
 }

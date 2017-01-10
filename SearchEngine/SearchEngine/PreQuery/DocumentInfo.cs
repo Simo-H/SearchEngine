@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,8 @@ namespace SearchEngine.PreQuery
         /// The title of the document as described in the meta data of the document.
         /// </summary>
         public string title;
+        private static Dictionary<string, string> spelling = new Dictionary<string, string>();
+
         /// <summary>
         /// The normal ctor of a documentInfo.
         /// </summary>
@@ -47,6 +50,8 @@ namespace SearchEngine.PreQuery
         /// <param name="seperatedMetaData">document meta data</param>
         public DocumentInfo(string[] seperatedMetaData)
         {      
+            if(spelling.Count == 0)
+                CorrectSpelling();
             int docTitleStart = Array.IndexOf(seperatedMetaData, "TI");
             int docTitleEnd = Array.IndexOf(seperatedMetaData, "/TI");
             if(docTitleStart != -1)
@@ -65,12 +70,53 @@ namespace SearchEngine.PreQuery
             if(docLanguage != -1)
             {
                 originalLanguage = seperatedMetaData[docLanguage + 1];
+                originalLanguage = originalLanguage.Trim(',', '-', ';').ToLower();
+                int i;
+                if (!Int32.TryParse(originalLanguage,out i))
+                {
+                    string correctedLanguage;
+                    if (spelling.TryGetValue(originalLanguage, out correctedLanguage))
+                    {
+                        originalLanguage = correctedLanguage;
+                    }
+                    else if (originalLanguage.Equals("the"))
+                    {
+                        originalLanguage = "Language not found";
+                    }
+
+                }
+                else
+                {
+                    originalLanguage = "Language not found";
+                }
             }
             else
             {
                 originalLanguage = "Language not found";
             }                    
-        }        
+        }
+
+        public void CorrectSpelling()
+        {
+            spelling["arabi"] = "arabic";
+            spelling["cambodia"] = "cambodian";
+            spelling["eng"] = "english";
+            spelling["engligh"] = "english";
+            spelling["enhglish"] = "english";
+            spelling["enlgish"] = "english";
+            spelling["hebrew3"] = "hebrew";
+            spelling["itaian"] = "italian";
+            spelling["japanse"] = "japanese";
+            spelling["kinyarwand"] = "kinyarwanda";
+            spelling["rusian"] = "russian";
+            spelling["russia"] = "russian";
+            spelling["russia"] = "russian";
+            spelling["slovenian"] = "slovene";
+            spelling["span"] = "spanish";
+            spelling["spansih"] = "spanish";
+            spelling["tigrigna"] = "tigrinya";
+
+        }
     }
     
 }

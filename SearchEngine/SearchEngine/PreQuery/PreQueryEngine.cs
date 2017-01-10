@@ -1,6 +1,9 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -17,8 +20,10 @@ namespace SearchEngine.PreQuery
     /// This class is the main class for the pre-query process. encapsulating relevant operations such as stemming,parsing,indexing etc
     /// 
     /// </summary>
-    class PreQueryEngine
+    class PreQueryEngine : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
         /// <summary>
         /// A stop watch used to measure the time it take to process the corpus.
         /// </summary>
@@ -34,7 +39,22 @@ namespace SearchEngine.PreQuery
         /// <summary>
         /// the parser used to parse each word in the documents text
         /// </summary>
-        public Parse parser;        
+        public Parse parser;
+
+        
+
+        private List<string> languagesList;
+        public List<string> LanguagesList
+        {
+            get { return languagesList; }
+            set
+            {
+                languagesList = value;
+                NotifyPropertyChanged("LanguagesList");
+            }
+        }
+
+
         /// <summary>
         /// pre query engine ctor
         /// </summary>
@@ -42,7 +62,6 @@ namespace SearchEngine.PreQuery
         {           
             //string stopWordsText = System.IO.File.ReadAllText(Properties.Settings.Default.sourceFilesPath+"\\stop_words.txt");
             //stopWords = stopWordsText.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
-            
             indexer = new Indexer();
             parser = new Parse();
             stopWatch = new Stopwatch();
@@ -53,7 +72,8 @@ namespace SearchEngine.PreQuery
         public void engine()
         {
             stopWatch.Start();
-            string[] files = rf.getCorpusFilesFromSource();            
+            string[] files = rf.getCorpusFilesFromSource();
+            ConcurrentBag<string> languagesConcurrentBag = new ConcurrentBag<string>();
             //Thread t = new Thread(() => indexer.mergeQueueFirstThread());
             //t.Start();
             foreach (string filePath in files)
@@ -71,6 +91,7 @@ namespace SearchEngine.PreQuery
                     string text;
                     rf.getMetaDataAndTextFromDoc(doc, out metaData, out text);
                     string docNo = indexer.AddDocFromMetaData(metaData);
+                    languagesConcurrentBag.Add(indexer.documentDictionary[docNo].originalLanguage);
                     string[] stringSeparators = new string[] { " ", "\n" ,"...","--","?",")","(", "[", "]", "\"", "&", "_",";", "~", "|" };
                     string[] textArray = text.ToLower().Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
                     for (int i = 0; i < textArray.Length; i++)
@@ -147,7 +168,8 @@ namespace SearchEngine.PreQuery
             indexer.saveTermDictionary();
             indexer.saveDocumentDictionary();
             stopWatch.Stop();
-           // indexer.sortedFrequency();
+            LanguagesList = new List<string>(languagesConcurrentBag.Distinct());
+            WriteLanguagesToDisk(languagesList);
             int sum=indexer.countNumbers();
             System.Windows.MessageBox.Show("Inverted index is complete. \nNumber of terms: "+ indexer.mainTermDictionary.Count()+".\nNumber of documents: "+indexer.documentDictionary.Count()+"\nRun time: "+stopWatch.ElapsedMilliseconds/1000);
             
@@ -202,6 +224,27 @@ namespace SearchEngine.PreQuery
             }
 
         }
-         
+
+        public void reset()
+        {
+            indexer.documentDictionary = new ConcurrentDictionary<string, DocumentInfo>();
+            indexer.mainTermDictionary = new ConcurrentDictionary<string, TermInfo>();
+            
+        }
+        public void NotifyPropertyChanged(string propName)
+        {
+            if (this.PropertyChanged != null)
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
+        }
+
+        public void WriteLanguagesToDisk(List<string> list)
+        {
+            string data = "";
+            foreach (string language in list)
+            {
+                data += language + " ";
+            }
+            File.WriteAllText(Properties.Settings.Default.postingFiles+"\\Languages.txt",data);
+        }
     }
 }

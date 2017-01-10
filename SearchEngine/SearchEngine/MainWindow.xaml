@@ -5,41 +5,43 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SearchEngine"
         mc:Ignorable="d"
-        Title="MainWindow" Height="320" Width="500" ResizeMode="NoResize">
-    <StackPanel Margin="10">
-        <Label FontWeight="Bold" FontSize="14">Pre query engine:</Label>
+        Title="MainWindow" Height="320" Width="500" ResizeMode="NoResize"  >
+    <StackPanel Margin="10" >
+        <Label FontWeight="Bold" FontSize="14" Content="Pre query engine"/>
 
-        <CheckBox  Content="Use stemmer" Name="stemmer" 
-		      FontStyle="Oblique" FontWeight="Bold" IsChecked="{Binding StemmerIsChecked , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-		     VerticalAlignment="Top" Checked="stem_isChecked" Unchecked="stem_isChecked"/>        
-        <DockPanel>            
+        <CheckBox  Content="Use stemmer" x:Name="stemmer" 
+		      FontStyle="Oblique" FontWeight="Bold" IsChecked="{Binding StemmerIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+		     VerticalAlignment="Top"/>
+        <DockPanel>
             <TextBlock HorizontalAlignment="Left" FontStyle="Oblique" FontWeight="Bold"
                        Text="Selected language : "/>
             <ComboBox
 	    HorizontalAlignment="Left"	    
 	    VerticalAlignment="Top"
 	    Width="120"
-	    Loaded="ComboBox_Loaded"
-	    SelectionChanged="ComboBox_SelectionChanged"/>
+	    
+	    SelectionChanged="ComboBox_SelectionChanged" 
+        SelectedItem="{Binding SelectedLanguage}"
+        ItemsSource="{Binding LanguagesList}"
+            />
         </DockPanel>
         <DockPanel>
-            
-        <Button HorizontalAlignment="Left" Name="LoadDictionaries"
+
+            <Button HorizontalAlignment="Left" x:Name="LoadDictionaries"
                     Content="Load Dictionary"
                     Height="25"
                     Width="90"
-                    Margin =" 5" Click="LoadDictionary">
-            </Button>
-        <Button HorizontalAlignment="Left" Name="ShowDictionary"
+                    Margin =" 5" Click="LoadDictionary"/>
+            <Button HorizontalAlignment="Left" x:Name="ShowDictionary"
                     
                     
                     Content="Show Dictionary"
                     Height="25"
                     Width="90"
-                    Margin =" 5" Click="showDictionary_onClick"></Button>
+                    Margin =" 5" Click="showDictionary_onClick"/>
         </DockPanel>
 
-        <Label FontWeight="Bold" FontSize="14">Please select file paths :</Label>
+        <Label FontWeight="Bold" FontSize="14" Content="Please select file paths :"/>
         <DockPanel Width="470" HorizontalAlignment="Left">
 
             <TextBlock HorizontalAlignment="Left" FontStyle="Oblique" FontWeight="Bold" 
@@ -48,64 +50,57 @@
                        />
             <TextBox x:Name="Path"                     
                      Width="170"
-                     Text="{Binding CorpusAndStopWordFilesPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     
                      Height="35"
                      VerticalAlignment="Top"
-                     HorizontalAlignment="Left" TextChanged="Path_TextChanged"
-                     
+                     HorizontalAlignment="Left"
+                     Text="{Binding Path1,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                      />
             <Button HorizontalAlignment="Left" x:Name="browse1"  
                     Content="browse"
                     Height="30"
                     Width="66"
-                    Margin =" 5" Click="browse1_onClick"/>
+                    Margin =" 5" Click="browse_onClick"/>
         </DockPanel>
         <DockPanel Width="470" HorizontalAlignment="Left">
             <TextBlock HorizontalAlignment="Left" FontStyle="Oblique" FontWeight="Bold"
                        Text="Posting and Dictionary save-to folder path : " Height="27"
                        />
-            <TextBox Name="aPath"                     
+            <TextBox x:Name="aPath"                     
                      Width="119"
-                     Text="{Binding Path=CurrentPath,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Text="{Binding Path2,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                      Height="35" 
                      VerticalAlignment="Top"
-                     HorizontalAlignment="Left" TextChanged="aPath_TextChanged"
+                     HorizontalAlignment="Left" 
                      />
-            <Button HorizontalAlignment="Left" Name="browse2"                    
+            <Button HorizontalAlignment="Left" x:Name="browse2"                    
                     Content="browse"
                     Height="30"
                     Width="70"
-                    Margin =" 5" Click="browse2_onClick">
-            </Button>
+                    Margin =" 5" Click="browse_onClick"/>
         </DockPanel>
-        
+
 
         <StackPanel   Margin="5,0,10,0" Height="49" Orientation="Horizontal"
                       HorizontalAlignment="Center">
-            <Button HorizontalAlignment="Left" Name="run_engine"                    
+            <Button HorizontalAlignment="Left" x:Name="run_engine"                    
                     Content="Run query engine"
                     Height="30"
                     Width="110"
-                    Margin =" 5" Click="run_query_engine_onClick">
-
-            </Button>
-            <Button HorizontalAlignment="Center" Name="reset"
+                    Margin =" 5" Click="run_query_engine_onClick"/>
+            <Button HorizontalAlignment="Center" x:Name="reset"
                     
                     
                     Content="Reset"
                     Height="30"
-                    Width="60" Click="reset_onClick">
-
-            </Button>
-            <Button HorizontalAlignment="Right" Name="Cancel"
+                    Width="60" Click="reset_onClick"/>
+            <Button HorizontalAlignment="Right" x:Name="Cancel"
                     
                     
                     Content="Cancel"
                     Height="29"
                     Width="65" 
-                    Margin="10" Click="Cancel_Click">
-
-            </Button>
+                    Margin="10" Click="Cancel_Click"/>
         </StackPanel>
     </StackPanel>
 </Window>

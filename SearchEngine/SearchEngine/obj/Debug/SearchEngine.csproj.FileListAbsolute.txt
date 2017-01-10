@@ -38,7 +38,6 @@ F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchE
 F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.pdb
 F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\SearchEngine.exe
 F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\SearchEngine.pdb
-F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.csprojResolveAssemblyReference.cache
 F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\MainWindow.g.cs
 F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ShowDictionary.g.cs
 F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\App.g.cs
@@ -65,3 +64,4 @@ D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ShowDictionary.baml
 D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.g.resources
 D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.Properties.Resources.resources
 D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.csproj.GenerateResource.Cache
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.csprojResolveAssemblyReference.cache
