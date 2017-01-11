@@ -34,6 +34,7 @@ namespace SearchEngine
             InitializeComponent();
             vm = new ViewModel();
             DataContext = vm;
+            shearcher = new Searcher(ref pq.indexer);
         }
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -70,6 +71,14 @@ namespace SearchEngine
         {
             Close();
         }
+        private void GO_onClick(object sender, RoutedEventArgs e)
+        {
+            Query = searchPath.Text;
+            postQuery = new PostQueryEngine(ref pq.indexer, Query, "noyet");
+            //shearcher.AllQueryPerformances();
+
+        }
     }
+
         
 }

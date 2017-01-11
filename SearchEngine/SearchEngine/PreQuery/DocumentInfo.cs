@@ -29,7 +29,10 @@ namespace SearchEngine.PreQuery
         /// </summary>
         public string title;
         private static Dictionary<string, string> spelling = new Dictionary<string, string>();
-
+        /// <summary>
+        /// The total number of words in document.
+        /// </summary>
+        public int totalNumberInDoc;
         /// <summary>
         /// The normal ctor of a documentInfo.
         /// </summary>
@@ -37,12 +40,13 @@ namespace SearchEngine.PreQuery
         /// <param name="originalLanguage"></param>
         /// <param name="maxTF"></param>
         /// <param name="title"></param>
-        public DocumentInfo(int uniqueTerms,string originalLanguage,int maxTF,string title)
+        public DocumentInfo(int uniqueTerms,string originalLanguage,int maxTF,string title, int totalNumberInDoc)
         {
             this.uniqueTerms = uniqueTerms;
             this.originalLanguage = originalLanguage;
             this.maxTF = maxTF;
             this.title = title;
+            this.totalNumberInDoc = totalNumberInDoc;
         }
         /// <summary>
         /// A more complex ctor of the object, given a meta data of a document, the ctor extract the document info and create an object describing the document.
