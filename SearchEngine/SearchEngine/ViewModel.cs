@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
+using SearchEngine.PostQuery;
 using SearchEngine.PreQuery;
 
 namespace SearchEngine
@@ -18,6 +19,15 @@ namespace SearchEngine
         private PreQueryEngine pq;
         public event PropertyChangedEventHandler PropertyChanged;
         Thread engineThread;
+        private Searcher searcher;
+        private string query;
+
+        public string Query
+        {
+            get { return query; }
+            set { query = value; }
+        }
+
         public List<string> LanguagesList
         {
             get
@@ -40,7 +50,7 @@ namespace SearchEngine
             set
             {
                 stemmerIsChecked = value;
-                Properties.Settings.Default.stemmer = StemmerIsChecked;
+                Properties.Settings.Default.stemmer = stemmerIsChecked;
                 Properties.Settings.Default.Save();
             }
         }
@@ -81,7 +91,9 @@ namespace SearchEngine
 
         public ViewModel()
         {
+            stemmerIsChecked = false;
             pq = new PreQueryEngine();
+            searcher = new Searcher(ref pq.indexer);
             pq.PropertyChanged += delegate (object sender, PropertyChangedEventArgs e)
             {
                 NotifyPropertyChanged(e.PropertyName);
@@ -177,6 +189,12 @@ namespace SearchEngine
             {
                 System.Windows.MessageBox.Show("Dictionary not loaded.\nPlease check if the paths are correct and you already created a dictionary.");
             }
+        }
+
+        public void Search()
+        {
+            PostQueryEngine postQuery = new PostQueryEngine(ref pq.indexer, Query, "noyet");
+            //shearcher.AllQueryPerformances();
         }
     };
 }

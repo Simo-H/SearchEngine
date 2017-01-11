@@ -21,6 +21,7 @@ namespace SearchEngine.PostQuery
             ConcurrentDictionary<string, double> ranking= ranker.BM25(parseQuery);
             var myList = ranking.ToList();
             myList.Sort((pair1, pair2) => pair1.Value.CompareTo(pair2.Value));
+            myList.Reverse(0, myList.Count);
             List<string> result =new List<string>();
 
         }

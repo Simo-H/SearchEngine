@@ -19,6 +19,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.ComponentModel;
 using System.Threading;
+using SearchEngine.PostQuery;
 
 namespace SearchEngine
 {
@@ -27,14 +28,13 @@ namespace SearchEngine
     /// </summary>
     public partial class MainWindow : Window
     {
-
         private ViewModel vm;
         public MainWindow()
         {
             InitializeComponent();
             vm = new ViewModel();
             DataContext = vm;
-            shearcher = new Searcher(ref pq.indexer);
+            
         }
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -73,10 +73,7 @@ namespace SearchEngine
         }
         private void GO_onClick(object sender, RoutedEventArgs e)
         {
-            Query = searchPath.Text;
-            postQuery = new PostQueryEngine(ref pq.indexer, Query, "noyet");
-            //shearcher.AllQueryPerformances();
-
+            vm.Search();
         }
     }
 

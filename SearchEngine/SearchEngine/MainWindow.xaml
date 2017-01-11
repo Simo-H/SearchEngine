@@ -46,7 +46,7 @@
 
             <TextBlock HorizontalAlignment="Left" FontStyle="Oblique" FontWeight="Bold" 
                        Text="Corpus and Stop-Words files path : " TextAlignment="Center" Height="25"
-                     
+                        
                        />
             <TextBox x:Name="Path"                     
                      Width="170"
@@ -111,10 +111,10 @@
                        />
             <TextBox Name="searchPath"                     
                      Width="350"
-                     Text="{Binding Path=Query,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Text="{Binding Query,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Height="35" 
                      VerticalAlignment="Top"
-                     HorizontalAlignment="Left" TextChanged="aPath_TextChanged"
+                     HorizontalAlignment="Left"
                      />
             <Button HorizontalAlignment="Left" Name="Go"                    
                     Content="Go"
