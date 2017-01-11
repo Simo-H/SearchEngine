@@ -91,6 +91,10 @@ namespace SearchEngine.PreQuery
                     string text;
                     rf.getMetaDataAndTextFromDoc(doc, out metaData, out text);
                     string docNo = indexer.AddDocFromMetaData(metaData);
+                    if (docNo.Equals("FBIS4-11824"))
+                    {
+                        string s = filePath.ToString();
+                    }
                     languagesConcurrentBag.Add(indexer.documentDictionary[docNo].originalLanguage);
                     string[] stringSeparators = new string[] { " ", "\n" ,"...","--","?",")","(", "[", "]", "\"", "&", "_",";", "~", "|" };
                     string[] textArray = text.ToLower().Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,8 @@ namespace SearchEngine.PostQuery
 {
     class Ranker
     {
+        Indexer indexer;
+        Searcher shearch;
         double k1;
         double k2;
         double K;
@@ -17,17 +20,16 @@ namespace SearchEngine.PostQuery
         int N;
         int ri;
         int R;
-     //   double fi;
-     //   double Qfi;
-     //   int Length;
-     //   int dl;
         double avgDocLenght;
-        Indexer indexer;
-        Searcher shearch;
+        int BonusAllQueryInDocument;
+        int BonusTermInTitle;
+
         public Ranker(ref Indexer indexer, ref Searcher shearch)
         {
             this.indexer = indexer;
             this.shearch = shearch;
+            BonusAllQueryInDocument = 1;
+            BonusTermInTitle = 1;
             N = indexer.documentDictionary.Count();
             ri = 0;
             R = 0;
@@ -41,11 +43,12 @@ namespace SearchEngine.PostQuery
             }
             avgDocLenght = avgDocLenght / N;
         }
-        public ConcurrentDictionary<string, double>  BM25(string[] q)
+
+        public ConcurrentDictionary<string, double>  BM25(string[] q, Dictionary<string, Dictionary<string, int>> QueryPerformances)
         {
             double qfi = System.Convert.ToDouble(1 / System.Convert.ToDouble( q.Length));
             ConcurrentDictionary <string,double> docList = new ConcurrentDictionary<string, double>();
-            foreach (Dictionary<string, int> term in shearch.QueryPerformances.Values)
+            foreach (Dictionary<string, int> term in QueryPerformances.Values)
             {
                 foreach (string doc in term.Keys)
                 {
@@ -56,29 +59,76 @@ namespace SearchEngine.PostQuery
             {
                 DocumentInfo f = indexer.documentDictionary[doc];
                 int dl = indexer.documentDictionary[doc].totalNumberInDoc;
-
-            double totalRanke=0;
-                double rankerdoc = 0;
-                foreach (Dictionary<string, int> term in shearch.QueryPerformances.Values)
+                double totalRankeForDoc=0;
+                double rankeTermAtDoc = 0;
+                int CounterTerminDoc = 0;
+                foreach (Dictionary<string, int> term in QueryPerformances.Values)
                 {
                     double ni = term.Values.Count();
                     if (term.Keys.Contains(doc))
                     {
-                    double fi =( System.Convert.ToDouble(term[doc])) / (System.Convert.ToDouble(dl));
-                        double firstPart = ((ri + 0.5) / (R - ri + 0.5)) / ((ni - ri + 0.5) / (N - ni- R + ri + 0.5));
-                        K = k1*((1 - b) + b * (dl/ avgDocLenght));
-                        double secondPart=((k1+1)*fi)/ (K + fi);
-                        double third = ((k2 + 1) * qfi) / (k2 + qfi);
-                        totalRanke = firstPart * secondPart * third;
-                        totalRanke = Math.Log(totalRanke);
+                        CounterTerminDoc++;
+                        double fi =( System.Convert.ToDouble(term[doc])) / (System.Convert.ToDouble(dl));
+                      //  double firstPart = ((ri + 0.5) / (R - ri + 0.5)) / ((ni - ri + 0.5) / (N - ni- R + ri + 0.5));
+                      //  K = k1*((1 - b) + b * (dl/ avgDocLenght));
+                      //  //double secondPart=((k1+1)*fi)/ (K + fi);
+                      //  //double third = ((k2 + 1) * qfi) / (k2 + qfi);
+                      // // rankeTermAtDoc = firstPart * secondPart * third;
+                      ////  rankeTermAtDoc = Math.Log(rankeTermAtDoc);
+                        totalRankeForDoc = totalRankeForDoc + rankeTermAtDoc+ fi;
                     }
-
                 }
-                rankerdoc = rankerdoc + totalRanke;
-                docList[doc] = rankerdoc;
-
+                docList[doc] = totalRankeForDoc;
+                if (CounterTerminDoc==q.Length)
+                {
+                    docList[doc] = docList[doc] + BonusAllQueryInDocument+ CheckingTitle(doc, q);
+                }
             }
             return docList;
         }
+
+        public double CheckingTitle(string docName, string[] q)
+        {
+            int count = 0;
+            for (int i = 0; i < q.Length; i++)
+            {
+              bool containing=indexer.documentDictionary[docName].title.Contains(q[i]);
+                if (containing)
+                {
+                    count++;
+                }
+            }
+            return count* BonusTermInTitle;
+        }
+
+        public List<KeyValuePair<string,double>> printRankToFile(ConcurrentDictionary<string, double> ranking, string fileName)
+        {
+
+            string filePath = Properties.Settings.Default.postingFiles + fileName;
+            var myList = ranking.ToList();
+            myList.Sort((pair1, pair2) => pair1.Value.CompareTo(pair2.Value));
+            myList.Reverse(0, myList.Count);
+            using (FileStream newFileStream = new FileStream(filePath, FileMode.Create))
+            {
+                StreamWriter bw = new StreamWriter(newFileStream);
+                foreach (var item in myList)
+                {
+                    bw.WriteLine(item.Key);
+                    bw.WriteLine(item.Value);
+
+                }
+                bw.Flush();
+            }
+            return myList;
+        }
+
+        public ConcurrentDictionary<string, double> Ranke(string[] q, Dictionary<string, Dictionary<string, int>> QueryPerformances)
+        {
+            ConcurrentDictionary<string, double> rank = new ConcurrentDictionary<string, double>();
+            rank = BM25(q, QueryPerformances);
+            return rank;
+        }
+
+
     }
 }

@@ -17,6 +17,7 @@ namespace SearchEngine
     class ViewModel:INotifyPropertyChanged
     {
         private PreQueryEngine pq;
+        PostQueryEngine postQuery;
         public event PropertyChangedEventHandler PropertyChanged;
         Thread engineThread;
         private Searcher searcher;
@@ -93,6 +94,7 @@ namespace SearchEngine
         {
             stemmerIsChecked = false;
             pq = new PreQueryEngine();
+            postQuery = new PostQueryEngine(ref pq.indexer);
             searcher = new Searcher(ref pq.indexer);
             pq.PropertyChanged += delegate (object sender, PropertyChangedEventArgs e)
             {
@@ -193,8 +195,7 @@ namespace SearchEngine
 
         public void Search()
         {
-            PostQueryEngine postQuery = new PostQueryEngine(ref pq.indexer, Query, "noyet");
-            //shearcher.AllQueryPerformances();
+            postQuery.retrive(Query, selectedLanguage);
         }
     };
 }
