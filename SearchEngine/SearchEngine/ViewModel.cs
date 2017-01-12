@@ -99,6 +99,7 @@ namespace SearchEngine
             pq.PropertyChanged += delegate (object sender, PropertyChangedEventArgs e)
             {
                 NotifyPropertyChanged(e.PropertyName);
+                
             };
         }
         public void NotifyPropertyChanged(string propName)

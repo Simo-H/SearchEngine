@@ -101,10 +101,10 @@ namespace SearchEngine.PostQuery
             return count* BonusTermInTitle;
         }
 
-        public List<KeyValuePair<string,double>> printRankToFile(ConcurrentDictionary<string, double> ranking, string fileName)
+        public List<KeyValuePair<int,string>> printRankToFile(ConcurrentDictionary<string, double> ranking, string fileName, int queryId)
         {
-
-            string filePath = Properties.Settings.Default.postingFiles + fileName;
+            List < KeyValuePair < int,string>> Best50 = new List<KeyValuePair<int, string>>();
+             string filePath = Properties.Settings.Default.postingFiles + fileName;
             var myList = ranking.ToList();
             myList.Sort((pair1, pair2) => pair1.Value.CompareTo(pair2.Value));
             myList.Reverse(0, myList.Count);
@@ -117,9 +117,14 @@ namespace SearchEngine.PostQuery
                     bw.WriteLine(item.Value);
 
                 }
+                for (int i = 0; i < 51; i++)
+                {
+                    KeyValuePair<int, string> kp = new KeyValuePair<int, string>(queryId,myList[i].Key);
+                    Best50.Add(kp);
+                }
                 bw.Flush();
             }
-            return myList;
+            return Best50;
         }
 
         public ConcurrentDictionary<string, double> Ranke(string[] q, Dictionary<string, Dictionary<string, int>> QueryPerformances)

@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 D:\Git\SearchEngine\SearchEngine\SearchEngine\App.xaml
-21664549449
+3-1309133453
 
-211603004766
+221975423409
 15-1591354632
-MainWindow.xaml;ShowDictionary.xaml;
+MainWindow.xaml;ShowDictionary.xaml;ShowRankResults.xaml;
 
-False
+True
 
