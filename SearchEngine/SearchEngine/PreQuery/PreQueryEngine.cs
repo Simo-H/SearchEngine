@@ -250,5 +250,15 @@ namespace SearchEngine.PreQuery
             }
             File.WriteAllText(Properties.Settings.Default.postingFiles+"\\Languages.txt",data);
         }
+        public void ReadLanguagesFile()
+        {
+            string file = File.ReadAllText(Properties.Settings.Default.postingFiles + "\\Languages.txt");
+            List<string> list = file.Split(new char[] { ' ' },StringSplitOptions.RemoveEmptyEntries).ToList();
+            list.Remove("language");
+            list.Remove("language");
+            list.Remove("language");
+            LanguagesList = list;
+
+        }
     }
 }

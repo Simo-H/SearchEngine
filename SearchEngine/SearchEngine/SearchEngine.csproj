@@ -51,12 +51,16 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WordNetClasses">
+      <HintPath>PostQuery\WordNetClasses.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="PostQuery\Optimizer.cs" />
     <Compile Include="PostQuery\PostQueryEngine.cs" />
     <Compile Include="PostQuery\Ranker.cs" />
     <Compile Include="PostQuery\Searcher.cs" />
