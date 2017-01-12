@@ -68,3 +68,5 @@ F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\WordNet
 F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.csprojResolveAssemblyReference.cache
 F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ShowRankResults.g.cs
 F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ShowRankResults.baml
+D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ResultsAllQueries.g.cs
+D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ResultsSingleQuery.g.cs

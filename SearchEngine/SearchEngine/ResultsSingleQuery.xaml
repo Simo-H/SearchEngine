@@ -14,20 +14,14 @@
 
             <TextBlock x:Name="numberOfDoc" Text="number of doc" HorizontalAlignment="Right" Height="19" Margin="0,75,370,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96"></TextBlock>
             <TextBlock x:Name="counter" Text="count of doc" HorizontalAlignment="Right" Height="19" Margin="0,75,274,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96"></TextBlock>
-            <ListView x:Name="listView" HorizontalAlignment="Right" Height="180" VerticalAlignment="Top" Width="191" RenderTransformOrigin="1.307,0.605" SelectionChanged="listView_SelectionChanged">
+            <ListView x:Name="listView" HorizontalAlignment="Right" Height="180" VerticalAlignment="Top" Width="191" RenderTransformOrigin="1.307,0.605" >
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="doc id" Width="191"  DisplayMemberBinding="{Binding QueriesResults}"/>
                     </GridView>
                 </ListView.View>
             </ListView>
-            <Button HorizontalAlignment="Left" Name="Ok"
-                    
-                    
-                    Content="OK"
-                    Height="25"
-                    Width="90"
-                    Margin ="74,245,0,30" Click="ok"></Button>
+
         </Grid>
     </Canvas>
 

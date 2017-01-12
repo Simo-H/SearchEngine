@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SearchEngine"
         mc:Ignorable="d"
-        Title="ResultsAllQueries" Height="300" Width="300">
+        Title="Queries Results" Height="300" Width="300">
     <Grid>
         <ListView x:Name ="listview" Margin="0,5,0,0" />
+        <Button x:Name="button" Content="ok" HorizontalAlignment="Left" Height="16" Margin="91,243,0,0" VerticalAlignment="Top" Width="92" Click="button_Click"/>
 
     </Grid>
 </Window>

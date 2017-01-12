@@ -101,34 +101,31 @@ namespace SearchEngine.PostQuery
             return count* BonusTermInTitle;
         }
 
-        public List<KeyValuePair<int,string>> sortRanking(ConcurrentDictionary<string, double> ranking, int queryId)
+        public List<string> sortRanking(ConcurrentDictionary<string, double> ranking)
         {
             List<KeyValuePair<string,double>> myList = ranking.ToList();
             myList.Sort((pair1, pair2) => pair1.Value.CompareTo(pair2.Value));
             myList.Reverse(0, myList.Count);
-            List<KeyValuePair<int,string>> sortedRanking = new List<KeyValuePair<int, string>>();
+            List<string> sortedRanking = new List<string>();
             foreach (var result in myList)
             {
-                KeyValuePair<int, string> kp = new KeyValuePair<int, string>(queryId, result.Key);
-                sortedRanking.Add(kp);
+                sortedRanking.Add(result.Key);
             }
             //sortedRanking = top50Results(sortedRanking);
             return sortedRanking;
         }
 
-        public List<string> ResultDocsList(List<KeyValuePair<int, string>> ranking)
-        {
-            List<string> list = new List<string>();
-            foreach (var result in ranking)
-            {
-                list.Add(result.Value);
-            }
-            return list;
-        }
-        public List<KeyValuePair<int, string>> top50Results(List<KeyValuePair<int, string>> allResults)
+
+        public List<string> top50Results(List<string> allResults)
         {
             return allResults.Take(50).ToList();
         }
+
+        /// <summary>
+        /// /////////////////////////////////////
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="rankingList"></param>
         public void writeSingleQueryToFile(string fileName, List<KeyValuePair<int, string>> rankingList)
         {
             string filePath = Properties.Settings.Default.postingFiles+"\\" + fileName;

@@ -44,38 +44,41 @@ namespace SearchEngine.PostQuery
             //opt.Optimize(Properties.Settings.Default.postingFiles+"\\qrels.txt");
         }
 
-        public  List<KeyValuePair<int,string>> retriveSingleQuery(string query, string language,int queryId)
+        public  void retriveSingleQuery(string query, string language,int queryId)
         {
             string[] parseQuery = searcher.ParseQuery(query);
             List<string> queryList = searcher.AddSemantic(parseQuery.ToList());
             Dictionary<string, Dictionary<string, int>> QueryPerformances =new Dictionary<string, Dictionary<string, int>>();
             QueryPerformances= searcher.AllQueryPerformances(parseQuery, language);
             ConcurrentDictionary<string, double> ranking = ranker.Ranke(parseQuery, QueryPerformances);
-            List<KeyValuePair<int, string>> l = new List<KeyValuePair<int, string>>();
-            return ranker.sortRanking(ranking, queryId);
+            QueriesResults[queryId]= ranker.sortRanking(ranking);
+           
         }
 
         public void userManualSingleQuery(string query, string language)
         {
-            List<KeyValuePair<int,string>> results = retriveSingleQuery(query, language, queryid);
-            QueriesResults[queryid] = ranker.ResultDocsList(results);
-            ranker.writeSingleQueryToFile("Query "+queryid, results);
+            QueriesResults = new Dictionary<int, List<string>>();            
+            retriveSingleQuery(query,language,queryid);            
             queryid++;
         }
 
 
         public void queriesFile(string QueriesFilePath,string language)
         {
+            QueriesResults = new Dictionary<int, List<string>>();
             using (FileStream queriesTextFileStream = new FileStream(QueriesFilePath, FileMode.Open))
             {
                 StreamReader streamReader = new StreamReader(queriesTextFileStream);
                 string line;
                 while ((line = streamReader.ReadLine()) != null)
                 {
-                    string[] queryLine = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                    List<KeyValuePair<int, string>> results = retriveSingleQuery(queryLine[1], language, Int32.Parse(queryLine[0]));
-                    QueriesResults[queryid] = ranker.ResultDocsList(results);
-                    ranker.writeSingleQueryToFile("Query " + queryLine[0], results);
+                    string[] queryLine = line.Split(new char[] { ' ','\t' }, StringSplitOptions.RemoveEmptyEntries);
+                    string q="";
+                    for (int i = 1; i < queryLine.Length; i++)
+                    {
+                        q += queryLine[i];
+                    }
+                    retriveSingleQuery(q, language, Int32.Parse(queryLine[0]));
                 }
             }
         }

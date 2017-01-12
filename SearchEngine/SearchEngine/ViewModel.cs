@@ -28,6 +28,13 @@ namespace SearchEngine
             get { return query; }
             set { query = value; }
         }
+        private int myVar;
+
+        public int MyProperty
+        {
+            get { return myVar; }
+            set { myVar = value; }
+        }
 
         public List<string> LanguagesList
         {
@@ -198,12 +205,13 @@ namespace SearchEngine
         
         public void Search()
         {
-           // postQuery.userManualSingleQuery(Query, selectedLanguage);
+           postQuery.userManualSingleQuery(Query, selectedLanguage);
+            
         }
 
         public void Optimize()
         {
-            postQuery.findOptimizedParameters();
+            //postQuery.findOptimizedParameters();
         }
     };
 }
