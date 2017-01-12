@@ -67,6 +67,9 @@
     <Compile Include="ShowDictionary.xaml.cs">
       <DependentUpon>ShowDictionary.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ShowRankResults.xaml.cs">
+      <DependentUpon>ShowRankResults.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -81,6 +84,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="ShowDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ShowRankResults.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -13,7 +13,7 @@ namespace SearchEngine.PostQuery
     {
         Ranker ranker;
         Searcher searcher;
-
+        public static int queryid=1;
 
         public PostQueryEngine(ref Indexer indexer)
         {
@@ -23,15 +23,16 @@ namespace SearchEngine.PostQuery
             opt.Optimize(Properties.Settings.Default.postingFiles+"\\qrels.txt");
         }
 
-        public  void retrive(string query, string language)
+        public  void retriveSingleQuery( string query, string language)
         {
             string[] parseQuery = searcher.ParseQuery(query);
             List<string> queryList = searcher.AddSemantic(parseQuery.ToList());
             Dictionary<string, Dictionary<string, int>> QueryPerformances =new Dictionary<string, Dictionary<string, int>>();
             QueryPerformances= searcher.AllQueryPerformances(parseQuery, language);
             ConcurrentDictionary<string, double> ranking = ranker.Ranke(parseQuery, QueryPerformances);
-            List<KeyValuePair<string, double>> l = new List<KeyValuePair<string, double>>();
-            l= ranker.printRankToFile(ranking, "\\rank.txt");
+            List<KeyValuePair<int, string>> l = new List<KeyValuePair<int, string>>();
+            l= ranker.printRankToFile(ranking, "\\rank.txt", queryid);
+            queryid++;
         }
         
     }

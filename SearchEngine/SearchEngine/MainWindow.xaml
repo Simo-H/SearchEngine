@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SearchEngine"
         mc:Ignorable="d"
-        Title="MainWindow" Height="380" Width="500" ResizeMode="NoResize">
+        Title="MainWindow" Height="400" Width="500" ResizeMode="NoResize">
     <StackPanel Margin="10">
         <Label FontWeight="Bold" FontSize="14">Pre query engine:</Label>
 
@@ -118,6 +118,24 @@
                      />
             <Button HorizontalAlignment="Left" Name="Go"                    
                     Content="Go"
+                    Height="30"
+                    Width="53"
+                    Margin =" 5" Click="GO_onClick">
+            </Button>
+        </DockPanel>
+        <DockPanel Width="470" HorizontalAlignment="Left">
+            <TextBlock HorizontalAlignment="Left" FontStyle="Oblique" FontWeight="Bold"
+                       Text="phath queries at file :" Height="27"
+                       />
+            <TextBox Name="filePath"                     
+                     Width="272"
+                     Text="{Binding Path3,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Height="35" 
+                     VerticalAlignment="Top"
+                     HorizontalAlignment="Left"
+                     />
+            <Button HorizontalAlignment="Left" Name="browse3"                    
+                    Content="browse"
                     Height="30"
                     Width="53"
                     Margin =" 5" Click="GO_onClick">
