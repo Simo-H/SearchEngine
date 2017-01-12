@@ -198,7 +198,12 @@ namespace SearchEngine
         
         public void Search()
         {
-            postQuery.retrive(Query, selectedLanguage);
+           // postQuery.userManualSingleQuery(Query, selectedLanguage);
+        }
+
+        public void Optimize()
+        {
+            postQuery.findOptimizedParameters();
         }
     };
 }

@@ -24,7 +24,7 @@ namespace SearchEngine.PostQuery
         int BonusAllQueryInDocument;
         int BonusTermInTitle;
 
-        public Ranker(ref Indexer indexer, ref Searcher shearch)
+        public Ranker(ref Indexer indexer, ref Searcher shearch,double k1,double k2,double b)
         {
             this.indexer = indexer;
             this.shearch = shearch;
@@ -33,9 +33,9 @@ namespace SearchEngine.PostQuery
             N = indexer.documentDictionary.Count();
             ri = 0;
             R = 0;
-            k1 = 1.2;
-            k2 = 100;
-            b = 0.75;
+            this.k1 = k1;
+            this.k2 = k2;
+            this.b = b;
             avgDocLenght = 0;
             foreach (string item in indexer.documentDictionary.Keys)
             {
@@ -69,12 +69,12 @@ namespace SearchEngine.PostQuery
                     {
                         CounterTerminDoc++;
                         double fi =( System.Convert.ToDouble(term[doc])) / (System.Convert.ToDouble(dl));
-                      //  double firstPart = ((ri + 0.5) / (R - ri + 0.5)) / ((ni - ri + 0.5) / (N - ni- R + ri + 0.5));
-                      //  K = k1*((1 - b) + b * (dl/ avgDocLenght));
-                      //  //double secondPart=((k1+1)*fi)/ (K + fi);
-                      //  //double third = ((k2 + 1) * qfi) / (k2 + qfi);
-                      // // rankeTermAtDoc = firstPart * secondPart * third;
-                      ////  rankeTermAtDoc = Math.Log(rankeTermAtDoc);
+                        double firstPart = ((ri + 0.5) / (R - ri + 0.5)) / ((ni - ri + 0.5) / (N - ni - R + ri + 0.5));
+                        K = k1 * ((1 - b) + b * (dl / avgDocLenght));
+                        double secondPart = ((k1 + 1) * fi) / (K + fi);
+                        double third = ((k2 + 1) * qfi) / (k2 + qfi);
+                        rankeTermAtDoc = firstPart * secondPart * third;
+                        rankeTermAtDoc = Math.Log(rankeTermAtDoc);
                         totalRankeForDoc = totalRankeForDoc + rankeTermAtDoc+ fi;
                     }
                 }
@@ -101,30 +101,48 @@ namespace SearchEngine.PostQuery
             return count* BonusTermInTitle;
         }
 
-        public List<KeyValuePair<int,string>> printRankToFile(ConcurrentDictionary<string, double> ranking, string fileName, int queryId)
+        public List<KeyValuePair<int,string>> sortRanking(ConcurrentDictionary<string, double> ranking, int queryId)
         {
-            List < KeyValuePair < int,string>> Best50 = new List<KeyValuePair<int, string>>();
-             string filePath = Properties.Settings.Default.postingFiles + fileName;
-            var myList = ranking.ToList();
+            List<KeyValuePair<string,double>> myList = ranking.ToList();
             myList.Sort((pair1, pair2) => pair1.Value.CompareTo(pair2.Value));
             myList.Reverse(0, myList.Count);
+            List<KeyValuePair<int,string>> sortedRanking = new List<KeyValuePair<int, string>>();
+            foreach (var result in myList)
+            {
+                KeyValuePair<int, string> kp = new KeyValuePair<int, string>(queryId, result.Key);
+                sortedRanking.Add(kp);
+            }
+            //sortedRanking = top50Results(sortedRanking);
+            return sortedRanking;
+        }
+
+        public List<string> ResultDocsList(List<KeyValuePair<int, string>> ranking)
+        {
+            List<string> list = new List<string>();
+            foreach (var result in ranking)
+            {
+                list.Add(result.Value);
+            }
+            return list;
+        }
+        public List<KeyValuePair<int, string>> top50Results(List<KeyValuePair<int, string>> allResults)
+        {
+            return allResults.Take(50).ToList();
+        }
+        public void writeSingleQueryToFile(string fileName, List<KeyValuePair<int, string>> rankingList)
+        {
+            string filePath = Properties.Settings.Default.postingFiles+"\\" + fileName;
             using (FileStream newFileStream = new FileStream(filePath, FileMode.Create))
             {
                 StreamWriter bw = new StreamWriter(newFileStream);
-                foreach (var item in myList)
+                foreach (var item in rankingList)
                 {
                     bw.WriteLine(item.Key);
                     bw.WriteLine(item.Value);
 
                 }
-                for (int i = 0; i < 51; i++)
-                {
-                    KeyValuePair<int, string> kp = new KeyValuePair<int, string>(queryId,myList[i].Key);
-                    Best50.Add(kp);
-                }
                 bw.Flush();
             }
-            return Best50;
         }
 
         public ConcurrentDictionary<string, double> Ranke(string[] q, Dictionary<string, Dictionary<string, int>> QueryPerformances)
