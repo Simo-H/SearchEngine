@@ -18,6 +18,7 @@ namespace SearchEngine
     {
         private PreQueryEngine pq;
         PostQueryEngine postQuery;
+        //private Optimizer opt;
         public event PropertyChangedEventHandler PropertyChanged;
         Thread engineThread;
         private Searcher searcher;
@@ -103,6 +104,7 @@ namespace SearchEngine
             pq = new PreQueryEngine();
             postQuery = new PostQueryEngine(ref pq.indexer);
             searcher = new Searcher(ref pq.indexer,3);
+            //opt = new Optimizer(ref pq.indexer);
             pq.PropertyChanged += delegate (object sender, PropertyChangedEventArgs e)
             {
                 NotifyPropertyChanged(e.PropertyName);
