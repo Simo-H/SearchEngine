@@ -196,7 +196,7 @@ namespace SearchEngine
 
         public void Search()
         {
-            postQuery.retrive(Query, selectedLanguage);
+            postQuery.retriveSingleQuery(Query, selectedLanguage);
         }
     };
 }

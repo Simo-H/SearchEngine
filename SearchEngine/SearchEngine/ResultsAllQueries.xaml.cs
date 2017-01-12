@@ -15,19 +15,13 @@ using System.Windows.Shapes;
 namespace SearchEngine
 {
     /// <summary>
-    /// Interaction logic for ShowRankResults.xaml
+    /// Interaction logic for ResultsAllQueries.xaml
     /// </summary>
-    public partial class ShowRankResults : Window
+    public partial class ResultsAllQueries : Window
     {
-        public ShowRankResults()
+        public ResultsAllQueries()
         {
             InitializeComponent();
-
-        }
-
-        private void ok(object sender, RoutedEventArgs e)
-        {
-            this.Close();
         }
     }
 }

@@ -60,11 +60,14 @@
     <Compile Include="PostQuery\PostQueryEngine.cs" />
     <Compile Include="PostQuery\Ranker.cs" />
     <Compile Include="PostQuery\Searcher.cs" />
+    <Compile Include="ResultsAllQueries.xaml.cs">
+      <DependentUpon>ResultsAllQueries.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ResultsSingleQuery.xaml.cs">
+      <DependentUpon>ResultsSingleQuery.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ShowDictionary.xaml.cs">
       <DependentUpon>ShowDictionary.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ShowRankResults.xaml.cs">
-      <DependentUpon>ShowRankResults.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel.cs" />
     <Page Include="MainWindow.xaml">
@@ -79,11 +82,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="ShowDictionary.xaml">
+    <Page Include="ResultsAllQueries.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ShowRankResults.xaml">
+    <Page Include="ResultsSingleQuery.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ShowDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
