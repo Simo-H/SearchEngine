@@ -75,6 +75,11 @@ namespace SearchEngine
         {
             vm.Search();
         }
+
+        private void optimize_Click(object sender, RoutedEventArgs e)
+        {
+            vm.Optimize();
+        }
     }
 
         

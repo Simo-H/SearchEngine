@@ -66,3 +66,5 @@ D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.Properties.
 D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.csproj.GenerateResource.Cache
 F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\WordNetClasses.dll
 F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.csprojResolveAssemblyReference.cache
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ShowRankResults.g.cs
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ShowRankResults.baml

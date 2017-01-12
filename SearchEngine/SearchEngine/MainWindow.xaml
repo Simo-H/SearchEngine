@@ -24,6 +24,7 @@
         SelectedItem="{Binding SelectedLanguage}"
         ItemsSource="{Binding LanguagesList}"
             />
+            <Button x:Name="optimize" Content="Optimize" Width="75" Click="optimize_Click"/>
         </DockPanel>
         <DockPanel>
 
