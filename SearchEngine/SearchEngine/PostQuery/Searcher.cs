@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Wnlib;
+using WnLexicon;
 
 namespace SearchEngine.PostQuery
 {
@@ -13,12 +15,14 @@ namespace SearchEngine.PostQuery
         Stemmer stemmer;
         Parse parser;
         Indexer index;
+        public int numberOfsynonyms;
 
-        public Searcher(ref Indexer index)
+        public Searcher(ref Indexer index, int numberOfsynonyms)
         {
             stemmer = new Stemmer();
             parser = new Parse();
             this.index = index;
+            this.numberOfsynonyms = numberOfsynonyms;
         }
 
         public string[] ParseQuery(string query)
@@ -90,9 +94,9 @@ namespace SearchEngine.PostQuery
             return q;
         }
 
-        public Dictionary<string, Dictionary<string, int>>  AllQueryPerformances(string[] parseQuery, string language)
+        public Dictionary<string, Dictionary<string, int>> AllQueryPerformances(string[] parseQuery, string language)
         {
-            Dictionary<string, Dictionary<string, int>> QueryPerformances=new Dictionary<string, Dictionary<string, int>>();
+            Dictionary<string, Dictionary<string, int>> QueryPerformances = new Dictionary<string, Dictionary<string, int>>();
             foreach (string term in parseQuery)
             {
                 if (QueryPerformances.Keys.Contains(term))
@@ -100,17 +104,17 @@ namespace SearchEngine.PostQuery
                     continue;
                 }
                 Dictionary<string, int> DocAndTf = new Dictionary<string, int>();
-                DocAndTf = termDocsAndTf(term,language);
+                DocAndTf = termDocsAndTf(term, language);
                 QueryPerformances[term] = DocAndTf;
             }
             return QueryPerformances;
         }
 
-        public Dictionary<string,int> termDocsAndTf(string term, string language)
+        public Dictionary<string, int> termDocsAndTf(string term, string language)
         {
 
             Dictionary<string, int> termDocsAndTf = new Dictionary<string, int>();
-             string postingFilePath= Properties.Settings.Default.postingFiles;
+            string postingFilePath = Properties.Settings.Default.postingFiles;
             if (Properties.Settings.Default.stemmer)
             {
                 postingFilePath = postingFilePath + "\\PostingS.bin";
@@ -125,21 +129,21 @@ namespace SearchEngine.PostQuery
                 long position = index.mainTermDictionary[term].postingfilepointer;
                 br.BaseStream.Position = position;
                 string term1 = br.ReadString();
-                string AllPerformances= br.ReadString();
-                string[] stringSeparators = new string[] { " ", ">","<", ",", "#" };
+                string AllPerformances = br.ReadString();
+                string[] stringSeparators = new string[] { " ", ">", "<", ",", "#" };
                 string[] DocumentAndShowsArray = AllPerformances.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
                 for (int i = 0; i < DocumentAndShowsArray.Count(); i++)
                 {
-                  // if (language.Equals("All languages"))
-                  // {
-                  //      termDocsAndTf[DocumentAndShowsArray[i]] = Int32.Parse(DocumentAndShowsArray[i + 1]);
-                  //}
-                  // else
-                  // {
+                    // if (language.Equals("All languages"))
+                    // {
+                    //      termDocsAndTf[DocumentAndShowsArray[i]] = Int32.Parse(DocumentAndShowsArray[i + 1]);
+                    //}
+                    // else
+                    // {
                     //   if (language.Equals(index.documentDictionary[DocumentAndShowsArray[i]].originalLanguage))
                     //   {
-                            termDocsAndTf[DocumentAndShowsArray[i]] = Int32.Parse(DocumentAndShowsArray[i + 1]);
-                        //}
+                    termDocsAndTf[DocumentAndShowsArray[i]] = Int32.Parse(DocumentAndShowsArray[i + 1]);
+                    //}
                     //}
                     i++;
                 }
@@ -150,7 +154,33 @@ namespace SearchEngine.PostQuery
             return termDocsAndTf;
         }
 
-
+        public List<string> AddSemantic(List<string> query)
+        {
+            WordNetClasses.WN wnc = new WordNetClasses.WN(Directory.GetCurrentDirectory().Substring(0, Directory.GetCurrentDirectory().Length - 9) + "PostQuery\\WordNet\\dict\\");
+            List<string> stemedTerms = new List<string>();
+            foreach (string term in query)
+            {
+                stemedTerms.Add(stemmer.stemTerm(term));
+            }
+            foreach (string sttemedTerm in stemedTerms)
+            {
+                string[] synonyms = Lexicon.FindSynonyms(sttemedTerm, PartsOfSpeech.Noun, true);
+                if (synonyms == null)
+                {
+                    continue;
+                }
+                int min = Math.Min(numberOfsynonyms, synonyms.Length);
+                for (int i = 0; i < min; i++)
+                {
+                    if (Properties.Settings.Default.stemmer)
+                    {
+                        synonyms[i] = stemmer.stemTerm(synonyms[i]);
+                    }
+                    query.Add(synonyms[i]);
+                }
+            }
+            return query;
+        }
     }
 }
 

@@ -95,7 +95,7 @@ namespace SearchEngine
             stemmerIsChecked = false;
             pq = new PreQueryEngine();
             postQuery = new PostQueryEngine(ref pq.indexer);
-            searcher = new Searcher(ref pq.indexer);
+            searcher = new Searcher(ref pq.indexer,3);
             pq.PropertyChanged += delegate (object sender, PropertyChangedEventArgs e)
             {
                 NotifyPropertyChanged(e.PropertyName);
@@ -181,10 +181,12 @@ namespace SearchEngine
         {
             string filePath1 = Properties.Settings.Default.stemmer ? "\\TermDictionaryStemmer.bin" : "\\TermDictionary.bin";
             string filePath2 = Properties.Settings.Default.stemmer ? "\\DocumentDictionaryStemmer.bin" : "\\DocumentDictionary.bin";
-            if (File.Exists(Path2 + filePath1) && File.Exists(Path2 + filePath2))
+            if (File.Exists(Path2 + filePath1) && File.Exists(Path2 + filePath2) && File.Exists(Path2+"\\Languages.txt"))
             {
                 pq.indexer.loadTermDictionary();
                 pq.indexer.loadDocumentDictionary();
+                pq.ReadLanguagesFile();
+
                 System.Windows.MessageBox.Show("Dictionary loaded successfully!");
             }
             else
@@ -193,6 +195,7 @@ namespace SearchEngine
             }
         }
 
+        
         public void Search()
         {
             postQuery.retrive(Query, selectedLanguage);

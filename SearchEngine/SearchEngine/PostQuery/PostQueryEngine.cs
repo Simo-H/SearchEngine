@@ -17,19 +17,22 @@ namespace SearchEngine.PostQuery
 
         public PostQueryEngine(ref Indexer indexer)
         {
-            searcher= new Searcher(ref indexer);
+            searcher= new Searcher(ref indexer,3);
             ranker= new Ranker(ref indexer,  ref searcher);
+            Optimizer opt = new Optimizer();
+            opt.Optimize(Properties.Settings.Default.postingFiles+"\\qrels.txt");
         }
 
-        public  void retrive( string query, string language)
+        public  void retrive(string query, string language)
         {
             string[] parseQuery = searcher.ParseQuery(query);
+            List<string> queryList = searcher.AddSemantic(parseQuery.ToList());
             Dictionary<string, Dictionary<string, int>> QueryPerformances =new Dictionary<string, Dictionary<string, int>>();
             QueryPerformances= searcher.AllQueryPerformances(parseQuery, language);
             ConcurrentDictionary<string, double> ranking = ranker.Ranke(parseQuery, QueryPerformances);
             List<KeyValuePair<string, double>> l = new List<KeyValuePair<string, double>>();
             l= ranker.printRankToFile(ranking, "\\rank.txt");
         }
-
+        
     }
 }

@@ -64,4 +64,5 @@ D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ShowDictionary.baml
 D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.g.resources
 D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.Properties.Resources.resources
 D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.csproj.GenerateResource.Cache
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\WordNetClasses.dll
 F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.csprojResolveAssemblyReference.cache
