@@ -116,7 +116,7 @@ namespace SearchEngine.PostQuery
         }
 
 
-        public List<string> top50Results(List<string> allResults)
+        public static List<string> top50Results(List<string> allResults)
         {
             return allResults.Take(50).ToList();
         }

@@ -29,8 +29,10 @@ namespace SearchEngine
     public partial class MainWindow : Window
     {
         private ViewModel vm;
+        private ResultsAllQueries results;
         public MainWindow()
         {
+
             InitializeComponent();
             vm = new ViewModel();
             DataContext = vm;
@@ -73,14 +75,21 @@ namespace SearchEngine
         }
         private void GO_onClick(object sender, RoutedEventArgs e)
         {
+            results = new ResultsAllQueries(ref vm);
             vm.Search();
         }
 
         private void optimize_Click(object sender, RoutedEventArgs e)
         {
-            vm.Optimize();
+            results.ShowDialog(); 
+            //vm.Optimize();
+        }
+
+        private void PopulateAutoComplete(object sender, PopulatingEventArgs e)
+        {
+
         }
     }
-
+            
         
 }

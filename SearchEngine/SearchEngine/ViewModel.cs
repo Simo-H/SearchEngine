@@ -14,11 +14,11 @@ using SearchEngine.PreQuery;
 
 namespace SearchEngine
 {
-    class ViewModel:INotifyPropertyChanged
+    public class ViewModel:INotifyPropertyChanged
     {
         private PreQueryEngine pq;
         PostQueryEngine postQuery;
-        //private Optimizer opt;
+        private Optimizer opt;
         public event PropertyChangedEventHandler PropertyChanged;
         Thread engineThread;
         private Searcher searcher;
@@ -31,10 +31,19 @@ namespace SearchEngine
         }
         private int myVar;
 
-        public int MyProperty
+        
+        public List<ResultsSingleQuery> QueriesResults
         {
-            get { return myVar; }
-            set { myVar = value; }
+            get
+            {
+                List<ResultsSingleQuery> resultList = new List<ResultsSingleQuery>();
+                foreach (int item in postQuery.QueriesResults.Keys)
+                {
+                    resultList.Add(new ResultsSingleQuery(item, postQuery.QueriesResults[item].Count, Ranker.top50Results(postQuery.QueriesResults[item])));
+                }                
+                return resultList;
+            }
+
         }
 
         public List<string> LanguagesList
@@ -100,11 +109,11 @@ namespace SearchEngine
 
         public ViewModel()
         {
-            stemmerIsChecked = false;
+            StemmerIsChecked = false;
             pq = new PreQueryEngine();
             postQuery = new PostQueryEngine(ref pq.indexer);
             searcher = new Searcher(ref pq.indexer,3);
-            //opt = new Optimizer(ref pq.indexer);
+            opt = new Optimizer(ref pq.indexer);
             pq.PropertyChanged += delegate (object sender, PropertyChangedEventArgs e)
             {
                 NotifyPropertyChanged(e.PropertyName);
@@ -213,7 +222,7 @@ namespace SearchEngine
 
         public void Optimize()
         {
-            //postQuery.findOptimizedParameters();
+            opt.findOptimizedParameters();
         }
     };
 }

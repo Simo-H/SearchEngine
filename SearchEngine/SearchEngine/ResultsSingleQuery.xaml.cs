@@ -20,9 +20,12 @@ namespace SearchEngine
     /// </summary>
     public partial class ResultsSingleQuery : UserControl
     {
-        public ResultsSingleQuery()
+        public ResultsSingleQuery(int queryID,int numberOfDocReturned, List<string> returnedDocs)
         {
             InitializeComponent();
+            IdNumber.Text = ""+queryID;
+            counter.Text = "" + numberOfDocReturned;
+            listView.ItemsSource = returnedDocs;
         }
 
 

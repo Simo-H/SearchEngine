@@ -24,8 +24,8 @@ namespace SearchEngine.PostQuery
             if (this.PropertyChanged != null)
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
         }
-        private Dictionary<int,List<string>> queriesResults;
-        public Dictionary<int,List<string>> QueriesResults
+        private ObservableDictionary<int,List<string>> queriesResults;
+        public ObservableDictionary<int,List<string>> QueriesResults
         {
             get { return queriesResults; }
             set
@@ -39,7 +39,7 @@ namespace SearchEngine.PostQuery
         public PostQueryEngine(ref Indexer indexer)
         {
             searcher= new Searcher(ref indexer,3);
-            //ranker= new Ranker(ref indexer,  ref searcher);
+            ranker= new Ranker(ref indexer,  ref searcher,1.2,100,0.75);
             //opt = new Optimizer(ref indexer);
             //opt.Optimize(Properties.Settings.Default.postingFiles+"\\qrels.txt");
         }
@@ -57,7 +57,7 @@ namespace SearchEngine.PostQuery
 
         public void userManualSingleQuery(string query, string language)
         {
-            QueriesResults = new Dictionary<int, List<string>>();            
+            QueriesResults = new ObservableDictionary<int, List<string>>();            
             retriveSingleQuery(query,language,queryid);            
             queryid++;
         }
@@ -65,7 +65,7 @@ namespace SearchEngine.PostQuery
 
         public void queriesFile(string QueriesFilePath,string language)
         {
-            QueriesResults = new Dictionary<int, List<string>>();
+            QueriesResults = new ObservableDictionary<int, List<string>>();
             using (FileStream queriesTextFileStream = new FileStream(QueriesFilePath, FileMode.Open))
             {
                 StreamReader streamReader = new StreamReader(queriesTextFileStream);
@@ -76,7 +76,7 @@ namespace SearchEngine.PostQuery
                     string q="";
                     for (int i = 1; i < queryLine.Length; i++)
                     {
-                        q += queryLine[i];
+                        q += queryLine[i]+" ";
                     }
                     retriveSingleQuery(q, language, Int32.Parse(queryLine[0]));
                 }
