@@ -81,8 +81,9 @@ namespace SearchEngine.PreQuery
                 if (filePath.EndsWith("stop_words.txt"))
                     continue;
                 string[] docs = rf.seperateDocumentsFromFile(filePath);
+                ConcurrentDictionary < string, Dictionary<string, int>> ContinuTermsFileDic = new ConcurrentDictionary<string, Dictionary<string, int>>();
                 ConcurrentDictionary<string, string> tempFileDictionary = new ConcurrentDictionary<string, string>();
-                Parallel.ForEach(docs, new ParallelOptions { MaxDegreeOfParallelism = 2 }, (doc) =>
+                Parallel.ForEach(docs, new ParallelOptions { MaxDegreeOfParallelism = 1 }, (doc) =>
                 {                    
                     
                     Stemmer stemmer = new Stemmer();
@@ -100,7 +101,6 @@ namespace SearchEngine.PreQuery
                     string[] textArray = text.ToLower().Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
                     for (int i = 0; i < textArray.Length; i++)
                     {
-
                         textArray[i] = parser.cutAllsigns(textArray[i]);
                     }
                     if (textArray.Length == 0)
@@ -112,8 +112,10 @@ namespace SearchEngine.PreQuery
                     textList.Add("");
                     textList.Add("");
                     textList.Add("");
+                    string lastParsTerm = "";
+
                     for (int i = 0; i < textList.Count - 4; i++)
-                    {                      
+                    {
                         string parsedTerm1;
                         string parsedTerm2;
                         if (parser.checkForStopWord(textList[i]) == 1 && !textList[i].Equals("between"))
@@ -132,6 +134,13 @@ namespace SearchEngine.PreQuery
                                     parsedTerm1 = stemmer.stemTerm(parsedTerm1);
                                 }
                                 AddTermUniqe(parsedTerm1, uniqeTermsAtDoc);
+                                if (i>0)
+                                {
+                                        AddContinuingTerm(lastParsTerm, parsedTerm1, ContinuTermsFileDic);
+                                }
+                                lastParsTerm = parsedTerm1;
+
+
                                 if (parsedTerm2 != null)
                                 {
                                     if (Properties.Settings.Default.stemmer)
@@ -139,6 +148,8 @@ namespace SearchEngine.PreQuery
                                         parsedTerm2 = stemmer.stemTerm(parsedTerm2);
                                     }
                                     AddTermUniqe(parsedTerm2, uniqeTermsAtDoc);
+                                   // lastParsTerm = parsedTerm2;
+
                                 }
                             }
                             else
@@ -150,6 +161,12 @@ namespace SearchEngine.PreQuery
                                         parsedTerm1 = stemmer.stemTerm(parsedTerm1);
                                     }
                                     AddTermUniqe(parsedTerm1, uniqeTermsAtDoc);
+                                    if (i > 0)
+                                    {
+                                        AddContinuingTerm(lastParsTerm, parsedTerm1, ContinuTermsFileDic);
+                                    }
+                                    lastParsTerm = parsedTerm1;
+
                                 }
                             }
 
@@ -164,6 +181,7 @@ namespace SearchEngine.PreQuery
                 });
 
                 indexer.addFileDicToDisk(tempFileDictionary);
+                AddContinuingDicToMain(ContinuTermsFileDic);
             }
             indexer.stop = false;
             //t.Join();
@@ -193,6 +211,9 @@ namespace SearchEngine.PreQuery
             {
                 UniqeFromDoc[Uniqe] = 1;
             }
+
+           
+
         }
         /// <summary>
         /// This method return a dictionary of terms and their cf. serving the user gui show function
@@ -255,10 +276,80 @@ namespace SearchEngine.PreQuery
             string file = File.ReadAllText(Properties.Settings.Default.postingFiles + "\\Languages.txt");
             List<string> list = file.Split(new char[] { ' ' },StringSplitOptions.RemoveEmptyEntries).ToList();
             list.Remove("language");
-            list.Remove("language");
-            list.Remove("language");
+            list.Remove("not");
+            list.Remove("found");
             LanguagesList = list;
 
+        }
+        public void AddContinuingTerm( string term,string nextTerm, ConcurrentDictionary<string, Dictionary<string, int> > TermsContinuingDicAtDoc)
+        {
+            if (term != null)
+            {
+
+
+                if (TermsContinuingDicAtDoc.ContainsKey(term))
+                {
+                    if (TermsContinuingDicAtDoc[term].ContainsKey(nextTerm))
+                    {
+                        TermsContinuingDicAtDoc[term][nextTerm]++;
+                    }
+                    else
+                    {
+                        TermsContinuingDicAtDoc[term][nextTerm] = 1;
+                    }
+                }
+                else
+                {
+                    Dictionary<string, int> a = new Dictionary<string, int>();
+                    a[nextTerm] = 1;
+                    TermsContinuingDicAtDoc[term] = a;
+                }
+            }
+        }
+
+        public void AddContinuingDicToMain(ConcurrentDictionary<string, Dictionary<string, int>> TermsContinuingDicAtDoc)
+        {
+            int numOfMembers;
+            List<KeyValuePair<string, int>> mergeList;
+            List<KeyValuePair<string, int>> myList;
+            List<KeyValuePair<string, int>> termList;
+
+            foreach (string term in TermsContinuingDicAtDoc.Keys)
+            {
+                if (term != "")
+                {
+
+                myList = TermsContinuingDicAtDoc[term].ToList();
+                myList.Sort((pair1, pair2) => pair1.Value.CompareTo(pair2.Value));
+                myList.Reverse(0, myList.Count);
+                    if (4 > myList.Count)
+                    {
+                    numOfMembers = myList.Count;
+                    }
+                else
+                {
+                    numOfMembers = 4;
+
+                }
+
+                if (indexer.mainTermDictionary[term].completion != null)
+                    {
+                    termList = indexer.mainTermDictionary[term].completion.ToList();
+                        mergeList = termList.Concat(myList.GetRange(0, numOfMembers)).ToList();
+                    mergeList.Sort((pair1, pair2) => pair1.Value.CompareTo(pair2.Value));
+                    mergeList.Reverse();
+                    myList = mergeList;
+                    }
+                    Dictionary<string, int> a = new Dictionary<string, int>();
+                for (int i = 0; i < 4 && i< myList.Count; i++)
+                {
+                    a[myList[i].Key] = myList[i].Value;
+
+                }
+                    indexer.mainTermDictionary[term].completion = a;
+                }
+                
+            }
         }
     }
 }

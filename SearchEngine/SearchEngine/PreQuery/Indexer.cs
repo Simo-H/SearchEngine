@@ -411,6 +411,19 @@ namespace SearchEngine.PreQuery
                     bw.Write(item.Value.df);
                     bw.Write(item.Value.cf);
                     bw.Write(item.Value.postingfilepointer);
+                    string completions="";
+                    if (item.Value.completion!=null)
+                    {
+                        foreach (string next in item.Value.completion.Keys)
+                        {
+                            completions += next + " " + item.Value.completion[next] + " ";
+                        }
+                    }
+                    else
+                    {
+                        completions = " ";
+                    }
+                    bw.Write(completions);
                 }
                 bw.Flush();
             }
@@ -462,16 +475,31 @@ namespace SearchEngine.PreQuery
             using (FileStream newFileStream = new FileStream(fileName, FileMode.Open))
             {
                 BinaryReader br = new BinaryReader(newFileStream);
-                while(br.BaseStream.Position != br.BaseStream.Length)
+                while (br.BaseStream.Position != br.BaseStream.Length)
                 {
                     string term = br.ReadString();
                     int df = br.ReadInt32();
                     int cf = br.ReadInt32();
                     long pointer = br.ReadInt64();
+                    string continuing = br.ReadString();
                     mainTermDictionary[term] = new TermInfo();
                     mainTermDictionary[term].df = df;
                     mainTermDictionary[term].cf = cf;
                     mainTermDictionary[term].postingfilepointer = pointer;
+
+                    string[] stringSeparators = new string[] { " ", ">", "<", ",", "#" };
+                    string[] DocumentAndShowsArray = continuing.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
+                    if (DocumentAndShowsArray!=null)
+                    {
+                        for (int i = 0; i < DocumentAndShowsArray.Count(); i = i + 2)
+                        {
+                            mainTermDictionary[term].completion[DocumentAndShowsArray[i]] = Int32.Parse(DocumentAndShowsArray[i + 1]);
+                        }  
+                    }
+                    else
+                    {
+                        mainTermDictionary[term].completion = new Dictionary<string, int>();
+                    }
                 }
             }
         }

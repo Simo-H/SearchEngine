@@ -70,3 +70,6 @@ F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ShowRan
 F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ShowRankResults.baml
 D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ResultsAllQueries.g.cs
 D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ResultsSingleQuery.g.cs
+D:\Git\SearchEngine\SearchEngine\SearchEngine\bin\Debug\WordNetClasses.dll
+D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ResultsAllQueries.baml
+D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ResultsSingleQuery.baml

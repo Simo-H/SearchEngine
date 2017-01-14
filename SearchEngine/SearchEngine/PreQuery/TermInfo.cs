@@ -25,8 +25,13 @@ namespace SearchEngine.PreQuery
         /// a pointer to the term's posting in the posting file
         /// </summary>
         public long postingfilepointer;
+        /// <summary>
+        /// Continuing terms list of words and number of occurrences
+        /// </summary>
+        public Dictionary<string,int>  completion;
         public TermInfo()
         {
+            completion = new Dictionary<string, int>();
         }
     }
 }
