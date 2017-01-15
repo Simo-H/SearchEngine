@@ -46,7 +46,7 @@ namespace SearchEngine.PostQuery
 
         public ConcurrentDictionary<string, double>  BM25(string[] q, Dictionary<string, Dictionary<string, int>> QueryPerformances)
         {
-            ConcurrentDictionary <string,double> docList = new ConcurrentDictionary<string, double>();
+             ConcurrentDictionary<string, double> docList = new ConcurrentDictionary<string, double>();
             foreach (Dictionary<string, int> term in QueryPerformances.Values)
             {
                 foreach (string doc in term.Keys)
@@ -87,6 +87,42 @@ namespace SearchEngine.PostQuery
             return docList;
         }
 
+
+        public ConcurrentDictionary<string, double> Sim(string[] q, Dictionary<string, Dictionary<string, int>> QueryPerformances)
+        {
+
+            ConcurrentDictionary<string, double> docList = new ConcurrentDictionary<string, double>();
+            foreach (Dictionary<string, int> term in QueryPerformances.Values)
+            {
+                foreach (string doc in term.Keys)
+                {
+                    docList[doc] = 0;
+                }
+            }
+
+
+            double rankeTermAtDoc = 0;
+            foreach (string doc in docList.Keys)
+            {
+
+                double maxfi = indexer.documentDictionary[doc].maxTF;
+                foreach (string term in QueryPerformances.Keys)
+                {
+                    double qfi =1;
+                    if (QueryPerformances[term].ContainsKey(doc))
+                    {
+                        double fi = (System.Convert.ToDouble(QueryPerformances[term][doc]));
+                        double tfi = fi / maxfi;
+                        double idf = Math.Log(N/indexer.mainTermDictionary[term].df);
+
+                        rankeTermAtDoc += tfi*idf* qfi;
+                    }
+                }
+                docList[doc]= rankeTermAtDoc;
+                
+            }
+            return docList;
+        }
         public double CheckingTitle(string docName, string[] q)
         {
             int count = 0;
@@ -156,9 +192,17 @@ namespace SearchEngine.PostQuery
 
         public ConcurrentDictionary<string, double> Ranke(string[] q, Dictionary<string, Dictionary<string, int>> QueryPerformances)
         {
-            ConcurrentDictionary<string, double> rank = new ConcurrentDictionary<string, double>();
-            rank = BM25(q, QueryPerformances);
-            return rank;
+            ConcurrentDictionary<string, double> rank25 = new ConcurrentDictionary<string, double>();
+            ConcurrentDictionary<string, double> rankSim = new ConcurrentDictionary<string, double>();
+            ConcurrentDictionary<string, double> total = new ConcurrentDictionary<string, double>();
+
+            rank25 = BM25(q, QueryPerformances);
+            rankSim=Sim(q, QueryPerformances);
+            foreach (string item in rank25.Keys)
+            {
+                total[item]=0.25*rank25[item]+0.75*rankSim[item];
+            }
+            return total;
         }
 
         public int countNumberOfoccurencesInQuery(string[] queryArray,string query)
