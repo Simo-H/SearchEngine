@@ -86,12 +86,6 @@ namespace SearchEngine
             vm.Optimize();
         }
 
-        private void PopulateAutoComplete(object sender, PopulatingEventArgs e)
-        {
-            string text = AutoCompleteBox1.Text;
-            AutoCompleteBox1.ItemsSource = vm.AutoCompletePopulate(text);
-            AutoCompleteBox1.PopulateComplete();
-        }
 
         private void GOQueryFile_onClick(object sender, RoutedEventArgs e)
         {
@@ -106,10 +100,18 @@ namespace SearchEngine
             vm.browseFile();
         }
 
-        private void PopulateAutoComplete1(object sender, PopulatedEventArgs e)
-        {
-            Debug.WriteLine("");
-        }
+        //private void Populating(object sender, PopulatingEventArgs e)
+        //{
+        //    string text = AutoCompleteBox1.Text;
+        //    if (vm.foundInTermDic(text))
+        //    {
+                
+        //    List<string> candidateList = vm.getPopulating(text);
+        //    AutoCompleteBox1.ItemsSource = candidateList;
+        //    AutoCompleteBox1.
+        //    }
+            
+        //}
     }
             
         

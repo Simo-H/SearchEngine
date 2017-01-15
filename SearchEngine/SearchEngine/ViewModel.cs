@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -23,7 +24,6 @@ namespace SearchEngine
         public event PropertyChangedEventHandler PropertyChanged;
         Thread engineThread;
         private Searcher searcher;
-        private IEnumerable<string> queryAutoCompleteList;
 
         private string query;
 
@@ -33,21 +33,40 @@ namespace SearchEngine
             set
             {
                 query = value;
-                QueryAutoCompleteList = AutoCompletePopulate(query);
+                if (foundInTermDic(query))
+                {
+                    List<string> a = new List<string>(getPopulating(query));
+                    QueryAutoCompleteList = new ObservableCollection<string>(a);
+                    //NotifyPropertyChanged("QueryAutoCompleteList");
+                    
+                }
             }
         }
+        private ObservableCollection<string> queryAutoCompleteList;
 
-        public IEnumerable<string> QueryAutoCompleteList
+        public ObservableCollection<string> QueryAutoCompleteList
         {
-            get { return queryAutoCompleteList; }
+            get
+            {
+                return queryAutoCompleteList; 
+                
+            }
             set
             {
                 queryAutoCompleteList = value;
                 NotifyPropertyChanged("QueryAutoCompleteList");
             }
         }
+        private string selected;
 
-        
+        public string Selected
+        {
+            get { return selected; }
+            set { selected = value; }
+        }
+
+
+
         public List<ResultsSingleQuery> QueriesResults
         {
             get
@@ -138,6 +157,7 @@ namespace SearchEngine
 
         public ViewModel()
         {
+            QueryAutoCompleteList = new ObservableCollection<string>();
             StemmerIsChecked = false;
             SelectedLanguage = "All languages";
             pq = new PreQueryEngine();
@@ -272,10 +292,14 @@ namespace SearchEngine
             opt.findOptimizedParameters();
         }
 
-        public List<string> AutoCompletePopulate(string queryTerm)
+        public List<string> getPopulating(string text)
         {
-            return pq.indexer.mainTermDictionary[queryTerm].completion.Keys.ToList();
-            
+            return pq.indexer.mainTermDictionary[text].completion.Keys.ToList();
+        }
+
+        public bool foundInTermDic(string term)
+        {
+            return pq.indexer.mainTermDictionary.ContainsKey(term);
         }
     }
 }

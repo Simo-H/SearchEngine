@@ -113,11 +113,13 @@
                        />
             <toolkit:AutoCompleteBox x:Name="AutoCompleteBox1"                     
                      Width="363"
-                     Text="{Binding Query, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                     Populating="PopulateAutoComplete" Populated="PopulateAutoComplete1"
                      Height="35" 
                      VerticalAlignment="Top"
-                     HorizontalAlignment="Left"
+                     HorizontalAlignment="Left" Text="{Binding Query, Mode=TwoWay}"
+
+                     ItemsSource ="{Binding QueryAutoCompleteList, UpdateSourceTrigger=PropertyChanged,Mode=OneWay}" SelectedItem="{Binding Selected ,Mode=TwoWay}"
+ 
+                                     
                      />
             <Button HorizontalAlignment="Left" x:Name="Go"                    
                     Content="Go"
