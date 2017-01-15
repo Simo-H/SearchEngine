@@ -66,8 +66,6 @@ D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.Properties.
 D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.csproj.GenerateResource.Cache
 F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\WordNetClasses.dll
 F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.csprojResolveAssemblyReference.cache
-F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ShowRankResults.g.cs
-F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ShowRankResults.baml
 D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ResultsAllQueries.g.cs
 D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ResultsSingleQuery.g.cs
 E:\Apps\Git Repository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\SearchEngine.exe.config
@@ -95,3 +93,11 @@ E:\Apps\Git Repository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\System.W
 E:\Apps\Git Repository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\WPFToolkit.dll
 E:\Apps\Git Repository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\System.Windows.Controls.Input.Toolkit.pdb
 E:\Apps\Git Repository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\WPFToolkit.pdb
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\System.Windows.Controls.Input.Toolkit.dll
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\WPFToolkit.dll
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\System.Windows.Controls.Input.Toolkit.pdb
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\WPFToolkit.pdb
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ResultsAllQueries.g.cs
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ResultsSingleQuery.g.cs
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ResultsAllQueries.baml
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ResultsSingleQuery.baml
