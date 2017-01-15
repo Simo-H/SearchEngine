@@ -34,11 +34,12 @@ namespace SearchEngine
             set
             {
                 query = value;
-                if (foundInTermDic(query) && query[query.Length-1].Equals(' ')&& query.Split(' ').Length >1)
+                QueryAutoCompleteList = new ObservableCollection<string>();
+                if ( query[query.Length-1].Equals(' ')&& foundInTermDic(query.Substring(0,query.Length-1)) && query.Split(new char[] {' '} ,StringSplitOptions.RemoveEmptyEntries).Length==1)
                 {
-                    List<string> a = new List<string>(getPopulating(query));
+                    List<string> a = new List<string>(getPopulating(query.Substring(0, query.Length - 1)));
                     QueryAutoCompleteList = new ObservableCollection<string>(a);
-                    NotifyPropertyChanged("QueryAutoCompleteList");
+                    //NotifyPropertyChanged("QueryAutoCompleteList");
                 }
             }
         }
@@ -70,6 +71,7 @@ namespace SearchEngine
         {
             get
             {
+                
                 List<ResultsSingleQuery> resultList = new List<ResultsSingleQuery>();
                 foreach (int item in postQuery.QueriesResults.Keys)
                 {

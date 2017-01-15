@@ -114,7 +114,7 @@
                      Width="363"
                      Height="35" 
                      VerticalAlignment="Top"
-                     HorizontalAlignment="Left" Text="{Binding Query, Mode=TwoWay}"                                                   
+                     HorizontalAlignment="Left" Text="{Binding Query, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"                                                   
                      />
             <Button  
                 x:Name="Go"  HorizontalAlignment="Left"                 
@@ -126,23 +126,19 @@
 
         </DockPanel>
         <DockPanel Width="474" HorizontalAlignment="Left" Height="119" RenderTransformOrigin="0.425,0.535">
-            <TextBox x:Name="serch" Height="24" Margin="0,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="99" HorizontalAlignment="Left"  FontWeight="Bold" RenderTransformOrigin="0.808,2.125"/>
-            <ListView x:Name="listView" Height="99" Margin="5,10,80,0" VerticalAlignment="Top" Width="280">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn/>
-                    </GridView>
-                </ListView.View>
+            <Label x:Name="search" Height="30" Margin="0,10,0,0" Content="Suggestions :" VerticalAlignment="Top" Width="87" HorizontalAlignment="Left"  FontWeight="Bold" RenderTransformOrigin="0.808,2.125"/>
+            <ListView x:Name="listView" Height="99" Margin="5,10,80,0" VerticalAlignment="Top" Width="280" ItemsSource="{Binding QueryAutoCompleteList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                
             </ListView>
 
 
         </DockPanel>
         <DockPanel Width="474" HorizontalAlignment="Left">
             <TextBlock HorizontalAlignment="Left" FontStyle="Oblique" FontWeight="Bold"
-                       Text="Read queries from file :" Height="27"
+                       Text="Read queries from file :" Height="28" Width="135"
                        />
             <TextBox x:Name="filePath"                     
-                     Width="214"
+                     Width="204"
                      Text="{Binding Path3, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Height="35" 
                      VerticalAlignment="Top"
@@ -156,7 +152,7 @@
             <Button HorizontalAlignment="Left" x:Name="GoQueryFile"                    
                     Content="Go"
                     Height="30"
-                    Width="49"
+                    Width="60"
                     Margin =" 5" Click="GOQueryFile_onClick"/>
         </DockPanel>
         <DockPanel Width="470" HorizontalAlignment="Left" Height="42">
