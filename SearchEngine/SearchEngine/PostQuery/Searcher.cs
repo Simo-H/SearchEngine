@@ -99,7 +99,7 @@ namespace SearchEngine.PostQuery
             Dictionary<string, Dictionary<string, int>> QueryPerformances = new Dictionary<string, Dictionary<string, int>>();
             foreach (string term in parseQuery)
             {
-                if (index.mainTermDictionary.ContainsKey(term) && QueryPerformances.Keys.Contains(term))
+                if (!index.mainTermDictionary.ContainsKey(term) || QueryPerformances.Keys.Contains(term))
                 {
                     continue;
                 }

@@ -412,11 +412,11 @@ namespace SearchEngine.PreQuery
                     bw.Write(item.Value.cf);
                     bw.Write(item.Value.postingfilepointer);
                     string completions="";
-                    if (item.Value.completion!=null)
+                    if (item.Value.completion.Count!=0)
                     {
                         foreach (string next in item.Value.completion.Keys)
                         {
-                            completions += next + " " + item.Value.completion[next] + " ";
+                            completions += next + "&&&" + item.Value.completion[next] + "&&&";
                         }
                     }
                     else
@@ -487,7 +487,7 @@ namespace SearchEngine.PreQuery
                     mainTermDictionary[term].cf = cf;
                     mainTermDictionary[term].postingfilepointer = pointer;
 
-                    string[] stringSeparators = new string[] { " ", ">", "<", ",", "#" };
+                    string[] stringSeparators = new string[] { "&&&" };
                     string[] DocumentAndShowsArray = continuing.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
                     if (DocumentAndShowsArray!=null)
                     {
