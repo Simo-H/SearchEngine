@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Forms;
 using SearchEngine.PostQuery;
 using SearchEngine.PreQuery;
@@ -22,14 +23,29 @@ namespace SearchEngine
         public event PropertyChangedEventHandler PropertyChanged;
         Thread engineThread;
         private Searcher searcher;
+        private IEnumerable<string> queryAutoCompleteList;
+
         private string query;
 
         public string Query
         {
             get { return query; }
-            set { query = value; }
+            set
+            {
+                query = value;
+                QueryAutoCompleteList = AutoCompletePopulate(query);
+            }
         }
-        private int myVar;
+
+        public IEnumerable<string> QueryAutoCompleteList
+        {
+            get { return queryAutoCompleteList; }
+            set
+            {
+                queryAutoCompleteList = value;
+                NotifyPropertyChanged("QueryAutoCompleteList");
+            }
+        }
 
         
         public List<ResultsSingleQuery> QueriesResults
@@ -123,6 +139,7 @@ namespace SearchEngine
         public ViewModel()
         {
             StemmerIsChecked = false;
+            SelectedLanguage = "All languages";
             pq = new PreQueryEngine();
             postQuery = new PostQueryEngine(ref pq.indexer);
             searcher = new Searcher(ref pq.indexer,3);
@@ -254,6 +271,12 @@ namespace SearchEngine
         {
             opt.findOptimizedParameters();
         }
-    };
+
+        public List<string> AutoCompletePopulate(string queryTerm)
+        {
+            return pq.indexer.mainTermDictionary[queryTerm].completion.Keys.ToList();
+            
+        }
+    }
 }
 

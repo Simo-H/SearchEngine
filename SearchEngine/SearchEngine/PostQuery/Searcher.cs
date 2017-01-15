@@ -135,17 +135,17 @@ namespace SearchEngine.PostQuery
                 string[] DocumentAndShowsArray = AllPerformances.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
                 for (int i = 0; i < DocumentAndShowsArray.Count(); i++)
                 {
-                    // if (language.Equals("All languages"))
-                    // {
-                    //      termDocsAndTf[DocumentAndShowsArray[i]] = Int32.Parse(DocumentAndShowsArray[i + 1]);
-                    //}
-                    // else
-                    // {
-                    //   if (language.Equals(index.documentDictionary[DocumentAndShowsArray[i]].originalLanguage))
-                    //   {
-                    termDocsAndTf[DocumentAndShowsArray[i]] = Int32.Parse(DocumentAndShowsArray[i + 1]);
-                    //}
-                    //}
+                    if (language.Equals("All languages"))
+                    {
+                        termDocsAndTf[DocumentAndShowsArray[i]] = Int32.Parse(DocumentAndShowsArray[i + 1]);
+                    }
+                    else
+                    {
+                        if (language.Equals(index.documentDictionary[DocumentAndShowsArray[i]].originalLanguage))
+                        {
+                            termDocsAndTf[DocumentAndShowsArray[i]] = Int32.Parse(DocumentAndShowsArray[i + 1]);
+                        }
+                    }
                     i++;
                 }
                 fileStream.Flush();
