@@ -284,7 +284,7 @@ namespace SearchEngine
         public void Search()
         {
 
-            postQuery.userManualSingleQuery(Query, selectedLanguage, Path4 + "\\Result" + ReasultFileName);
+            postQuery.userManualSingleQuery(Query, selectedLanguage, Path4 + "\\Result" + ReasultFileName + ".txt");
             ReasultFileName++;
 
 
@@ -304,7 +304,7 @@ namespace SearchEngine
         {
             if (File.Exists(Path3) && Directory.Exists(Path4))
             {
-                postQuery.queriesFile(Path3, SelectedLanguage, Path4 + "\\Result" + ReasultFileName);
+                postQuery.queriesFile(Path3, SelectedLanguage, Path4 + "\\Results" + ReasultFileName+".txt");
                 ReasultFileName++;
             }
             else

@@ -46,7 +46,6 @@ namespace SearchEngine.PostQuery
 
         public ConcurrentDictionary<string, double>  BM25(string[] q, Dictionary<string, Dictionary<string, int>> QueryPerformances)
         {
-            double qfi = System.Convert.ToDouble(1 / System.Convert.ToDouble( q.Length));
             ConcurrentDictionary <string,double> docList = new ConcurrentDictionary<string, double>();
             foreach (Dictionary<string, int> term in QueryPerformances.Values)
             {
@@ -62,26 +61,27 @@ namespace SearchEngine.PostQuery
                 double totalRankeForDoc=0;
                 double rankeTermAtDoc = 0;
                 int CounterTerminDoc = 0;
-                foreach (Dictionary<string, int> term in QueryPerformances.Values)
+                foreach (string term in QueryPerformances.Keys)
                 {
-                    double ni = term.Values.Count();
-                    if (term.Keys.Contains(doc))
+                    double qfi = System.Convert.ToDouble(countNumberOfoccurencesInQuery(q,term) / System.Convert.ToDouble( q.Length));
+                    double ni = QueryPerformances[term].Count;
+                    if (QueryPerformances[term].ContainsKey(doc))
                     {
                         CounterTerminDoc++;
-                        double fi =( System.Convert.ToDouble(term[doc])) / (System.Convert.ToDouble(dl));
+                        double fi =( System.Convert.ToDouble(QueryPerformances[term][doc]));
                         double firstPart = ((ri + 0.5) / (R - ri + 0.5)) / ((ni - ri + 0.5) / (N - ni - R + ri + 0.5));
                         K = k1 * ((1 - b) + b * (dl / avgDocLenght));
                         double secondPart = ((k1 + 1) * fi) / (K + fi);
                         double third = ((k2 + 1) * qfi) / (k2 + qfi);
                         rankeTermAtDoc = firstPart * secondPart * third;
                         rankeTermAtDoc = Math.Log(rankeTermAtDoc);
-                        totalRankeForDoc = totalRankeForDoc + rankeTermAtDoc+ fi;
+                        totalRankeForDoc += rankeTermAtDoc;
                     }
                 }
                 docList[doc] = totalRankeForDoc;
                 if (CounterTerminDoc==q.Length)
                 {
-                    docList[doc] = docList[doc]; // + BonusAllQueryInDocument+ CheckingTitle(doc, q);
+                    docList[doc] = docList[doc]; //+ BonusAllQueryInDocument; //+ CheckingTitle(doc, q);
                 }
             }
             return docList;
@@ -161,6 +161,18 @@ namespace SearchEngine.PostQuery
             return rank;
         }
 
+        public int countNumberOfoccurencesInQuery(string[] queryArray,string query)
+        {
+            int counter = 0;
+            foreach (string term in queryArray)
+            {
+                if (term.Equals(query))
+                {
+                    counter++;
+                }
+            }
+            return counter;
+        }
 
     }
 }
