@@ -15,7 +15,7 @@ namespace SearchEngine.PostQuery
         public Ranker ranker;
         public Searcher searcher;
         private Optimizer opt;
-        public static int queryid=1;
+        public static int queryid=100;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -58,8 +58,12 @@ namespace SearchEngine.PostQuery
         public void userManualSingleQuery(string query, string language)
         {
             QueriesResults = new ObservableDictionary<int, List<string>>();            
-            retriveSingleQuery(query,language,queryid);            
+            retriveSingleQuery(query,language,queryid);         
             queryid++;
+            if (queryid>999)
+            {
+                queryid = 100;
+            }
         }
 
 

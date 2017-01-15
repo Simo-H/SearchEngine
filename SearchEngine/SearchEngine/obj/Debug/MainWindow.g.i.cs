@@ -168,6 +168,22 @@ namespace SearchEngine {
         #line default
         #line hidden
         
+        
+        #line 154 "..\..\MainWindow.xaml"
+        [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
+        internal System.Windows.Controls.TextBox Path4;
+        
+        #line default
+        #line hidden
+        
+        
+        #line 161 "..\..\MainWindow.xaml"
+        [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
+        internal System.Windows.Controls.Button browse4;
+        
+        #line default
+        #line hidden
+        
         private bool _contentLoaded;
         
         /// <summary>
@@ -316,6 +332,18 @@ namespace SearchEngine {
             
             #line 151 "..\..\MainWindow.xaml"
             this.GoQueryFile.Click += new System.Windows.RoutedEventHandler(this.GOQueryFile_onClick);
+            
+            #line default
+            #line hidden
+            return;
+            case 18:
+            this.Path4 = ((System.Windows.Controls.TextBox)(target));
+            return;
+            case 19:
+            this.browse4 = ((System.Windows.Controls.Button)(target));
+            
+            #line 165 "..\..\MainWindow.xaml"
+            this.browse4.Click += new System.Windows.RoutedEventHandler(this.browse_onClick);
             
             #line default
             #line hidden

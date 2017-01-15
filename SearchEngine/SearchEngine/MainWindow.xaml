@@ -8,7 +8,7 @@
         xmlns:local="clr-namespace:SearchEngine"
         x:Class="SearchEngine.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="500" ResizeMode="NoResize">
+        Title="MainWindow" Height="450" Width="500" ResizeMode="NoResize">
     <StackPanel Margin="10">
         <Label FontWeight="Bold" FontSize="14" Content="Pre query engine:"/>
 
@@ -128,7 +128,7 @@
                     Margin =" 5" Click="GO_onClick"/>
 
         </DockPanel>
-        <DockPanel Width="470" HorizontalAlignment="Left">
+        <DockPanel Width="474" HorizontalAlignment="Left">
             <TextBlock HorizontalAlignment="Left" FontStyle="Oblique" FontWeight="Bold"
                        Text="Read queries from file :" Height="27"
                        />
@@ -147,8 +147,27 @@
             <Button HorizontalAlignment="Left" x:Name="GoQueryFile"                    
                     Content="Go"
                     Height="30"
-                    Width="53"
+                    Width="49"
                     Margin =" 5" Click="GOQueryFile_onClick"/>
+        </DockPanel>
+        <DockPanel Width="470" HorizontalAlignment="Left" Height="42">
+            <TextBlock HorizontalAlignment="Left" FontStyle="Oblique" FontWeight="Bold"
+                       Text="Path for saving results: " Height="27"
+                       />
+            <TextBox x:Name="Path4"                     
+                     Width="273"
+                     Text="{Binding Path4, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Height="35" 
+                     VerticalAlignment="Top"
+                     HorizontalAlignment="Left"
+                     />
+            <Button HorizontalAlignment="Left" x:Name="browse4"                    
+                    Content="browse"
+                    Height="30"
+                    Width="49"
+                    Margin ="5,6" Click="browse_onClick"/>
+
+
         </DockPanel>
     </StackPanel>
 </Window>
