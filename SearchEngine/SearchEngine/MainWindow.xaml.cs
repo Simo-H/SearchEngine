@@ -87,7 +87,6 @@ namespace SearchEngine
         }
 
 
-
         private void GOQueryFile_onClick(object sender, RoutedEventArgs e)
         {
             results = new ResultsAllQueries(ref vm);
@@ -101,10 +100,18 @@ namespace SearchEngine
             vm.browseFile();
         }
 
-        private void PopulateAutoComplete1(object sender, PopulatedEventArgs e)
-        {
-            Debug.WriteLine("");
-        }
+        //private void Populating(object sender, PopulatingEventArgs e)
+        //{
+        //    string text = AutoCompleteBox1.Text;
+        //    if (vm.foundInTermDic(text))
+        //    {
+                
+        //    List<string> candidateList = vm.getPopulating(text);
+        //    AutoCompleteBox1.ItemsSource = candidateList;
+        //    AutoCompleteBox1.
+        //    }
+            
+        //}
     }
             
         

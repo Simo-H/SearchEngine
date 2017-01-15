@@ -115,7 +115,11 @@
                      Width="363"
                      Height="35" 
                      VerticalAlignment="Top"
-                     HorizontalAlignment="Left"
+                     HorizontalAlignment="Left" Text="{Binding Query, Mode=TwoWay}"
+
+                     ItemsSource ="{Binding QueryAutoCompleteList, UpdateSourceTrigger=PropertyChanged,Mode=OneWay}" SelectedItem="{Binding Selected ,Mode=TwoWay}"
+ 
+                                     
                      />
             <Button HorizontalAlignment="Left" x:Name="Go"                    
                     Content="Go"
