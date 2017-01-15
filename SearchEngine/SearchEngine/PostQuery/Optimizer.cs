@@ -16,8 +16,9 @@ namespace SearchEngine.PostQuery
         private PostQueryEngine postQuery;
         public Optimizer(ref Indexer indexer)
         {
-            qrelsDictionary = new Dictionary<int, Dictionary<string, int>>();
             this.indexer = indexer;
+            postQuery = new PostQueryEngine(ref this.indexer);
+            qrelsDictionary = new Dictionary<int, Dictionary<string, int>>();
             postQuery.searcher = new Searcher(ref indexer, 3);
         }
         public void ReadQrels(string qrelsFilePath)
@@ -28,7 +29,7 @@ namespace SearchEngine.PostQuery
                 string line;
                 while ((line = streamReader.ReadLine()) != null)
                 {
-                    string[] qrel = line.Split(new char[] {' '},StringSplitOptions.RemoveEmptyEntries);
+                    string[] qrel = line.Split(new char[] {' ',},StringSplitOptions.RemoveEmptyEntries);
                     if (!qrelsDictionary.ContainsKey(Int32.Parse(qrel[0])))
                     {
                         Dictionary<string, int> queryKeyValuePair = new Dictionary<string, int>();
@@ -54,14 +55,14 @@ namespace SearchEngine.PostQuery
             return bestScore / totalrecall;
         }
 
-        public int compareResults(Dictionary<int, List<string>> QueriesResults)
+        public int compareResults(ObservableDictionary<int, List<string>> QueriesResults)
         {
             int recall = 0;
             foreach (int queryResult in QueriesResults.Keys)
             {
-                foreach (string docNo in QueriesResults[queryResult])
+                foreach (string docNo in Ranker.top50Results(QueriesResults[queryResult]))
                 {
-                    if (qrelsDictionary[queryResult][docNo]== 1)
+                    if (qrelsDictionary[queryResult].ContainsKey(docNo) && qrelsDictionary[queryResult][docNo]== 1)
                     {
                         recall++;
                     }
@@ -83,7 +84,7 @@ namespace SearchEngine.PostQuery
                 {
                     for (double b = 0.5; b <= 1; b+=0.01)
                     {
-                        Ranker ranker = new Ranker(ref indexer,ref postQuery.searcher,k1,k2,b );
+                        postQuery.ranker = new Ranker(ref indexer,ref postQuery.searcher,k1,k2,b );
                         postQuery.queriesFile(Properties.Settings.Default.postingFiles + "\\queries.txt", "All languages");
                         int score = compareResults(postQuery.QueriesResults);
                         if (score > bestScore)

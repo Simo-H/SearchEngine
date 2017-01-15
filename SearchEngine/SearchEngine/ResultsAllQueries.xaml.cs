@@ -19,9 +19,11 @@ namespace SearchEngine
     /// </summary>
     public partial class ResultsAllQueries : Window
     {
-        public ResultsAllQueries()
+        
+        public ResultsAllQueries(ref ViewModel vm)
         {
-            InitializeComponent();
+            InitializeComponent();            
+            DataContext = vm;
         }
 
         private void button_Click(object sender, RoutedEventArgs e)

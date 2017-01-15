@@ -70,6 +70,28 @@ F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ShowRan
 F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ShowRankResults.baml
 D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ResultsAllQueries.g.cs
 D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ResultsSingleQuery.g.cs
-D:\Git\SearchEngine\SearchEngine\SearchEngine\bin\Debug\WordNetClasses.dll
-D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ResultsAllQueries.baml
-D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ResultsSingleQuery.baml
+E:\Apps\Git Repository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\SearchEngine.exe.config
+E:\Apps\Git Repository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.exe
+E:\Apps\Git Repository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.pdb
+E:\Apps\Git Repository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\SearchEngine.exe
+E:\Apps\Git Repository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\SearchEngine.pdb
+E:\Apps\Git Repository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\WordNetClasses.dll
+E:\Apps\Git Repository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\MainWindow.g.cs
+E:\Apps\Git Repository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ResultsAllQueries.g.cs
+E:\Apps\Git Repository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ResultsSingleQuery.g.cs
+E:\Apps\Git Repository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ShowDictionary.g.cs
+E:\Apps\Git Repository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\App.g.cs
+E:\Apps\Git Repository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine_MarkupCompile.cache
+E:\Apps\Git Repository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine_MarkupCompile.lref
+E:\Apps\Git Repository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\MainWindow.baml
+E:\Apps\Git Repository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ResultsAllQueries.baml
+E:\Apps\Git Repository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ResultsSingleQuery.baml
+E:\Apps\Git Repository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ShowDictionary.baml
+E:\Apps\Git Repository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.g.resources
+E:\Apps\Git Repository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.Properties.Resources.resources
+E:\Apps\Git Repository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.csproj.GenerateResource.Cache
+E:\Apps\Git Repository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.csprojResolveAssemblyReference.cache
+E:\Apps\Git Repository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\System.Windows.Controls.Input.Toolkit.dll
+E:\Apps\Git Repository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\WPFToolkit.dll
+E:\Apps\Git Repository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\System.Windows.Controls.Input.Toolkit.pdb
+E:\Apps\Git Repository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\WPFToolkit.pdb

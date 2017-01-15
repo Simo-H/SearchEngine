@@ -99,10 +99,11 @@ namespace SearchEngine.PostQuery
             Dictionary<string, Dictionary<string, int>> QueryPerformances = new Dictionary<string, Dictionary<string, int>>();
             foreach (string term in parseQuery)
             {
-                if (QueryPerformances.Keys.Contains(term))
+                if (index.mainTermDictionary.ContainsKey(term) && QueryPerformances.Keys.Contains(term))
                 {
                     continue;
                 }
+                
                 Dictionary<string, int> DocAndTf = new Dictionary<string, int>();
                 DocAndTf = termDocsAndTf(term, language);
                 QueryPerformances[term] = DocAndTf;
