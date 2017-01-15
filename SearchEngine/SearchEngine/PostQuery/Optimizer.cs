@@ -85,7 +85,7 @@ namespace SearchEngine.PostQuery
                     for (double b = 0.5; b <= 1; b+=0.01)
                     {
                         postQuery.ranker = new Ranker(ref indexer,ref postQuery.searcher,k1,k2,b );
-                        postQuery.queriesFile(Properties.Settings.Default.postingFiles + "\\queries.txt", "All languages");
+                     //   postQuery.queriesFile(Properties.Settings.Default.postingFiles + "\\queries.txt", "All languages");
                         int score = compareResults(postQuery.QueriesResults);
                         if (score > bestScore)
                         {

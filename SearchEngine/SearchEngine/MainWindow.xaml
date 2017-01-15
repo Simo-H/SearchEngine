@@ -111,10 +111,8 @@
             <TextBlock HorizontalAlignment="Left" FontStyle="Oblique" FontWeight="Bold"
                        Text="search: " Height="27"
                        />
-            <toolkit:AutoCompleteBox x:Name="AutoCompleteBox1"                     
+            <TextBox x:Name="Auto"                     
                      Width="363"
-                     Text="{Binding Query, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                     Populating="PopulateAutoComplete" Populated="PopulateAutoComplete1"
                      Height="35" 
                      VerticalAlignment="Top"
                      HorizontalAlignment="Left"
@@ -152,7 +150,7 @@
             <TextBlock HorizontalAlignment="Left" FontStyle="Oblique" FontWeight="Bold"
                        Text="Path for saving results: " Height="27"
                        />
-            <TextBox x:Name="Path4"                     
+            <TextBox                     
                      Width="273"
                      Text="{Binding Path4, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Height="35" 

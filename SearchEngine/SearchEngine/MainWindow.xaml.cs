@@ -86,12 +86,7 @@ namespace SearchEngine
             vm.Optimize();
         }
 
-        private void PopulateAutoComplete(object sender, PopulatingEventArgs e)
-        {
-            string text = AutoCompleteBox1.Text;
-            AutoCompleteBox1.ItemsSource = vm.AutoCompletePopulate(text);
-            AutoCompleteBox1.PopulateComplete();
-        }
+
 
         private void GOQueryFile_onClick(object sender, RoutedEventArgs e)
         {

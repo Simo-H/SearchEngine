@@ -17,6 +17,7 @@ namespace SearchEngine
 {
     public class ViewModel:INotifyPropertyChanged
     {
+        static int ReasultFileName = 1;
         private PreQueryEngine pq;
         PostQueryEngine postQuery;
         private Optimizer opt;
@@ -125,6 +126,18 @@ namespace SearchEngine
             {
                 path3 = value;
                 NotifyPropertyChanged("Path3");
+            }
+        }
+
+        private string path4;
+
+        public string Path4
+        {
+            get { return path4; }
+            set
+            {
+                path4 = value;
+                NotifyPropertyChanged("Path4");
             }
         }
 
@@ -246,8 +259,8 @@ namespace SearchEngine
         
         public void Search()
         {
-           postQuery.userManualSingleQuery(Query, selectedLanguage);
-            
+           postQuery.userManualSingleQuery(Query, selectedLanguage ,Path4+"\\Result" + ReasultFileName);
+           ReasultFileName++;
         }
 
         public void browseFile()
@@ -263,7 +276,8 @@ namespace SearchEngine
         {
             if (File.Exists(Path3))
             {
-                postQuery.queriesFile(Path3,SelectedLanguage);
+                postQuery.queriesFile(Path3,SelectedLanguage, Path4+"\\Result"+ ReasultFileName);
+                ReasultFileName++;
             }
         }
 

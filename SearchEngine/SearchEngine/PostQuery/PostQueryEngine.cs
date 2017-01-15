@@ -54,8 +54,8 @@ namespace SearchEngine.PostQuery
             QueriesResults[queryId]= ranker.sortRanking(ranking);
            
         }
-
-        public void userManualSingleQuery(string query, string language)
+        //****************************************************************//
+        public void userManualSingleQuery(string query, string language, string ResultsFilePath)
         {
             QueriesResults = new ObservableDictionary<int, List<string>>();            
             retriveSingleQuery(query,language,queryid);         
@@ -64,10 +64,12 @@ namespace SearchEngine.PostQuery
             {
                 queryid = 100;
             }
+            ranker.writeSingleQueryToFile(ResultsFilePath, QueriesResults);
         }
 
+        //****************************************************************//
 
-        public void queriesFile(string QueriesFilePath,string language)
+        public void queriesFile(string QueriesFilePath,string language, string ResultsFilePath)
         {
             QueriesResults = new ObservableDictionary<int, List<string>>();
             using (FileStream queriesTextFileStream = new FileStream(QueriesFilePath, FileMode.Open))
@@ -85,6 +87,7 @@ namespace SearchEngine.PostQuery
                     retriveSingleQuery(q, language, Int32.Parse(queryLine[0]));
                 }
             }
+            ranker.writeSingleQueryToFile(ResultsFilePath, QueriesResults);
         }
 
 

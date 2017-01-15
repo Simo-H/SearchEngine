@@ -121,21 +121,33 @@ namespace SearchEngine.PostQuery
             return allResults.Take(50).ToList();
         }
 
-        /// <summary>
-        /// /////////////////////////////////////
-        /// </summary>
-        /// <param name="fileName"></param>
-        /// <param name="rankingList"></param>
-        public void writeSingleQueryToFile(string fileName, List<KeyValuePair<int, string>> rankingList)
+ 
+        public void writeSingleQueryToFile(string  filePath, ObservableDictionary<int, List<string>> rankingList)
         {
-            string filePath = Properties.Settings.Default.postingFiles+"\\" + fileName;
+ 
             using (FileStream newFileStream = new FileStream(filePath, FileMode.Create))
             {
                 StreamWriter bw = new StreamWriter(newFileStream);
-                foreach (var item in rankingList)
+                string iter = "0";
+                string Rank = "0";
+                string float_sim = "0";
+                string Run_id = "mt";
+
+
+                foreach (int qcode in rankingList)
                 {
-                    bw.WriteLine(item.Key);
-                    bw.WriteLine(item.Value);
+                    for (int i = 0; i < rankingList[qcode].Count; i++)
+                    {
+
+                    bw.WriteLine(qcode.ToString());
+                    bw.WriteLine(iter);
+                    bw.WriteLine(rankingList[qcode][i]);
+                    bw.WriteLine(Rank);
+                    bw.WriteLine(float_sim);
+                    bw.WriteLine(Run_id);
+
+
+                    }
 
                 }
                 bw.Flush();
