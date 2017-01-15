@@ -34,12 +34,11 @@ namespace SearchEngine
             set
             {
                 query = value;
-                if (foundInTermDic(query))
+                if (foundInTermDic(query) && query[query.Length-1].Equals(' ')&& query.Split(' ').Length >1)
                 {
                     List<string> a = new List<string>(getPopulating(query));
                     QueryAutoCompleteList = new ObservableCollection<string>(a);
-                    //NotifyPropertyChanged("QueryAutoCompleteList");
-                    
+                    NotifyPropertyChanged("QueryAutoCompleteList");
                 }
             }
         }
@@ -50,7 +49,6 @@ namespace SearchEngine
             get
             {
                 return queryAutoCompleteList; 
-                
             }
             set
             {

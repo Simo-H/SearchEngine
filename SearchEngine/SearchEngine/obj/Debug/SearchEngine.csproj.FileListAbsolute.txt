@@ -103,3 +103,4 @@ D:\Git\SearchEngine\SearchEngine\SearchEngine\bin\Debug\WordNetClasses.dll
 D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ResultsAllQueries.baml
 D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ResultsSingleQuery.baml
 D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.csprojResolveAssemblyReference.cache
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.csprojResolveAssemblyReference.cache
