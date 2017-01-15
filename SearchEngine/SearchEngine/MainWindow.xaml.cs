@@ -36,7 +36,7 @@ namespace SearchEngine
             InitializeComponent();
             vm = new ViewModel();
             DataContext = vm;
-            
+
         }
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -77,15 +77,15 @@ namespace SearchEngine
         {
             if (Directory.Exists(filePath4.Text))
             {
-    results = new ResultsAllQueries(ref vm);
-            vm.Search();
-            results.ShowDialog();
+                results = new ResultsAllQueries(ref vm);
+                vm.Search();
+                results.ShowDialog();
 
             }
             else
             {
                 System.Windows.MessageBox.Show("The given paths is invalid");
- 
+
             }
 
         }
@@ -116,14 +116,14 @@ namespace SearchEngine
         //    string text = AutoCompleteBox1.Text;
         //    if (vm.foundInTermDic(text))
         //    {
-                
+
         //    List<string> candidateList = vm.getPopulating(text);
         //    AutoCompleteBox1.ItemsSource = candidateList;
         //    AutoCompleteBox1.
         //    }
-            
+
         //}
     }
-            
-        
+
+
 }
