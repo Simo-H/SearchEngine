@@ -16,7 +16,7 @@ using SearchEngine.PreQuery;
 
 namespace SearchEngine
 {
-    public class ViewModel:INotifyPropertyChanged
+    public class ViewModel : INotifyPropertyChanged
     {
         static int ReasultFileName = 1;
         private PreQueryEngine pq;
@@ -39,7 +39,7 @@ namespace SearchEngine
                     List<string> a = new List<string>(getPopulating(query));
                     QueryAutoCompleteList = new ObservableCollection<string>(a);
                     //NotifyPropertyChanged("QueryAutoCompleteList");
-                    
+
                 }
             }
         }
@@ -49,8 +49,8 @@ namespace SearchEngine
         {
             get
             {
-                return queryAutoCompleteList; 
-                
+                return queryAutoCompleteList;
+
             }
             set
             {
@@ -76,7 +76,7 @@ namespace SearchEngine
                 foreach (int item in postQuery.QueriesResults.Keys)
                 {
                     resultList.Add(new ResultsSingleQuery(item, postQuery.QueriesResults[item].Count, Ranker.top50Results(postQuery.QueriesResults[item])));
-                }                
+                }
                 return resultList;
             }
 
@@ -91,7 +91,7 @@ namespace SearchEngine
                     List<string> languageList = new List<string>(pq.LanguagesList);
                     languageList.Remove("Language not found");
                     languageList.Sort();
-                    languageList.Insert(0,"All languages");
+                    languageList.Insert(0, "All languages");
                     return languageList;
                 }
                 return null;
@@ -175,7 +175,7 @@ namespace SearchEngine
             SelectedLanguage = "All languages";
             pq = new PreQueryEngine();
             postQuery = new PostQueryEngine(ref pq.indexer);
-            searcher = new Searcher(ref pq.indexer,3);
+            searcher = new Searcher(ref pq.indexer, 3);
             opt = new Optimizer(ref pq.indexer);
             pq.PropertyChanged += delegate (object sender, PropertyChangedEventArgs e)
             {
@@ -266,7 +266,7 @@ namespace SearchEngine
         {
             string filePath1 = Properties.Settings.Default.stemmer ? "\\TermDictionaryStemmer.bin" : "\\TermDictionary.bin";
             string filePath2 = Properties.Settings.Default.stemmer ? "\\DocumentDictionaryStemmer.bin" : "\\DocumentDictionary.bin";
-            if (File.Exists(Path2 + filePath1) && File.Exists(Path2 + filePath2) && File.Exists(Path2+"\\Languages.txt"))
+            if (File.Exists(Path2 + filePath1) && File.Exists(Path2 + filePath2) && File.Exists(Path2 + "\\Languages.txt"))
             {
                 pq.indexer.loadTermDictionary();
                 pq.indexer.loadDocumentDictionary();
@@ -280,30 +280,31 @@ namespace SearchEngine
             }
         }
 
-        
+
         public void Search()
         {
 
-           postQuery.userManualSingleQuery(Query, selectedLanguage ,Path4+"\\Result" + ReasultFileName);
-           ReasultFileName++;
+            postQuery.userManualSingleQuery(Query, selectedLanguage, Path4 + "\\Result" + ReasultFileName);
+            ReasultFileName++;
 
-            
+
         }
 
         public void browseFile()
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             Nullable<bool> result = dlg.ShowDialog();
-            if (result == true){
-                
+            if (result == true)
+            {
+
                 Path3 = dlg.FileName;
             }
         }
         public void SearchQueryFile()
         {
-            if (File.Exists(Path3)&& Directory.Exists(Path4))
+            if (File.Exists(Path3) && Directory.Exists(Path4))
             {
-                postQuery.queriesFile(Path3,SelectedLanguage, Path4+"\\Result"+ ReasultFileName);
+                postQuery.queriesFile(Path3, SelectedLanguage, Path4 + "\\Result" + ReasultFileName);
                 ReasultFileName++;
             }
             else
