@@ -65,7 +65,6 @@ D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.g.resources
 D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.Properties.Resources.resources
 D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.csproj.GenerateResource.Cache
 F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\WordNetClasses.dll
-F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.csprojResolveAssemblyReference.cache
 D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ResultsAllQueries.g.cs
 D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ResultsSingleQuery.g.cs
 E:\Apps\Git Repository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\SearchEngine.exe.config

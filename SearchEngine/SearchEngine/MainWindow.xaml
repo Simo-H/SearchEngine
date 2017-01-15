@@ -111,7 +111,7 @@
                        Text="search: " Height="27"
                        />
             <Controls:AutoCompleteBox x:Name="searchPath"                     
-                     Width="350"
+                     Width="363"
                      Text="{Binding Query, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Populating="PopulateAutoComplete"
                      Height="35" 
@@ -127,10 +127,10 @@
         </DockPanel>
         <DockPanel Width="470" HorizontalAlignment="Left">
             <TextBlock HorizontalAlignment="Left" FontStyle="Oblique" FontWeight="Bold"
-                       Text="phath queries at file :" Height="27"
+                       Text="Read queries from file :" Height="27"
                        />
             <TextBox x:Name="filePath"                     
-                     Width="272"
+                     Width="214"
                      Text="{Binding Path3, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Height="35" 
                      VerticalAlignment="Top"
@@ -140,7 +140,12 @@
                     Content="browse"
                     Height="30"
                     Width="53"
-                    Margin =" 5" Click="GO_onClick"/>
+                    Margin =" 5" Click="browseFile"/>
+            <Button HorizontalAlignment="Left" x:Name="GoQueryFile"                    
+                    Content="Go"
+                    Height="30"
+                    Width="53"
+                    Margin =" 5" Click="GOQueryFile_onClick"/>
         </DockPanel>
     </StackPanel>
 </Window>

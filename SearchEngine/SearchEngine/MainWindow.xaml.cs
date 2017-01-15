@@ -77,6 +77,7 @@ namespace SearchEngine
         {
             results = new ResultsAllQueries(ref vm);
             vm.Search();
+            results.ShowDialog();
         }
 
         private void optimize_Click(object sender, RoutedEventArgs e)
@@ -88,6 +89,19 @@ namespace SearchEngine
         private void PopulateAutoComplete(object sender, PopulatingEventArgs e)
         {
 
+        }
+
+        private void GOQueryFile_onClick(object sender, RoutedEventArgs e)
+        {
+            results = new ResultsAllQueries(ref vm);
+            vm.SearchQueryFile();
+            results.ShowDialog();
+        }
+
+        private void browseFile(object sender, RoutedEventArgs e)
+        {
+
+            vm.browseFile();
         }
     }
             

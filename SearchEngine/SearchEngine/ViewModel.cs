@@ -99,6 +99,19 @@ namespace SearchEngine
                 NotifyPropertyChanged("Path2");
             }
         }
+
+        private string path3;
+
+        public string Path3
+        {
+            get { return path3; }
+            set
+            {
+                path3 = value;
+                NotifyPropertyChanged("Path3");
+            }
+        }
+
         private string selectedLanguage;
 
         public string SelectedLanguage
@@ -218,6 +231,23 @@ namespace SearchEngine
         {
            postQuery.userManualSingleQuery(Query, selectedLanguage);
             
+        }
+
+        public void browseFile()
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            Nullable<bool> result = dlg.ShowDialog();
+            if (result == true){
+                
+                Path3 = dlg.FileName;
+            }
+        }
+        public void SearchQueryFile()
+        {
+            if (File.Exists(Path3))
+            {
+                postQuery.queriesFile(Path3,SelectedLanguage);
+            }
         }
 
         public void Optimize()

@@ -489,7 +489,7 @@ namespace SearchEngine.PreQuery
 
                     string[] stringSeparators = new string[] { "&&&" };
                     string[] DocumentAndShowsArray = continuing.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
-                    if (DocumentAndShowsArray!=null)
+                    if (!(DocumentAndShowsArray.Length==1 && DocumentAndShowsArray[0].Equals(" ")))
                     {
                         for (int i = 0; i < DocumentAndShowsArray.Count(); i = i + 2)
                         {
