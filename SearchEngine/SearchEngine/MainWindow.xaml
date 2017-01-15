@@ -25,7 +25,6 @@
 	    
 	    SelectionChanged="ComboBox_SelectionChanged" 
         SelectedItem="{Binding SelectedLanguage}"
-        ItemsSource="{Binding LanguagesList}"
             />
             <Button x:Name="optimize" Content="Optimize" Width="75" Click="optimize_Click"/>
         </DockPanel>
@@ -115,13 +114,10 @@
                      Width="363"
                      Height="35" 
                      VerticalAlignment="Top"
-                     HorizontalAlignment="Left" Text="{Binding Query, Mode=TwoWay}"
-
-                     ItemsSource ="{Binding QueryAutoCompleteList, UpdateSourceTrigger=PropertyChanged,Mode=OneWay}" SelectedItem="{Binding Selected ,Mode=TwoWay}"
- 
-                                     
+                     HorizontalAlignment="Left" Text="{Binding Query, Mode=TwoWay}"                                                   
                      />
-            <Button HorizontalAlignment="Left" x:Name="Go"                    
+            <Button  
+                x:Name="Go"  HorizontalAlignment="Left"                 
                     Content="Go"
                     Height="30"
                     Width="53"
@@ -154,7 +150,7 @@
             <TextBlock HorizontalAlignment="Left" FontStyle="Oblique" FontWeight="Bold"
                        Text="Path for saving results: " Height="27"
                        />
-            <TextBox                     
+            <TextBox    x:Name="filePath4"                   
                      Width="273"
                      Text="{Binding Path4, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Height="35" 

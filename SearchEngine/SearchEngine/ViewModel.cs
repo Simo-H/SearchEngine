@@ -196,7 +196,7 @@ namespace SearchEngine
                 engineThread.Start();
             }
             else
-                System.Windows.MessageBox.Show("One of the paths given is invalid");
+                System.Windows.MessageBox.Show("One of the given paths is invalid");
         }
 
         public void ResetDictionariesAndFiles()
@@ -234,6 +234,10 @@ namespace SearchEngine
                 if (buttenName.Equals("browse2"))
                 {
                     Path2 = dialog.SelectedPath;
+                }
+                if (buttenName.Equals("browse4"))
+                {
+                    Path4 = dialog.SelectedPath;
                 }
             }
         }
@@ -279,8 +283,11 @@ namespace SearchEngine
         
         public void Search()
         {
+
            postQuery.userManualSingleQuery(Query, selectedLanguage ,Path4+"\\Result" + ReasultFileName);
            ReasultFileName++;
+
+            
         }
 
         public void browseFile()
@@ -294,11 +301,17 @@ namespace SearchEngine
         }
         public void SearchQueryFile()
         {
-            if (File.Exists(Path3))
+            if (File.Exists(Path3)&& Directory.Exists(Path4))
             {
                 postQuery.queriesFile(Path3,SelectedLanguage, Path4+"\\Result"+ ReasultFileName);
                 ReasultFileName++;
             }
+            else
+            {
+                System.Windows.MessageBox.Show("At least one illegal Path");
+
+            }
+
         }
 
         public void Optimize()

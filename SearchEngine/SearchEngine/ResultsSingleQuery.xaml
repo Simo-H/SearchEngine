@@ -5,16 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SearchEngine"
              mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="500">
-    <Canvas HorizontalAlignment="Left" Height="200" VerticalAlignment="Top" Width="500" Background="White">
-        <Grid Height="190" Width="490" Canvas.Top="10">
-            <Label x:Name="label" Content="Query Result" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="112,0,0,0" FontWeight="Bold" />
-            <TextBlock x:Name="qid" Text="Query Id" HorizontalAlignment="Right" Height="17" Margin="0,53,391,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="75"></TextBlock>
-            <TextBlock x:Name="IdNumber" HorizontalAlignment="Right" Height="17" Margin="0,53,295,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="75"></TextBlock>
+             d:DesignHeight="200" d:DesignWidth="450">
+    <Canvas HorizontalAlignment="Left" Height="200" VerticalAlignment="Top" Width="450" Background="White">
+        <Grid Height="200" Width="440" Canvas.Left="10">
+            <Label x:Name="label" Content="Query Result" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="135,0,0,0" FontWeight="Bold" />
+            <TextBlock x:Name="qid" Text="Query Id" HorizontalAlignment="Right" Height="17" Margin="0,53,355,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="75"></TextBlock>
+            <TextBlock x:Name="IdNumber" Text="id of doc" HorizontalAlignment="Right" Height="17" Margin="0,53,261,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="75"></TextBlock>
 
-            <TextBlock x:Name="numberOfDoc" Text="number of doc" HorizontalAlignment="Right" Height="19" Margin="0,75,370,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96"></TextBlock>
-            <TextBlock x:Name="counter" Text="count of doc" HorizontalAlignment="Right" Height="19" Margin="0,75,274,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96"></TextBlock>
-            <ListView x:Name="listView" HorizontalAlignment="Right" Height="180" VerticalAlignment="Top" Width="191" RenderTransformOrigin="1.307,0.605" >
+            <TextBlock x:Name="numberOfDoc" Text="number of doc" HorizontalAlignment="Right" Height="19" Margin="0,75,336,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96"></TextBlock>
+            <TextBlock x:Name="counter" Text="count of doc" HorizontalAlignment="Right" Height="19" Margin="0,75,240,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96"></TextBlock>
+            <ListView x:Name="listView" HorizontalAlignment="Right" Height="180" VerticalAlignment="Top" Width="191" RenderTransformOrigin="1.307,0.605" Margin="0,10,26,0" >
                 
             </ListView>
 

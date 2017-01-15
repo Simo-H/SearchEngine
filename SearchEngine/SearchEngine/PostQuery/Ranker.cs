@@ -134,16 +134,16 @@ namespace SearchEngine.PostQuery
                 string Run_id = "mt";
 
 
-                foreach (int qcode in rankingList)
+                foreach (int qcode in rankingList.Keys)
                 {
                     for (int i = 0; i < rankingList[qcode].Count; i++)
                     {
 
-                    bw.WriteLine(qcode.ToString());
-                    bw.WriteLine(iter);
-                    bw.WriteLine(rankingList[qcode][i]);
-                    bw.WriteLine(Rank);
-                    bw.WriteLine(float_sim);
+                    bw.Write(qcode.ToString()+" ");
+                    bw.Write(iter+" ");
+                    bw.Write(rankingList[qcode][i]+" ");
+                    bw.Write(Rank+" ");
+                    bw.Write(float_sim+" ");
                     bw.WriteLine(Run_id);
 
 

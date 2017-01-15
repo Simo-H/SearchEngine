@@ -75,9 +75,19 @@ namespace SearchEngine
         }
         private void GO_onClick(object sender, RoutedEventArgs e)
         {
-            results = new ResultsAllQueries(ref vm);
+            if (Directory.Exists(filePath4.Text))
+            {
+    results = new ResultsAllQueries(ref vm);
             vm.Search();
             results.ShowDialog();
+
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("The given paths is invalid");
+ 
+            }
+
         }
 
         private void optimize_Click(object sender, RoutedEventArgs e)
@@ -89,6 +99,7 @@ namespace SearchEngine
 
         private void GOQueryFile_onClick(object sender, RoutedEventArgs e)
         {
+
             results = new ResultsAllQueries(ref vm);
             vm.SearchQueryFile();
             results.ShowDialog();

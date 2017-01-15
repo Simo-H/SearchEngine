@@ -53,7 +53,6 @@ D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.exe
 D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.pdb
 D:\Git\SearchEngine\SearchEngine\SearchEngine\bin\Debug\SearchEngine.exe
 D:\Git\SearchEngine\SearchEngine\SearchEngine\bin\Debug\SearchEngine.pdb
-D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.csprojResolveAssemblyReference.cache
 D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\MainWindow.g.cs
 D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ShowDictionary.g.cs
 D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\App.g.cs
@@ -103,3 +102,4 @@ F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\Results
 D:\Git\SearchEngine\SearchEngine\SearchEngine\bin\Debug\WordNetClasses.dll
 D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ResultsAllQueries.baml
 D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ResultsSingleQuery.baml
+D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.csprojResolveAssemblyReference.cache
