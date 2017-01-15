@@ -81,7 +81,7 @@ namespace SearchEngine.PostQuery
                 docList[doc] = totalRankeForDoc;
                 if (CounterTerminDoc==q.Length)
                 {
-                    docList[doc] = docList[doc] + BonusAllQueryInDocument+ CheckingTitle(doc, q);
+                    docList[doc] = docList[doc]; // + BonusAllQueryInDocument+ CheckingTitle(doc, q);
                 }
             }
             return docList;
