@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-E:\Apps\Git Repository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\
 SearchEngine
 none
 false
 DEBUG;TRACE
-E:\Apps\Git Repository\SearchEngine\SearchEngine\SearchEngine\App.xaml
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\App.xaml
 41701640514
 
-25-879018902
-20-838249994
+251510750462
+20569162585
 MainWindow.xaml;ResultsAllQueries.xaml;ResultsSingleQuery.xaml;ShowDictionary.xaml;
 
-True
+False
 
