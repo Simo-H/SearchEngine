@@ -19,7 +19,7 @@ namespace SearchEngine.PostQuery
             this.indexer = indexer;
             postQuery = new PostQueryEngine(ref this.indexer);
             qrelsDictionary = new Dictionary<int, Dictionary<string, int>>();
-            postQuery.searcher = new Searcher(ref indexer, 3);
+            postQuery.searcher = new Searcher(ref indexer, 5);
         }
         public void ReadQrels(string qrelsFilePath)
         {
@@ -42,13 +42,13 @@ namespace SearchEngine.PostQuery
             }
         }
 
-        public double Optimize(string qrelsFilePath)
+        public double Optimize(string qrelsFilePath,string path)
         {
             double optk1;
             double optk2;
             double optb;
             ReadQrels(qrelsFilePath);
-            double bestScore = testRun(out optk1,out optk2,out optb);
+            double bestScore = testRun(out optk1,out optk2,out optb,path);
             double totalrecall = optimalRecall();
             Debug.WriteLine("k1= "+optk1+" k2= "+" b= "+optb);
             Debug.WriteLine(bestScore / totalrecall);
@@ -60,7 +60,8 @@ namespace SearchEngine.PostQuery
             int recall = 0;
             foreach (int queryResult in QueriesResults.Keys)
             {
-                foreach (string docNo in Ranker.top50Results(QueriesResults[queryResult]))
+                //Ranker.top50Results(
+                foreach (string docNo in QueriesResults[queryResult])
                 {
                     if (qrelsDictionary[queryResult].ContainsKey(docNo) && qrelsDictionary[queryResult][docNo]== 1)
                     {
@@ -71,21 +72,21 @@ namespace SearchEngine.PostQuery
             return recall;
         }
 
-        public double testRun(out double optK1,out double optK2, out double optB)
+        public double testRun(out double optK1,out double optK2, out double optB,string path)
         {
             postQuery = new PostQueryEngine(ref indexer);
             int bestScore = 0;
             double bestk1 = 0;
             double bestk2 = 0;
             double bestb = 0;
-            for (double k1 = 1; k1 <= 2; k1+=0.1)
+            for (double k1 = 1.2; k1 <= 1.2; k1+=0.1)
             {
-                for (double k2 = 50; k2 <= 150; k2+=1)
+                for (double k2 = 100; k2 <= 100; k2+=5)
                 {
-                    for (double b = 0.5; b <= 1; b+=0.01)
+                    for (double b = 0.5; b <= 0.5; b+=0.01)
                     {
                         postQuery.ranker = new Ranker(ref indexer,ref postQuery.searcher,k1,k2,b );
-                     //   postQuery.queriesFile(Properties.Settings.Default.postingFiles + "\\queries.txt", "All languages");
+                        postQuery.queriesFile(Properties.Settings.Default.postingFiles + "\\queries.txt", "All languages", path);
                         int score = compareResults(postQuery.QueriesResults);
                         if (score > bestScore)
                         {
@@ -118,9 +119,9 @@ namespace SearchEngine.PostQuery
             }
             return totalRecall;
         }
-        public void findOptimizedParameters()
+        public void findOptimizedParameters(string path)
         {
-            Optimize(Properties.Settings.Default.postingFiles + "\\qrels.txt");
+            Optimize(Properties.Settings.Default.postingFiles + "\\qrels.txt",path);
         }
     }
 }
