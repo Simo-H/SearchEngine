@@ -47,10 +47,11 @@ namespace SearchEngine.PostQuery
         public  void retriveSingleQuery(string query, string language,int queryId)
         {
             string[] parseQuery = searcher.ParseQuery(query);
-            List<string> queryList = searcher.AddSemantic(parseQuery.ToList());
+            //List<string> queryList = searcher.AddSemantic(parseQuery.ToList());
+            List<string> queryList = parseQuery.ToList();
             Dictionary<string, Dictionary<string, int>> QueryPerformances =new Dictionary<string, Dictionary<string, int>>();
-            QueryPerformances= searcher.AllQueryPerformances(parseQuery, language);
-            ConcurrentDictionary<string, double> ranking = ranker.Ranke(parseQuery, QueryPerformances);
+            QueryPerformances= searcher.AllQueryPerformances(queryList.ToArray(), language);
+            ConcurrentDictionary<string, double> ranking = ranker.Ranke(queryList.ToArray(), QueryPerformances);
             QueriesResults[queryId]= ranker.sortRanking(ranking);
            
         }

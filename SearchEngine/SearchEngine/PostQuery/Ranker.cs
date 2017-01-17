@@ -202,7 +202,7 @@ namespace SearchEngine.PostQuery
             {
                 total[item]=0.25*rank25[item]+0.75*rankSim[item];
             }
-            return total;
+            return rank25;
         }
 
         public int countNumberOfoccurencesInQuery(string[] queryArray,string query)

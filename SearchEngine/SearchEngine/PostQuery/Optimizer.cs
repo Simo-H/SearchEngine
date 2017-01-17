@@ -19,7 +19,7 @@ namespace SearchEngine.PostQuery
             this.indexer = indexer;
             postQuery = new PostQueryEngine(ref this.indexer);
             qrelsDictionary = new Dictionary<int, Dictionary<string, int>>();
-            postQuery.searcher = new Searcher(ref indexer, 3);
+            postQuery.searcher = new Searcher(ref indexer, 5);
         }
         public void ReadQrels(string qrelsFilePath)
         {
@@ -60,7 +60,8 @@ namespace SearchEngine.PostQuery
             int recall = 0;
             foreach (int queryResult in QueriesResults.Keys)
             {
-                foreach (string docNo in Ranker.top50Results(QueriesResults[queryResult]))
+                //Ranker.top50Results(
+                foreach (string docNo in QueriesResults[queryResult])
                 {
                     if (qrelsDictionary[queryResult].ContainsKey(docNo) && qrelsDictionary[queryResult][docNo]== 1)
                     {
@@ -78,11 +79,11 @@ namespace SearchEngine.PostQuery
             double bestk1 = 0;
             double bestk2 = 0;
             double bestb = 0;
-            for (double k1 = 0.0; k1 <= 2; k1+=0.1)
+            for (double k1 = 1.2; k1 <= 1.2; k1+=0.1)
             {
-                for (double k2 = 0; k2 <= 200; k2+=5)
+                for (double k2 = 100; k2 <= 100; k2+=5)
                 {
-                    for (double b = 0.0; b <= 0.1; b+=0.01)
+                    for (double b = 0.5; b <= 0.5; b+=0.01)
                     {
                         postQuery.ranker = new Ranker(ref indexer,ref postQuery.searcher,k1,k2,b );
                         postQuery.queriesFile(Properties.Settings.Default.postingFiles + "\\queries.txt", "All languages", path);

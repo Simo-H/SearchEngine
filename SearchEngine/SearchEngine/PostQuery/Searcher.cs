@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Wnlib;
 using WnLexicon;
+using NHunspell;
 
 namespace SearchEngine.PostQuery
 {
@@ -103,7 +104,7 @@ namespace SearchEngine.PostQuery
                 {
                     continue;
                 }
-                
+
                 Dictionary<string, int> DocAndTf = new Dictionary<string, int>();
                 DocAndTf = termDocsAndTf(term, language);
                 QueryPerformances[term] = DocAndTf;
@@ -158,29 +159,76 @@ namespace SearchEngine.PostQuery
         public List<string> AddSemantic(List<string> query)
         {
             WordNetClasses.WN wnc = new WordNetClasses.WN(Directory.GetCurrentDirectory().Substring(0, Directory.GetCurrentDirectory().Length - 9) + "PostQuery\\WordNet\\dict\\");
-            List<string> stemedTerms = new List<string>();
-            foreach (string term in query)
+            List<string> Synonyms = new List<string>();
+            if (Properties.Settings.Default.stemmer)
             {
-                stemedTerms.Add(stemmer.stemTerm(term));
-            }
-            foreach (string sttemedTerm in stemedTerms)
-            {
-                string[] synonyms = Lexicon.FindSynonyms(sttemedTerm, PartsOfSpeech.Noun, true);
-                if (synonyms == null)
+                List<string> stemmedQuery = new List<string>();
+                foreach (string term in query)
                 {
-                    continue;
+                    stemmedQuery.Add(stemmer.stemTerm(term));
                 }
-                int min = Math.Min(numberOfsynonyms, synonyms.Length);
-                for (int i = 0; i < min; i++)
+                query = stemmedQuery;
+            }
+            else
+            {
+                int i = 0;
+                int count = query.Count;
+                while (i< count)
                 {
-                    if (Properties.Settings.Default.stemmer)
-                    {
-                        synonyms[i] = stemmer.stemTerm(synonyms[i]);
-                    }
-                    query.Add(synonyms[i]);
+                    query.Add(stemmer.stemTerm(query[i]));
+                    i++;
                 }
             }
+            foreach (string queryTerm in query)
+            {
+                string[] a = Lexicon.FindSynonyms(queryTerm, PartsOfSpeech.Noun, true);
+                if (a != null)
+                {
+                Synonyms.AddRange(a);
+                    
+                }
+                string[] b = Lexicon.FindSynonyms(queryTerm, PartsOfSpeech.Verb, true);
+                if (b != null)
+                {
+                    Synonyms.AddRange(b);
+
+                }
+                string[] c = Lexicon.FindSynonyms(queryTerm, PartsOfSpeech.Adj, true);
+                if (c != null)
+                {
+                    Synonyms.AddRange(c);
+
+                }
+                
+                //new semnatic function also add synonyms
+            }
+            Synonyms.AddRange(HunspellSynonymsList(query));
+
+            query.AddRange(Synonyms.Distinct<string>());
             return query;
+        }
+
+        public List<string> HunspellSynonymsList(List<string> query)
+        {
+            List<string> listOfSynonyms = new List<string>();
+            MyThes thes = new MyThes("F:\\Apps\\Git Respository\\SearchEngine\\SearchEngine\\SearchEngine\\th_en_US_new.dat");
+            using (Hunspell hunspell = new Hunspell("F:\\Apps\\Git Respository\\SearchEngine\\SearchEngine\\SearchEngine\\en_us.aff", "F:\\Apps\\Git Respository\\SearchEngine\\SearchEngine\\SearchEngine\\en_US.dic"))
+            {
+                foreach (string queryTerm in query)
+                {
+                    ThesResult tr = thes.Lookup(queryTerm, hunspell);
+                    if (tr == null)
+                    {
+                        continue;
+                    }
+                    foreach (ThesMeaning meaning in tr.Meanings)
+                    {
+                        listOfSynonyms.AddRange(meaning.Synonyms);
+                    }
+
+                }
+                return listOfSynonyms;
+            }
         }
     }
 }
