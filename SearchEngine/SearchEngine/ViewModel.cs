@@ -305,6 +305,8 @@ namespace SearchEngine
             if (File.Exists(Path3) && Directory.Exists(Path4))
             {
                 postQuery.queriesFile(Path3, SelectedLanguage, Path4 + "\\Results" + ReasultFileName+".txt");
+               postQuery.ranker.maxmin.Sort();
+
                 ReasultFileName++;
             }
             else
