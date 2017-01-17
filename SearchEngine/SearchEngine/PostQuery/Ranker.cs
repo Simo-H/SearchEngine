@@ -23,30 +23,36 @@ namespace SearchEngine.PostQuery
         double avgDocLenght;
         int BonusAllQueryInDocument;
         int BonusTermInTitle;
-
-        public Ranker(ref Indexer indexer, ref Searcher shearch,double k1,double k2,double b)
+        public List<double> maxmin;
+        public Ranker(ref Indexer indexer, ref Searcher shearch, double k1, double k2, double b)
         {
             this.indexer = indexer;
             this.shearch = shearch;
-            BonusAllQueryInDocument = 1;
-            BonusTermInTitle = 1;
-            N = indexer.documentDictionary.Count();
+            maxmin = new List<double>();
+            BonusAllQueryInDocument = 10;
+            BonusTermInTitle = 10;
+            N = 0;
             ri = 0;
             R = 0;
             this.k1 = k1;
             this.k2 = k2;
             this.b = b;
             avgDocLenght = 0;
-            foreach (string item in indexer.documentDictionary.Keys)
-            {
-                avgDocLenght= avgDocLenght+ indexer.documentDictionary[item].totalNumberInDoc;
-            }
-            avgDocLenght = avgDocLenght / N;
-        }
 
+        }
         public ConcurrentDictionary<string, double>  BM25(string[] q, Dictionary<string, Dictionary<string, int>> QueryPerformances)
         {
-             ConcurrentDictionary<string, double> docList = new ConcurrentDictionary<string, double>();
+            if (N == 0)
+            {
+                N = indexer.documentDictionary.Count();
+                foreach (string item in indexer.documentDictionary.Keys)
+                {
+                    avgDocLenght = avgDocLenght + indexer.documentDictionary[item].totalNumberInDoc;
+                }
+                avgDocLenght = avgDocLenght / N;
+
+            }
+            ConcurrentDictionary<string, double> docList = new ConcurrentDictionary<string, double>();
             foreach (Dictionary<string, int> term in QueryPerformances.Values)
             {
                 foreach (string doc in term.Keys)
@@ -63,7 +69,7 @@ namespace SearchEngine.PostQuery
                 int CounterTerminDoc = 0;
                 foreach (string term in QueryPerformances.Keys)
                 {
-                    double qfi = System.Convert.ToDouble(countNumberOfoccurencesInQuery(q,term) / System.Convert.ToDouble( q.Length));
+                  double qfi = System.Convert.ToDouble(countNumberOfoccurencesInQuery(q,term) / System.Convert.ToDouble( q.Length));
                     double ni = QueryPerformances[term].Count;
                     if (QueryPerformances[term].ContainsKey(doc))
                     {
@@ -75,13 +81,14 @@ namespace SearchEngine.PostQuery
                         double third = ((k2 + 1) * qfi) / (k2 + qfi);
                         rankeTermAtDoc = firstPart * secondPart * third;
                         rankeTermAtDoc = Math.Log(rankeTermAtDoc);
+                        maxmin.Add(rankeTermAtDoc);/////////////////////////////////////
                         totalRankeForDoc += rankeTermAtDoc;
                     }
                 }
                 docList[doc] = totalRankeForDoc;
                 if (CounterTerminDoc==q.Length)
                 {
-                    docList[doc] = docList[doc]+ BonusAllQueryInDocument+ CheckingTitle(doc, q);
+                    docList[doc] = docList[doc];// BonusAllQueryInDocument + CheckingTitle(doc, q);
                 }
             }
             return docList;
@@ -173,8 +180,9 @@ namespace SearchEngine.PostQuery
                              
                foreach (int qcode in rankingList.Keys)
                 {
-                    for (int i = 0; i < rankingList[qcode].Count; i++)
-                      // for (int i = 0; i < 51; i++)
+                    //for (int i = 0; i < rankingList[qcode].Count; i++)
+                   int mo= Math.Min(51, rankingList[qcode].Count);
+                      for (int i = 0; i < mo; i++)
 
                         {
 
@@ -205,7 +213,7 @@ namespace SearchEngine.PostQuery
             {
                 total[item]=0.25*rank25[item]+0.75*rankSim[item];
             }
-            return total;
+            return rank25;
         }
 
         public int countNumberOfoccurencesInQuery(string[] queryArray,string query)

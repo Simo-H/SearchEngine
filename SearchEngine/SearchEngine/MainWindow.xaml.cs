@@ -103,6 +103,7 @@ namespace SearchEngine
             results = new ResultsAllQueries(ref vm);
             vm.SearchQueryFile();
             results.ShowDialog();
+            
         }
 
         private void browseFile(object sender, RoutedEventArgs e)
