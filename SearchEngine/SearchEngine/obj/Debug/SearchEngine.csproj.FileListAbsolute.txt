@@ -107,3 +107,5 @@ F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchE
 F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\NHunspell.dll
 F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\NHunspell.pdb
 F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine_Content.g.cs
+D:\Git\SearchEngine\SearchEngine\SearchEngine\bin\Debug\NHunspell.dll
+D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine_Content.g.cs

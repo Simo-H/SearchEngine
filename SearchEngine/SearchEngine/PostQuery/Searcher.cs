@@ -211,8 +211,8 @@ namespace SearchEngine.PostQuery
         public List<string> HunspellSynonymsList(List<string> query)
         {
             List<string> listOfSynonyms = new List<string>();
-            MyThes thes = new MyThes("F:\\Apps\\Git Respository\\SearchEngine\\SearchEngine\\SearchEngine\\th_en_US_new.dat");
-            using (Hunspell hunspell = new Hunspell("F:\\Apps\\Git Respository\\SearchEngine\\SearchEngine\\SearchEngine\\en_us.aff", "F:\\Apps\\Git Respository\\SearchEngine\\SearchEngine\\SearchEngine\\en_US.dic"))
+            MyThes thes = new MyThes(Directory.GetCurrentDirectory().Substring(0, Directory.GetCurrentDirectory().Length - 9)+"th_en_US_new.dat");
+            using (Hunspell hunspell = new Hunspell(Directory.GetCurrentDirectory().Substring(0, Directory.GetCurrentDirectory().Length - 9)+"en_us.aff", Directory.GetCurrentDirectory().Substring(0, Directory.GetCurrentDirectory().Length - 9)+"en_US.dic"))
             {
                 foreach (string queryTerm in query)
                 {
