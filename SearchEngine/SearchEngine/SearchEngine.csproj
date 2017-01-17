@@ -36,8 +36,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="NHunspell">
-      <HintPath>..\..\..\..\..\SearchEngine\OuterSourceCodes\nhunspell-code-d1baa762529dd9ff5a1f32eb2aeb4f64ecbaa1a5\NHunspellSamples\packages\NHunspell.1.2.5359.26126\lib\net\NHunspell.dll</HintPath>
+    <Reference Include="NHunspell, Version=1.2.5359.26126, Culture=neutral, PublicKeyToken=1ac793ea843b4366, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>PostQuery\NHunspell.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
