@@ -81,7 +81,7 @@ namespace SearchEngine.PostQuery
                 docList[doc] = totalRankeForDoc;
                 if (CounterTerminDoc==q.Length)
                 {
-                    docList[doc] = docList[doc]; //+ BonusAllQueryInDocument; //+ CheckingTitle(doc, q);
+                    docList[doc] = docList[doc]+ BonusAllQueryInDocument+ CheckingTitle(doc, q);
                 }
             }
             return docList;
@@ -169,13 +169,16 @@ namespace SearchEngine.PostQuery
                 string float_sim = "0";
                 string Run_id = "mt";
 
-
-                foreach (int qcode in rankingList.Keys)
+                
+                             
+               foreach (int qcode in rankingList.Keys)
                 {
                     for (int i = 0; i < rankingList[qcode].Count; i++)
-                    {
+                      // for (int i = 0; i < 51; i++)
 
-                    bw.Write(qcode.ToString()+" ");
+                        {
+
+                            bw.Write(qcode.ToString()+" ");
                     bw.Write(iter+" ");
                     bw.Write(rankingList[qcode][i]+" ");
                     bw.Write(Rank+" ");
