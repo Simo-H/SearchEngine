@@ -61,7 +61,7 @@ namespace SearchEngine.PostQuery
             foreach (int queryResult in QueriesResults.Keys)
             {
                 //Ranker.top50Results(
-                foreach (string docNo in QueriesResults[queryResult])
+                foreach (string docNo in Ranker.top50Results(QueriesResults[queryResult]))
                 {
                     if (qrelsDictionary[queryResult].ContainsKey(docNo) && qrelsDictionary[queryResult][docNo]== 1)
                     {
