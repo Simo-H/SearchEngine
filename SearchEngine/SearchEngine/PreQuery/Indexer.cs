@@ -128,7 +128,7 @@ namespace SearchEngine.PreQuery
                 string posting;
                 if (tempDic.TryGetValue(term, out posting))
                 {
-                    posting += "#" + doc + "," + uniqueDic[term];
+                    tempDic[term] += "#" + doc + "," + uniqueDic[term];
                 }
                 else
                 {
@@ -330,7 +330,7 @@ namespace SearchEngine.PreQuery
         /// </summary>
         /// <param name="uniqueDictionary">a term dictionary from a single document</param>
         public void addUniqueDicToMainDic(Dictionary<string, int> uniqueDictionary)
-        {            
+        {
             foreach (string term in uniqueDictionary.Keys)
             {
                 TermInfo ti;

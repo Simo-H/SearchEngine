@@ -50,7 +50,7 @@ namespace SearchEngine.PostQuery
             ReadQrels(qrelsFilePath);
             double bestScore = testRun(out optk1,out optk2,out optb,path);
             double totalrecall = optimalRecall();
-            Debug.WriteLine("k1= "+optk1+" k2= "+" b= "+optb);
+            Debug.WriteLine("k1= "+optk1+" k2= "+optk2 +" b= "+optb);
             Debug.WriteLine(bestScore / totalrecall);
             return bestScore / totalrecall;
         }
@@ -58,16 +58,20 @@ namespace SearchEngine.PostQuery
         public int compareResults(ObservableDictionary<int, List<string>> QueriesResults)
         {
             int recall = 0;
+            int hasTitle = 0;
             foreach (int queryResult in QueriesResults.Keys)
             {
                 //Ranker.top50Results(
-                foreach (string docNo in Ranker.top50Results(QueriesResults[queryResult]))
+                    int qrecall = 0;
+                foreach (string docNo in (QueriesResults[queryResult]))
                 {
                     if (qrelsDictionary[queryResult].ContainsKey(docNo) && qrelsDictionary[queryResult][docNo]== 1)
                     {
-                        recall++;
+                        qrecall++;
                     }
                 }
+                    Debug.WriteLine("Query ID: "+queryResult+" , Relevant: "+qrecall);
+                recall += qrecall;
             }
             return recall;
         }
@@ -79,11 +83,11 @@ namespace SearchEngine.PostQuery
             double bestk1 = 0;
             double bestk2 = 0;
             double bestb = 0;
-            for (double k1 = 0; k1 <= 2; k1+=0.1)
+            for (double k1 = 1.2; k1 <= 1.2; k1+=0.1)
             {
-                for (double k2 = 50; k2 <= 150; k2+=5)
+                for (double k2 = 100; k2 <= 100; k2+=5)
                 {
-                    for (double b = 0.5; b <= 0.1; b+=0.05)
+                    for (double b = 0.75; b <= 0.75; b+=0.05)
                     {
                         postQuery.ranker = new Ranker(ref indexer,ref postQuery.searcher,k1,k2,b );
                         postQuery.queriesFile(Properties.Settings.Default.postingFiles + "\\queries.txt", "All languages", path);
@@ -122,6 +126,11 @@ namespace SearchEngine.PostQuery
         public void findOptimizedParameters(string path)
         {
             Optimize(Properties.Settings.Default.postingFiles + "\\qrels.txt",path);
+        }
+
+        public void hasTitle()
+        {
+            Debug.WriteLine(indexer.mainTermDictionary["state"].df);
         }
     }
 }

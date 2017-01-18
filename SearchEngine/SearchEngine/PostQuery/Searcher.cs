@@ -179,29 +179,29 @@ namespace SearchEngine.PostQuery
                     i++;
                 }
             }
-            foreach (string queryTerm in query)
-            {
-                string[] a = Lexicon.FindSynonyms(queryTerm, PartsOfSpeech.Noun, true);
-                if (a != null)
-                {
-                Synonyms.AddRange(a);
+            //foreach (string queryTerm in query)
+            //{
+                //string[] a = Lexicon.FindSynonyms(queryTerm, PartsOfSpeech.Noun, true);
+                //if (a != null)
+                //{
+                //Synonyms.AddRange(a);
                     
-                }
-                string[] b = Lexicon.FindSynonyms(queryTerm, PartsOfSpeech.Verb, true);
-                if (b != null)
-                {
-                    Synonyms.AddRange(b);
+                //}
+                //string[] b = Lexicon.FindSynonyms(queryTerm, PartsOfSpeech.Verb, true);
+                //if (b != null)
+                //{
+                //    Synonyms.AddRange(b);
 
-                }
-                string[] c = Lexicon.FindSynonyms(queryTerm, PartsOfSpeech.Adj, true);
-                if (c != null)
-                {
-                    Synonyms.AddRange(c);
+                //}
+                //string[] c = Lexicon.FindSynonyms(queryTerm, PartsOfSpeech.Adj, true);
+                //if (c != null)
+                //{
+                //    Synonyms.AddRange(c);
 
-                }
+                //}
                 
                 //new semnatic function also add synonyms
-            }
+            //}
             Synonyms.AddRange(HunspellSynonymsList(query));
             if (Properties.Settings.Default.stemmer)
             {

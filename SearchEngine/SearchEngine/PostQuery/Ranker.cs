@@ -85,7 +85,7 @@ namespace SearchEngine.PostQuery
                         totalRankeForDoc += rankeTermAtDoc;
                     }
                 }
-                docList[doc] = totalRankeForDoc;//+Math.Pow(2, CheckingTitle(doc, q))+ Math.Pow(1.5,CounterTerminDoc);
+                docList[doc] = totalRankeForDoc;// +Math.Pow(3, CheckingTitle(doc, q))+ Math.Pow(2,CounterTerminDoc);
                 
             }
             return docList;
