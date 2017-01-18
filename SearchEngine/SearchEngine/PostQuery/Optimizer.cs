@@ -79,11 +79,11 @@ namespace SearchEngine.PostQuery
             double bestk1 = 0;
             double bestk2 = 0;
             double bestb = 0;
-            for (double k1 = 1.2; k1 <= 1.2; k1+=0.1)
+            for (double k1 = 0; k1 <= 2; k1+=0.1)
             {
-                for (double k2 = 100; k2 <= 100; k2+=5)
+                for (double k2 = 50; k2 <= 150; k2+=5)
                 {
-                    for (double b = 0.5; b <= 0.5; b+=0.01)
+                    for (double b = 0.5; b <= 0.1; b+=0.05)
                     {
                         postQuery.ranker = new Ranker(ref indexer,ref postQuery.searcher,k1,k2,b );
                         postQuery.queriesFile(Properties.Settings.Default.postingFiles + "\\queries.txt", "All languages", path);

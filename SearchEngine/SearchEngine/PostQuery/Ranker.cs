@@ -47,7 +47,7 @@ namespace SearchEngine.PostQuery
                 N = indexer.documentDictionary.Count();
                 foreach (string item in indexer.documentDictionary.Keys)
                 {
-                    avgDocLenght = avgDocLenght + indexer.documentDictionary[item].totalNumberInDoc;
+                    avgDocLenght += indexer.documentDictionary[item].totalNumberInDoc;
                 }
                 avgDocLenght = avgDocLenght / N;
 
@@ -62,29 +62,30 @@ namespace SearchEngine.PostQuery
             }
             foreach (string doc in docList.Keys)
             {
-                DocumentInfo f = indexer.documentDictionary[doc];
+                //DocumentInfo f = indexer.documentDictionary[doc];
                 int dl = indexer.documentDictionary[doc].totalNumberInDoc;
                 double totalRankeForDoc=0;
                 double rankeTermAtDoc = 0;
                 int CounterTerminDoc = 0;
                 foreach (string term in QueryPerformances.Keys)
                 {
-                  double qfi = System.Convert.ToDouble(countNumberOfoccurencesInQuery(q,term) / System.Convert.ToDouble( q.Length));
-                    double ni = QueryPerformances[term].Count;
+                  double qfi = System.Convert.ToDouble(countNumberOfoccurencesInQuery(q,term));
+                    double df = indexer.mainTermDictionary[term].df;
                     if (QueryPerformances[term].ContainsKey(doc))
                     {
                         CounterTerminDoc++;
-                        double fi =( System.Convert.ToDouble(QueryPerformances[term][doc]));
-                        double firstPart = Math.Log(((ri + 0.5) / (R - ri + 0.5)) / ((ni - ri + 0.5) / (N - ni - R + ri + 0.5)));
+                        double tf =( System.Convert.ToDouble(QueryPerformances[term][doc]));
+                        //double firstPart = Math.Log(((ri + 0.5) / (R - ri + 0.5)) / ((ni - ri + 0.5) / (N - ni - R + ri + 0.5)));
+                        double firstPart = Math.Log((N - df + 0.5) / (df + 0.5));
                         K = k1 * ((1 - b) + b * (dl / avgDocLenght));
-                        double secondPart = ((k1 + 1) * fi) / (K + fi);
+                        double secondPart = ((k1 + 1) * tf) / (K + tf);
                         double third = ((k2 + 1) * qfi) / (k2 + qfi);
                         rankeTermAtDoc = firstPart * secondPart * third;
                         maxmin.Add(rankeTermAtDoc);/////////////////////////////////////
                         totalRankeForDoc += rankeTermAtDoc;
                     }
                 }
-                docList[doc] = totalRankeForDoc+Math.Pow(2, CheckingTitle(doc, q))+ Math.Pow(1.5,CounterTerminDoc);
+                docList[doc] = totalRankeForDoc;//+Math.Pow(2, CheckingTitle(doc, q))+ Math.Pow(1.5,CounterTerminDoc);
                 
             }
             return docList;
