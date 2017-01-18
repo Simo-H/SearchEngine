@@ -22,7 +22,7 @@
 	    HorizontalAlignment="Left"	    
 	    VerticalAlignment="Top"
 	    Width="120"
-	    
+	    ItemsSource="{Binding LanguagesList}"
 	    SelectionChanged="ComboBox_SelectionChanged" 
         SelectedItem="{Binding SelectedLanguage}"
             />
