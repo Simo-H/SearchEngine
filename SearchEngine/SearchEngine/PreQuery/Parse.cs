@@ -33,7 +33,7 @@ namespace SearchEngine.PreQuery
             string stopWordsPath = Properties.Settings.Default.sourceFilesPath + "\\stop_words.txt";
             if (File.Exists(stopWordsPath))
             {
-
+                
                 string[] stopWordsText = System.IO.File.ReadAllLines(stopWordsPath);
 
                 foreach (string word in stopWordsText)

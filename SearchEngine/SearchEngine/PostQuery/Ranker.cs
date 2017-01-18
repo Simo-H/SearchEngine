@@ -30,7 +30,7 @@ namespace SearchEngine.PostQuery
             this.shearch = shearch;
             maxmin = new List<double>();
             BonusAllQueryInDocument = 10;
-            BonusTermInTitle = 10;
+            BonusTermInTitle = 2;
             N = 0;
             ri = 0;
             R = 0;
@@ -75,21 +75,17 @@ namespace SearchEngine.PostQuery
                     {
                         CounterTerminDoc++;
                         double fi =( System.Convert.ToDouble(QueryPerformances[term][doc]));
-                        double firstPart = ((ri + 0.5) / (R - ri + 0.5)) / ((ni - ri + 0.5) / (N - ni - R + ri + 0.5));
+                        double firstPart = Math.Log(((ri + 0.5) / (R - ri + 0.5)) / ((ni - ri + 0.5) / (N - ni - R + ri + 0.5)));
                         K = k1 * ((1 - b) + b * (dl / avgDocLenght));
                         double secondPart = ((k1 + 1) * fi) / (K + fi);
                         double third = ((k2 + 1) * qfi) / (k2 + qfi);
                         rankeTermAtDoc = firstPart * secondPart * third;
-                        rankeTermAtDoc = Math.Log(rankeTermAtDoc);
                         maxmin.Add(rankeTermAtDoc);/////////////////////////////////////
                         totalRankeForDoc += rankeTermAtDoc;
                     }
                 }
-                docList[doc] = totalRankeForDoc;
-                if (CounterTerminDoc==q.Length)
-                {
-                    docList[doc] = docList[doc];// BonusAllQueryInDocument + CheckingTitle(doc, q);
-                }
+                docList[doc] = totalRankeForDoc+Math.Pow(2, CheckingTitle(doc, q))+ Math.Pow(1.5,CounterTerminDoc);
+                
             }
             return docList;
         }
@@ -141,7 +137,7 @@ namespace SearchEngine.PostQuery
                     count++;
                 }
             }
-            return count* BonusTermInTitle;
+            return count;
         }
 
         public List<string> sortRanking(ConcurrentDictionary<string, double> ranking)

@@ -203,7 +203,14 @@ namespace SearchEngine.PostQuery
                 //new semnatic function also add synonyms
             }
             Synonyms.AddRange(HunspellSynonymsList(query));
-
+            if (Properties.Settings.Default.stemmer)
+            {
+                
+                for (int i = 0; i < Synonyms.Count; i++)
+                {
+                    Synonyms[i] = stemmer.stemTerm(Synonyms[i]);
+                }
+            }
             query.AddRange(Synonyms.Distinct<string>());
             return query;
         }
