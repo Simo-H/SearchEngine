@@ -127,6 +127,49 @@ namespace SearchEngine.PostQuery
             }
             return docList;
         }
+
+
+        public ConcurrentDictionary<string, double> CosSim(string[] q, Dictionary<string, Dictionary<string, int>> QueryPerformances)
+        {
+
+            ConcurrentDictionary<string, double> docList = new ConcurrentDictionary<string, double>();
+            foreach (Dictionary<string, int> term in QueryPerformances.Values)
+            {
+                foreach (string doc in term.Keys)
+                {
+                    docList[doc] = 0;
+                }
+            }
+
+
+            double rankeTermAtDoc = 0;
+            double denominatorW = 0;
+            double denominatorWq = 0;
+
+            foreach (string doc in docList.Keys)
+            {
+
+                double maxfi = indexer.documentDictionary[doc].maxTF;
+                foreach (string term in QueryPerformances.Keys)
+                {
+                    double qfi = 1;
+                    if (QueryPerformances[term].ContainsKey(doc))
+                    {
+                        double fi = (System.Convert.ToDouble(QueryPerformances[term][doc]));
+                        double tfi = fi / maxfi;
+                        double idf = Math.Log(N / indexer.mainTermDictionary[term].df);
+
+                        rankeTermAtDoc += (tfi * idf * qfi);
+                        denominatorW += (tfi * idf)*(tfi * idf);
+                        denominatorWq += qfi * qfi;
+
+                    }
+                }
+                docList[doc] = rankeTermAtDoc/ Math.Sqrt(denominatorW* denominatorWq);
+
+            }
+            return docList;
+        }
         public double CheckingTitle(string docName, string[] q)
         {
             int count = 0;
@@ -203,14 +246,15 @@ namespace SearchEngine.PostQuery
             ConcurrentDictionary<string, double> rank25 = new ConcurrentDictionary<string, double>();
             ConcurrentDictionary<string, double> rankSim = new ConcurrentDictionary<string, double>();
             ConcurrentDictionary<string, double> total = new ConcurrentDictionary<string, double>();
-
+            ConcurrentDictionary<string, double> CosSimr = new ConcurrentDictionary<string, double>();
+            CosSimr = CosSim(q, QueryPerformances);
             rank25 = BM25(q, QueryPerformances);
             rankSim=Sim(q, QueryPerformances);
             foreach (string item in rank25.Keys)
             {
-                total[item]=0.25*rank25[item]+0.75*rankSim[item];
+                total[item] = CosSimr[item];//0.25*rank25[item]+0.75*rankSim[item];
             }
-            return rank25;
+            return CosSimr;
         }
 
         public int countNumberOfoccurencesInQuery(string[] queryArray,string query)
