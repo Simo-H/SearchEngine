@@ -319,9 +319,9 @@ namespace SearchEngine
 
         public void Optimize()
         {
-            //opt.findOptimizedParameters(Path4 + "\\Results" + ReasultFileName + ".txt");
+            opt.findOptimizedParameters(Path4 + "\\Results" + ReasultFileName + ".txt");
             //searcher.HunspellSynonymsList(new List<string>() {"car"});
-            opt.hasTitle();
+            //opt.hasTitle();
         }
 
         public List<string> getPopulating(string text)

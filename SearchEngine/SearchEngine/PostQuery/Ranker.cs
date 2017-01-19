@@ -85,7 +85,7 @@ namespace SearchEngine.PostQuery
                         totalRankeForDoc += rankeTermAtDoc;
                     }
                 }
-                docList[doc] = totalRankeForDoc;// +Math.Pow(3, CheckingTitle(doc, q))+ Math.Pow(2,CounterTerminDoc);
+                docList[doc] = totalRankeForDoc;//+Math.Pow(2, CheckingTitle(doc, q))+ Math.Pow(2,CounterTerminDoc);
                 
             }
             return docList;
@@ -178,8 +178,8 @@ namespace SearchEngine.PostQuery
                foreach (int qcode in rankingList.Keys)
                 {
                     //for (int i = 0; i < rankingList[qcode].Count; i++)
-                   int mo= Math.Min(51, rankingList[qcode].Count);
-                      for (int i = 0; i < mo; i++)
+                   //int mo= Math.Min(51, rankingList[qcode].Count);
+                      for (int i = 0; i < rankingList[qcode].Count; i++)
 
                         {
 
@@ -208,7 +208,7 @@ namespace SearchEngine.PostQuery
             rankSim=Sim(q, QueryPerformances);
             foreach (string item in rank25.Keys)
             {
-                total[item]=0.25*rank25[item]+0.75*rankSim[item];
+                total[item]=0.5*rank25[item]+0.5*rankSim[item];
             }
             return rank25;
         }
@@ -226,5 +226,10 @@ namespace SearchEngine.PostQuery
             return counter;
         }
 
+        //public ConcurrentDictionary<string, double> ICF(string[] q, Dictionary<string, Dictionary<string, int>> QueryPerformances)
+        //{
+        //    //double tf = (System.Convert.ToDouble(QueryPerformances[term][doc]));
+
+        //}
     }
 }

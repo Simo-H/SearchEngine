@@ -11,13 +11,33 @@ using NHunspell;
 
 namespace SearchEngine.PostQuery
 {
+    /// <summary>
+    /// This class returns all the documents containing the words of the query. The class methods also enhancing the query by adding semantic 
+    /// terms which are synonyms of the term in the query, thus maybe finding more relevant documents. 
+    /// </summary>
     class Searcher
     {
+        /// <summary>
+        /// A stemmer for stemming the query.
+        /// </summary>
         Stemmer stemmer;
+        /// <summary>
+        /// A parser, used to parse the qurey in the same method used in the pre query process.
+        /// </summary>
         Parse parser;
+        /// <summary>
+        /// A indexer that was built by the pre query engine, the indexer hold all the needed information to return queries results.
+        /// </summary>
         Indexer index;
+        /// <summary>
+        /// This int represent the number of synonyms term taken in account enhancing the query.
+        /// </summary>
         public int numberOfsynonyms;
-
+        /// <summary>
+        /// The ctor of the searcher
+        /// </summary>
+        /// <param name="index">referncing an index</param>
+        /// <param name="numberOfsynonyms">the number of synonyms the searcher will add to the query</param>
         public Searcher(ref Indexer index, int numberOfsynonyms)
         {
             stemmer = new Stemmer();
@@ -25,7 +45,11 @@ namespace SearchEngine.PostQuery
             this.index = index;
             this.numberOfsynonyms = numberOfsynonyms;
         }
-
+        /// <summary>
+        /// This method returned a parsed query strings.
+        /// </summary>
+        /// <param name="query">the string of the query entered by the user</param>
+        /// <returns></returns>
         public string[] ParseQuery(string query)
         {
 
@@ -94,8 +118,13 @@ namespace SearchEngine.PostQuery
             string[] q = parseQuery.ToArray();
             return q;
         }
-
-        public Dictionary<string, Dictionary<string, int>> AllQueryPerformances(string[] parseQuery, string language)
+        /// <summary>
+        /// This method
+        /// </summary>
+        /// <param name="parseQuery"></param>
+        /// <param name="language"></param>
+        /// <returns></returns>
+        public Dictionary<string, Dictionary<string, int>> AllQueryOccurrences(string[] parseQuery, string language)
         {
             Dictionary<string, Dictionary<string, int>> QueryPerformances = new Dictionary<string, Dictionary<string, int>>();
             foreach (string term in parseQuery)
@@ -181,12 +210,12 @@ namespace SearchEngine.PostQuery
             }
             //foreach (string queryTerm in query)
             //{
-                //string[] a = Lexicon.FindSynonyms(queryTerm, PartsOfSpeech.Noun, true);
-                //if (a != null)
-                //{
-                //Synonyms.AddRange(a);
-                    
-                //}
+            //    string[] a = Lexicon.FindSynonyms(queryTerm, PartsOfSpeech.Noun, true);
+            //    if (a != null)
+            //    {
+            //        Synonyms.AddRange(a);
+
+            //    }
                 //string[] b = Lexicon.FindSynonyms(queryTerm, PartsOfSpeech.Verb, true);
                 //if (b != null)
                 //{
@@ -199,13 +228,12 @@ namespace SearchEngine.PostQuery
                 //    Synonyms.AddRange(c);
 
                 //}
-                
-                //new semnatic function also add synonyms
+
+            //new semnatic function also add synonyms
             //}
             Synonyms.AddRange(HunspellSynonymsList(query));
             if (Properties.Settings.Default.stemmer)
             {
-                
                 for (int i = 0; i < Synonyms.Count; i++)
                 {
                     Synonyms[i] = stemmer.stemTerm(Synonyms[i]);
