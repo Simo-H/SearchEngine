@@ -50,7 +50,7 @@ namespace SearchEngine.PostQuery
             //List<string> queryList = searcher.AddSemantic(parseQuery.ToList());
             List<string> queryList = parseQuery.ToList();
             Dictionary<string, Dictionary<string, int>> QueryPerformances =new Dictionary<string, Dictionary<string, int>>();
-            QueryPerformances= searcher.AllQueryPerformances(queryList.ToArray(), language);
+            QueryPerformances= searcher.AllQueryOccurrences(queryList.ToArray(), language);
             ConcurrentDictionary<string, double> ranking = ranker.Ranke(queryList.ToArray(), QueryPerformances);
             QueriesResults[queryId]= ranker.sortRanking(ranking);
            
