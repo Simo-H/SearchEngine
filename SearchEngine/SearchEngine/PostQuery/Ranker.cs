@@ -264,7 +264,8 @@ namespace SearchEngine.PostQuery
             ConcurrentDictionary<string, double> rank25 = new ConcurrentDictionary<string, double>();
             ConcurrentDictionary<string, double> rankSim = new ConcurrentDictionary<string, double>();
             ConcurrentDictionary<string, double> total = new ConcurrentDictionary<string, double>();
-
+            ConcurrentDictionary<string, double> CosSimr = new ConcurrentDictionary<string, double>();
+            CosSimr = CosSim(q, QueryPerformances);
             rank25 = BM25(q, QueryPerformances);
             rankSim=Sim(q, QueryPerformances);
             foreach (string item in rank25.Keys)
