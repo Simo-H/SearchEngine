@@ -172,14 +172,16 @@ namespace SearchEngine
             get { return selectedLanguage; }
             set { selectedLanguage = value; }
         }
-
+        /// <summary>
+        /// ctor
+        /// </summary>
         public ViewModel()
         {
             QueryAutoCompleteList = new ObservableCollection<string>();
             StemmerIsChecked = false;
             SelectedLanguage = "All languages";
             pq = new PreQueryEngine();
-            postQuery = new PostQueryEngine(ref pq.indexer);
+            
             searcher = new Searcher(ref pq.indexer, 3);
             opt = new Optimizer(ref pq.indexer);
             pq.PropertyChanged += delegate (object sender, PropertyChangedEventArgs e)
@@ -288,7 +290,10 @@ namespace SearchEngine
 
         public void Search()
         {
-
+            if (postQuery != null)
+            {
+                postQuery = new PostQueryEngine(ref pq.indexer);
+            }
             postQuery.userManualSingleQuery(Query, selectedLanguage, Path4 + "\\Result" + ReasultFileName + ".txt");
             ReasultFileName++;
 
@@ -307,6 +312,10 @@ namespace SearchEngine
         }
         public void SearchQueryFile()
         {
+            if (postQuery != null)
+            {
+                postQuery = new PostQueryEngine(ref pq.indexer);
+            }
             if (File.Exists(Path3) && Directory.Exists(Path4))
             {
                 postQuery.queriesFile(Path3, SelectedLanguage, Path4 + "\\Results" + ReasultFileName+".txt");

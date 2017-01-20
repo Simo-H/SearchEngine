@@ -26,8 +26,8 @@ namespace SearchEngine.PostQuery
         /// <summary>
         /// Parameters for ranking, self explaintory
         /// </summary>
-        double k1;
-        double k2;
+        double k1_BM25Parameter;
+        double k2_BM25Parameter;
         double K;
         double b;
         int N;
@@ -48,10 +48,10 @@ namespace SearchEngine.PostQuery
         /// </summary>
         /// <param name="indexer"></param>
         /// <param name="search"></param>
-        /// <param name="k1">bm25 var</param>
-        /// <param name="k2">bm25 var</param>
+        /// <param name="k1Bm25Parameter">bm25 var</param>
+        /// <param name="k2Bm25Parameter">bm25 var</param>
         /// <param name="b">bm25 var</param>
-        public Ranker(ref Indexer indexer, ref Searcher search, double k1, double k2, double b)
+        public Ranker(ref Indexer indexer, ref Searcher search, double k1Bm25Parameter, double k2Bm25Parameter, double b)
         {
             this.indexer = indexer;
             this.search = search;
@@ -61,8 +61,8 @@ namespace SearchEngine.PostQuery
             N = 0;
             ri = 0;
             R = 0;
-            this.k1 = k1;
-            this.k2 = k2;
+            this.k1_BM25Parameter = k1Bm25Parameter;
+            this.k2_BM25Parameter = k2Bm25Parameter;
             this.b = b;
             avgDocLenght = 0;
 
@@ -109,9 +109,9 @@ namespace SearchEngine.PostQuery
                         double tf =( System.Convert.ToDouble(QueryOccurrences[term][doc]));
                         //double firstPart = Math.Log(((ri + 0.5) / (R - ri + 0.5)) / ((ni - ri + 0.5) / (N - ni - R + ri + 0.5)));
                         double firstPart = Math.Log((N - df + 0.5) / (df + 0.5));
-                        K = k1 * ((1 - b) + b * (dl / avgDocLenght));
-                        double secondPart = ((k1 + 1) * tf) / (K + tf);
-                        double third = ((k2 + 1) * qfi) / (k2 + qfi);
+                        K = k1_BM25Parameter * ((1 - b) + b * (dl / avgDocLenght));
+                        double secondPart = ((k1_BM25Parameter + 1) * tf) / (K + tf);
+                        double third = ((k2_BM25Parameter + 1) * qfi) / (k2_BM25Parameter + qfi);
                         rankeTermAtDoc = firstPart * secondPart * third;
                         maxmin.Add(rankeTermAtDoc);/////////////////////////////////////
                         totalRankeForDoc += rankeTermAtDoc;
@@ -265,7 +265,7 @@ namespace SearchEngine.PostQuery
             ConcurrentDictionary<string, double> rankSim = new ConcurrentDictionary<string, double>();
             ConcurrentDictionary<string, double> total = new ConcurrentDictionary<string, double>();
             ConcurrentDictionary<string, double> CosSimr = new ConcurrentDictionary<string, double>();
-            CosSimr = CosSim(q, QueryPerformances);
+            //CosSimr = CosSim(q, QueryPerformances);
             rank25 = BM25(q, QueryPerformances);
             rankSim=Sim(q, QueryPerformances);
             foreach (string item in rank25.Keys)
