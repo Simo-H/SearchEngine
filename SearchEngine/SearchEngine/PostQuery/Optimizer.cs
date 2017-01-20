@@ -125,7 +125,8 @@ namespace SearchEngine.PostQuery
         }
         public void findOptimizedParameters(string path)
         {
-            Optimize(Properties.Settings.Default.postingFiles + "\\qrels.txt",path);
+            //Optimize(Properties.Settings.Default.postingFiles + "\\qrels.txt",path);
+            //indexer.buildCarrot2();
         }
 
         public void hasTitle()

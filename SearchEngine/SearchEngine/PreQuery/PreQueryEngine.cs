@@ -24,6 +24,7 @@ namespace SearchEngine.PreQuery
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        
         /// <summary>
         /// A stop watch used to measure the time it take to process the corpus.
         /// </summary>
@@ -249,19 +250,28 @@ namespace SearchEngine.PreQuery
             }
 
         }
-
+        /// <summary>
+        /// This method reset the dictionaries in the indexer, deleting their content.
+        /// </summary>
         public void reset()
         {
             indexer.documentDictionary = new ConcurrentDictionary<string, DocumentInfo>();
             indexer.mainTermDictionary = new ConcurrentDictionary<string, TermInfo>();
             
         }
+        /// <summary>
+        /// Part of the MVVM architacture
+        /// </summary>
+        /// <param name="propName"></param>
         public void NotifyPropertyChanged(string propName)
         {
             if (this.PropertyChanged != null)
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
         }
-
+        /// <summary>
+        /// This methods write all the languages to a file.
+        /// </summary>
+        /// <param name="list"></param>
         public void WriteLanguagesToDisk(List<string> list)
         {
             string data = "";
@@ -271,6 +281,9 @@ namespace SearchEngine.PreQuery
             }
             File.WriteAllText(Properties.Settings.Default.postingFiles+"\\Languages.txt",data);
         }
+        /// <summary>
+        /// This method reads all the languages from the file language
+        /// </summary>
         public void ReadLanguagesFile()
         {
             string file = File.ReadAllText(Properties.Settings.Default.postingFiles + "\\Languages.txt");
@@ -281,6 +294,12 @@ namespace SearchEngine.PreQuery
             LanguagesList = list;
 
         }
+        /// <summary>
+        /// This methods add terms that comes after a specific term in the text. holding only 5 terms, the ones that occured the most.
+        /// </summary>
+        /// <param name="term"></param>
+        /// <param name="nextTerm"></param>
+        /// <param name="TermsContinuingDicAtDoc"></param>
         public void AddContinuingTerm( string term,string nextTerm, ConcurrentDictionary<string, Dictionary<string, int> > TermsContinuingDicAtDoc)
         {
             if (term != null)
@@ -306,7 +325,10 @@ namespace SearchEngine.PreQuery
                 }
             }
         }
-
+        /// <summary>
+        /// This method 
+        /// </summary>
+        /// <param name="TermsContinuingDicAtDoc"></param>
         public void AddContinuingDicToMain(ConcurrentDictionary<string, Dictionary<string, int>> TermsContinuingDicAtDoc)
         {
             int numOfMembers;
@@ -322,13 +344,13 @@ namespace SearchEngine.PreQuery
                 myList = TermsContinuingDicAtDoc[term].ToList();
                 myList.Sort((pair1, pair2) => pair1.Value.CompareTo(pair2.Value));
                 myList.Reverse(0, myList.Count);
-                    if (4 > myList.Count)
+                    if (5 > myList.Count)
                     {
                     numOfMembers = myList.Count;
                     }
                 else
                 {
-                    numOfMembers = 4;
+                    numOfMembers = 5;
 
                 }
 
@@ -341,7 +363,7 @@ namespace SearchEngine.PreQuery
                     myList = mergeList;
                     }
                     Dictionary<string, int> a = new Dictionary<string, int>();
-                for (int i = 0; i < 4 && i< myList.Count; i++)
+                for (int i = 0; i < 5 && i< myList.Count; i++)
                 {
                     a[myList[i].Key] = myList[i].Value;
 
@@ -351,6 +373,7 @@ namespace SearchEngine.PreQuery
                 
             }
         }
+
 
     }
 }

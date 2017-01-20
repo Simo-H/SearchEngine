@@ -28,7 +28,7 @@ namespace SearchEngine.PostQuery
         /// <summary>
         /// A indexer that was built by the pre query engine, the indexer hold all the needed information to return queries results.
         /// </summary>
-        Indexer index;
+        public Indexer index;
         /// <summary>
         /// This int represent the number of synonyms term taken in account enhancing the query.
         /// </summary>
@@ -119,10 +119,10 @@ namespace SearchEngine.PostQuery
             return q;
         }
         /// <summary>
-        /// This method
+        /// This method finds all the documents which hold the terms in the query, filtered by the language specified by the user
         /// </summary>
-        /// <param name="parseQuery"></param>
-        /// <param name="language"></param>
+        /// <param name="parseQuery">the term in the query</param>
+        /// <param name="language">the original language which the document were writen</param>
         /// <returns></returns>
         public Dictionary<string, Dictionary<string, int>> AllQueryOccurrences(string[] parseQuery, string language)
         {
@@ -140,7 +140,13 @@ namespace SearchEngine.PostQuery
             }
             return QueryPerformances;
         }
-
+        /// <summary>
+        /// This method use the posting file to return all the documents holding a specific term. the method first get the correct pointer 
+        /// of the term in the posting file from the term dictionary.
+        /// </summary>
+        /// <param name="term">the term which the method will search for</param>
+        /// <param name="language">the language which the documents will be returned in</param>
+        /// <returns></returns>
         public Dictionary<string, int> termDocsAndTf(string term, string language)
         {
 
@@ -184,7 +190,12 @@ namespace SearchEngine.PostQuery
             }
             return termDocsAndTf;
         }
-
+        /// <summary>
+        /// This method add synonyms word to the term in the query using to kinds of external tool. first is the word net project, second
+        /// is the hunspell thesaures dictionary
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         public List<string> AddSemantic(List<string> query)
         {
             WordNetClasses.WN wnc = new WordNetClasses.WN(Directory.GetCurrentDirectory().Substring(0, Directory.GetCurrentDirectory().Length - 9) + "PostQuery\\WordNet\\dict\\");
@@ -242,7 +253,11 @@ namespace SearchEngine.PostQuery
             query.AddRange(Synonyms.Distinct<string>());
             return query;
         }
-
+        /// <summary>
+        /// this method return a list of synonyms from the hunspell thesaraus dictionary.
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         public List<string> HunspellSynonymsList(List<string> query)
         {
             List<string> listOfSynonyms = new List<string>();

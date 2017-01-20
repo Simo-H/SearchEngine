@@ -9,6 +9,7 @@ using System.IO;
 using System.Threading;
 using System.Runtime.Serialization;
 using Microsoft.VisualBasic.FileIO;
+using Org.Carrot2.Core;
 
 namespace SearchEngine.PreQuery
 {
@@ -47,6 +48,9 @@ namespace SearchEngine.PreQuery
         /// a bool which helps prevent races, stopping the thread merging posting files.
         /// </summary>
         public bool stop;
+
+        public static readonly IList<Org.Carrot2.Core.Document> DataMiningDocuments = new List<Org.Carrot2.Core.Document>();
+
         /// <summary>
         /// ctor of the class
         /// </summary>
@@ -56,7 +60,7 @@ namespace SearchEngine.PreQuery
             stop = true;
             fileNameMutex = new Mutex();
             mergePathQueue = new ConcurrentQueue<string>();
-            mainTermDictionary = new ConcurrentDictionary<string, TermInfo>();            
+            mainTermDictionary = new ConcurrentDictionary<string, TermInfo>();
         }
         /// <summary>
         /// This methods adds a entry to the doc dictionary, extracting the document info from the meta data of the document.
@@ -79,7 +83,7 @@ namespace SearchEngine.PreQuery
         public void AddToMetaData(Dictionary<string, int> uniqeDictionary, string docName)
         {
             int max = 0;
-            int totalNumOfWord=0;
+            int totalNumOfWord = 0;
             foreach (string term in uniqeDictionary.Keys)
             {
                 totalNumOfWord = totalNumOfWord + uniqeDictionary[term];
@@ -191,13 +195,13 @@ namespace SearchEngine.PreQuery
                     {
                         BinaryReader br1 = new BinaryReader(fileStream1);
                         BinaryReader br2 = new BinaryReader(fileStream2);
-                        BinaryWriter bw = new BinaryWriter(newFileStream);                        
+                        BinaryWriter bw = new BinaryWriter(newFileStream);
                         string term1 = br1.ReadString();
                         string posting1 = br1.ReadString();
                         string term2 = br2.ReadString();
                         string posting2 = br2.ReadString();
                         long eof1 = br1.BaseStream.Length;
-                        long eof2 = br2.BaseStream.Length;                        
+                        long eof2 = br2.BaseStream.Length;
                         while (br1.BaseStream.Position != eof1 && br2.BaseStream.Position != eof2)
                         {
                             int compare = String.Compare(term1, term2);
@@ -376,7 +380,7 @@ namespace SearchEngine.PreQuery
             if (Properties.Settings.Default.stemmer)
             {
 
-                newPostingFilePath ="PostingS.bin";
+                newPostingFilePath = "PostingS.bin";
 
             }
             else
@@ -384,7 +388,7 @@ namespace SearchEngine.PreQuery
                 newPostingFilePath = "Posting.bin";
 
             }
- 
+
             FileSystem.RenameFile(postingFilePath, newPostingFilePath);
 
         }
@@ -394,7 +398,7 @@ namespace SearchEngine.PreQuery
         public void saveTermDictionary()
         {
             string fileName;
-            if(Properties.Settings.Default.stemmer)
+            if (Properties.Settings.Default.stemmer)
             {
                 fileName = Properties.Settings.Default.postingFiles + "\\TermDictionaryStemmer.bin";
             }
@@ -404,15 +408,15 @@ namespace SearchEngine.PreQuery
             }
             using (FileStream newFileStream = new FileStream(fileName, FileMode.Create))
             {
-                BinaryWriter bw = new BinaryWriter(newFileStream);                
+                BinaryWriter bw = new BinaryWriter(newFileStream);
                 foreach (var item in mainTermDictionary)
                 {
                     bw.Write(item.Key);
                     bw.Write(item.Value.df);
                     bw.Write(item.Value.cf);
                     bw.Write(item.Value.postingfilepointer);
-                    string completions="";
-                    if (item.Value.completion.Count!=0)
+                    string completions = "";
+                    if (item.Value.completion.Count != 0)
                     {
                         foreach (string next in item.Value.completion.Keys)
                         {
@@ -489,12 +493,12 @@ namespace SearchEngine.PreQuery
 
                     string[] stringSeparators = new string[] { "&&&" };
                     string[] DocumentAndShowsArray = continuing.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
-                    if (!(DocumentAndShowsArray.Length==1 && DocumentAndShowsArray[0].Equals(" ")))
+                    if (!(DocumentAndShowsArray.Length == 1 && DocumentAndShowsArray[0].Equals(" ")))
                     {
                         for (int i = 0; i < DocumentAndShowsArray.Count(); i = i + 2)
                         {
                             mainTermDictionary[term].completion[DocumentAndShowsArray[i]] = Int32.Parse(DocumentAndShowsArray[i + 1]);
-                        }  
+                        }
                     }
                     else
                     {
@@ -532,7 +536,7 @@ namespace SearchEngine.PreQuery
 
 
                     documentDictionary[DocNo] = new DocumentInfo(uniqueTerms, originalLanguage, maxTF, title, totalnumberofterms);
-                    
+
                 }
             }
         }
@@ -547,13 +551,13 @@ namespace SearchEngine.PreQuery
             using (FileStream fileStream = new FileStream(Properties.Settings.Default.postingFiles + "\\abc", FileMode.Create))
             {
                 StreamWriter sw = new StreamWriter(fileStream);
-                for (int i = listSort.Count - 1; i >= listSort.Count - 1-10; i--)
+                for (int i = listSort.Count - 1; i >= listSort.Count - 1 - 10; i--)
 
-                    {
-                        sw.WriteLine(listSort[i]);
+                {
+                    sw.WriteLine(listSort[i]);
                     foreach (var item in mainTermDictionary)
                     {
-                        if (item.Value.cf== listSort[i])
+                        if (item.Value.cf == listSort[i])
                         {
                             sw.WriteLine(item.Key);
                         }
@@ -571,12 +575,85 @@ namespace SearchEngine.PreQuery
             int sum = 0;
             foreach (var item in mainTermDictionary)
             {
-                if (item.Key.Contains("0")|| item.Key.Contains("2") || item.Key.Contains("3") || item.Key.Contains("4") || item.Key.Contains("5") || item.Key.Contains("6") ||item.Key.Contains("7") || item.Key.Contains("8") ||item.Key.Contains("9") )
+                if (item.Key.Contains("0") || item.Key.Contains("2") || item.Key.Contains("3") || item.Key.Contains("4") || item.Key.Contains("5") || item.Key.Contains("6") || item.Key.Contains("7") || item.Key.Contains("8") || item.Key.Contains("9"))
                 {
                     sum++;
                 }
             }
             return sum;
+        }
+
+        public List<string> buildCarrot2(string[] query, Dictionary<string, Dictionary<string, int>> querySearchResults)
+        {
+            Dictionary<int, string> docsTable = new Dictionary<int, string>();
+            List<string> returnedList = new List<string>();
+            List<string> queryResultDocList = new List<string>();
+            int i = 0;
+            string q = "";
+            foreach (string term in query)
+            {
+                q += term + " ";
+            }
+            q = q.Trim(' ');
+            foreach (Dictionary<string, int> term in querySearchResults.Values)
+            {
+                foreach (string doc in term.Keys)
+                {
+                    queryResultDocList.Add(doc);
+                }
+            }
+            queryResultDocList = queryResultDocList.Distinct().ToList();
+            foreach (string doc in queryResultDocList)
+            {
+                DataMiningDocuments.Add(new Org.Carrot2.Core.Document(documentDictionary[doc].title));
+                docsTable[i] = doc;
+                i++;
+            }
+
+            using (var controller = ControllerFactory.CreatePooling())
+            {
+                ProcessingResult result;
+                if (DataMiningDocuments.Count > 1000)
+                {
+                    var documents = DataMiningDocuments;
+                    var attributes = new Dictionary<string, object>();
+                    attributes[AttributeNames.Documents] = documents;
+                    attributes[AttributeNames.Query] = q;
+                    result = controller.Process(attributes, Algorithms.List.STC());
+                }
+
+                else
+                {
+                    var documents = DataMiningDocuments;
+                    var attributes = new Dictionary<string, object>();
+                    attributes[AttributeNames.Documents] = documents;
+                    attributes["LingoClusteringAlgorithm.clusterMergingThreshold"] = 0.9;
+                    attributes["LingoClusteringAlgorithm.desiredClusterCountBase"] = 25;
+                    attributes[AttributeNames.Query] = q;
+                    result = controller.Process(attributes, Algorithms.List.Lingo());
+                }
+
+                double bestClusterScore = 0;
+                Cluster bestCluster = null;
+                foreach (Cluster c in result.Clusters)
+                {
+                    if (c.Score > bestClusterScore)
+                    {
+                        bestClusterScore = c.Score;
+                        bestCluster = c;
+                    }
+                }
+                List<Org.Carrot2.Core.Document> bestClusterDocuments = new List<Document>();
+                //bestClusterDocuments.AddRange(bestCluster.AllDocuments);
+                bestClusterDocuments.AddRange(result.Clusters[1].AllDocuments);
+                foreach (var doc in bestClusterDocuments)
+                {
+                    returnedList.Add(docsTable[doc.Id]);
+                }
+                return returnedList;
+
+            }
+
         }
     }
 }

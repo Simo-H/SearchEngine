@@ -107,4 +107,18 @@ F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\NHunspe
 F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine_Content.g.cs
 D:\Git\SearchEngine\SearchEngine\SearchEngine\bin\Debug\NHunspell.dll
 D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine_Content.g.cs
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\IKVM.OpenJDK.Beans.dll
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\IKVM.OpenJDK.Charsets.dll
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\IKVM.OpenJDK.Core.dll
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\IKVM.OpenJDK.Management.dll
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\IKVM.OpenJDK.Security.dll
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\IKVM.OpenJDK.Text.dll
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\IKVM.OpenJDK.Util.dll
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\IKVM.OpenJDK.XML.API.dll
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\IKVM.OpenJDK.XML.Parse.dll
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\IKVM.Runtime.dll
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\Org.Carrot2.Core.dll
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\Org.Carrot2.Core.NET.dll
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\Org.Carrot2.Optional.Chinese.dll
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\Org.Carrot2.Optional.Polish.dll
 F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.csprojResolveAssemblyReference.cache

@@ -16,8 +16,13 @@ using SearchEngine.PreQuery;
 
 namespace SearchEngine
 {
+    /// <summary>
+    /// view model class, the link between the pre query enginge and the post query enging to the view part.
+    /// Implemention of the MVVM architacture
+    /// </summary>
     public class ViewModel : INotifyPropertyChanged
     {
+        
         static int ReasultFileName = 1;
         private PreQueryEngine pq;
         PostQueryEngine postQuery;
