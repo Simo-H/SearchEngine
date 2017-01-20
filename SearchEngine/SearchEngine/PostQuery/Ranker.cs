@@ -85,7 +85,7 @@ namespace SearchEngine.PostQuery
                         totalRankeForDoc += rankeTermAtDoc;
                     }
                 }
-                docList[doc] = totalRankeForDoc;//+Math.Pow(2, CheckingTitle(doc, q))+ Math.Pow(2,CounterTerminDoc);
+                docList[doc] = totalRankeForDoc;//+Math.Pow(3, CheckingTitle(doc, q))+ Math.Pow(2,CounterTerminDoc);
                 
             }
             return docList;
@@ -94,6 +94,7 @@ namespace SearchEngine.PostQuery
 
         public ConcurrentDictionary<string, double> Sim(string[] q, Dictionary<string, Dictionary<string, int>> QueryPerformances)
         {
+            N = indexer.documentDictionary.Count();
 
             ConcurrentDictionary<string, double> docList = new ConcurrentDictionary<string, double>();
             foreach (Dictionary<string, int> term in QueryPerformances.Values)
@@ -131,6 +132,7 @@ namespace SearchEngine.PostQuery
 
         public ConcurrentDictionary<string, double> CosSim(string[] q, Dictionary<string, Dictionary<string, int>> QueryPerformances)
         {
+            N = indexer.documentDictionary.Count();
 
             ConcurrentDictionary<string, double> docList = new ConcurrentDictionary<string, double>();
             foreach (Dictionary<string, int> term in QueryPerformances.Values)
@@ -157,7 +159,8 @@ namespace SearchEngine.PostQuery
                     {
                         double fi = (System.Convert.ToDouble(QueryPerformances[term][doc]));
                         double tfi = fi / maxfi;
-                        double idf = Math.Log(N / indexer.mainTermDictionary[term].df);
+
+                        double idf =Math.Log (N / indexer.mainTermDictionary[term].df);
 
                         rankeTermAtDoc += (tfi * idf * qfi);
                         denominatorW += (tfi * idf)*(tfi * idf);
@@ -165,7 +168,9 @@ namespace SearchEngine.PostQuery
 
                     }
                 }
-                docList[doc] = rankeTermAtDoc/ Math.Sqrt(denominatorW* denominatorWq);
+                double T = indexer.documentDictionary[doc].W;
+                double F =T* denominatorWq;
+                docList[doc] =(double) rankeTermAtDoc/ (double)Math.Sqrt(F);
 
             }
             return docList;
@@ -221,8 +226,8 @@ namespace SearchEngine.PostQuery
                foreach (int qcode in rankingList.Keys)
                 {
                     //for (int i = 0; i < rankingList[qcode].Count; i++)
-                   //int mo= Math.Min(51, rankingList[qcode].Count);
-                      for (int i = 0; i < rankingList[qcode].Count; i++)
+                   int mo= Math.Min(51, rankingList[qcode].Count);
+                      for (int i = 0; i < mo; i++)
 
                         {
 
@@ -252,7 +257,7 @@ namespace SearchEngine.PostQuery
             rankSim=Sim(q, QueryPerformances);
             foreach (string item in rank25.Keys)
             {
-                total[item]=0.5*rank25[item]+0.5*rankSim[item];
+                total[item]=rank25[item]+0.05*CosSimr[item];
             }
             return rank25;
         }
