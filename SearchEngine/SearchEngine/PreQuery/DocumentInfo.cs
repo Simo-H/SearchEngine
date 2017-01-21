@@ -12,6 +12,7 @@ namespace SearchEngine.PreQuery
     /// </summary>
     public class DocumentInfo
     {
+        public double W;
         /// <summary>
         /// The amount of unique term in the document (without duplicates).
         /// </summary>
@@ -40,13 +41,14 @@ namespace SearchEngine.PreQuery
         /// <param name="originalLanguage"></param>
         /// <param name="maxTF"></param>
         /// <param name="title"></param>
-        public DocumentInfo(int uniqueTerms,string originalLanguage,int maxTF,string title, int totalNumberInDoc)
+        public DocumentInfo(int uniqueTerms,string originalLanguage,int maxTF,string title, int totalNumberInDoc,double w)
         {
             this.uniqueTerms = uniqueTerms;
             this.originalLanguage = originalLanguage;
             this.maxTF = maxTF;
             this.title = title;
             this.totalNumberInDoc = totalNumberInDoc;
+            this.W = w;
         }
         /// <summary>
         /// A more complex ctor of the object, given a meta data of a document, the ctor extract the document info and create an object describing the document.

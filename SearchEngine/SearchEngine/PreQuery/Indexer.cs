@@ -457,6 +457,7 @@ namespace SearchEngine.PreQuery
                     bw.Write(item.Value.maxTF);
                     bw.Write(item.Value.title);
                     bw.Write(item.Value.totalNumberInDoc);
+                    bw.Write(item.Value.W);
                 }
                 bw.Flush();
             }
@@ -533,10 +534,11 @@ namespace SearchEngine.PreQuery
                     int maxTF = br.ReadInt32();
                     string title = br.ReadString();
                     int totalnumberofterms = br.ReadInt32();
+                    double w = br.ReadDouble();
 
 
-                    documentDictionary[DocNo] = new DocumentInfo(uniqueTerms, originalLanguage, maxTF, title, totalnumberofterms);
-
+                    documentDictionary[DocNo] = new DocumentInfo(uniqueTerms, originalLanguage, maxTF, title, totalnumberofterms,w);
+                    
                 }
             }
         }

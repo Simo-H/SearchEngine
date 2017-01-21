@@ -81,6 +81,7 @@ namespace SearchEngine.PostQuery
                 foreach (string doc in term.Keys)
                 {
                     docList[doc] = 0;
+                    bounus[doc] = 0;
                 }
             }
             foreach (string doc in docList.Keys)
@@ -120,6 +121,7 @@ namespace SearchEngine.PostQuery
         /// <returns></returns>
         public ConcurrentDictionary<string, double> Sim(string[] q, Dictionary<string, Dictionary<string, int>> QueryOccurrences)
         {
+            N = indexer.documentDictionary.Count();
 
             ConcurrentDictionary<string, double> docList = new ConcurrentDictionary<string, double>();
             foreach (Dictionary<string, int> term in QueryOccurrences.Values)
@@ -153,12 +155,53 @@ namespace SearchEngine.PostQuery
             }
             return docList;
         }
-        /// <summary>
-        /// This method check if the title holds term from the query. return the number of matching words.
-        /// </summary>
-        /// <param name="docName"></param>
-        /// <param name="q"></param>
-        /// <returns></returns>
+
+
+        public ConcurrentDictionary<string, double> CosSim(string[] q, Dictionary<string, Dictionary<string, int>> QueryPerformances)
+        {
+            N = indexer.documentDictionary.Count();
+
+            ConcurrentDictionary<string, double> docList = new ConcurrentDictionary<string, double>();
+            foreach (Dictionary<string, int> term in QueryPerformances.Values)
+            {
+                foreach (string doc in term.Keys)
+                {
+                    docList[doc] = 0;
+                }
+            }
+
+
+            double rankeTermAtDoc = 0;
+            double denominatorW = 0;
+            double denominatorWq = 0;
+
+            foreach (string doc in docList.Keys)
+            {
+
+                double maxfi = indexer.documentDictionary[doc].maxTF;
+                foreach (string term in QueryPerformances.Keys)
+                {
+                    double qfi = 1;
+                    if (QueryPerformances[term].ContainsKey(doc))
+                    {
+                        double fi = (System.Convert.ToDouble(QueryPerformances[term][doc]));
+                        double tfi = fi / maxfi;
+
+                        double idf =Math.Log (N / indexer.mainTermDictionary[term].df);
+
+                        rankeTermAtDoc += (tfi * idf * qfi);
+                        denominatorW += (tfi * idf)*(tfi * idf);
+                        denominatorWq += qfi * qfi;
+
+                    }
+                }
+                double T = indexer.documentDictionary[doc].W;
+                double F =T* denominatorWq;
+                docList[doc] =(double) rankeTermAtDoc/ (double)Math.Sqrt(F);
+
+            }
+            return docList;
+        }
         public double CheckingTitle(string docName, string[] q)
         {
             int count = 0;

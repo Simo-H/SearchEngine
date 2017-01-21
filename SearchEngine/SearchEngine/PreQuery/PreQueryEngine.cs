@@ -137,7 +137,7 @@ namespace SearchEngine.PreQuery
                                 AddTermUniqe(parsedTerm1, uniqeTermsAtDoc);
                                 if (i>0)
                                 {
-                                        AddContinuingTerm(lastParsTerm, parsedTerm1, ContinuTermsFileDic);
+                                        AddAutoCompletion(lastParsTerm, parsedTerm1, ContinuTermsFileDic);
                                 }
                                 lastParsTerm = parsedTerm1;
 
@@ -164,7 +164,7 @@ namespace SearchEngine.PreQuery
                                     AddTermUniqe(parsedTerm1, uniqeTermsAtDoc);
                                     if (i > 0)
                                     {
-                                        AddContinuingTerm(lastParsTerm, parsedTerm1, ContinuTermsFileDic);
+                                        AddAutoCompletion(lastParsTerm, parsedTerm1, ContinuTermsFileDic);
                                     }
                                     lastParsTerm = parsedTerm1;
 
@@ -175,6 +175,8 @@ namespace SearchEngine.PreQuery
                     }
                     indexer.AddToMetaData(uniqeTermsAtDoc, docNo);
 
+                    CalWij(uniqeTermsAtDoc, docNo);
+
                     indexer.addUniqueDicToTempDic(ref tempFileDictionary, uniqeTermsAtDoc, docNo);
 
                     indexer.addUniqueDicToMainDic(uniqeTermsAtDoc);
@@ -182,7 +184,7 @@ namespace SearchEngine.PreQuery
                 });
 
                 indexer.addFileDicToDisk(tempFileDictionary);
-                AddContinuingDicToMain(ContinuTermsFileDic);
+                AddCompletionDicToMain(ContinuTermsFileDic);
             }
             indexer.stop = false;
             //t.Join();
@@ -372,6 +374,21 @@ namespace SearchEngine.PreQuery
                 }
                 
             }
+        }
+        public void CalWij(Dictionary<string,int> dic,string doc)
+        {
+            int length = 0;
+            double total=0;
+            foreach (var item in dic.Keys)
+            {
+                length += dic[item];
+            }
+            foreach (var item in dic.Keys)
+            {
+                total += ((double)dic[item]/ (double)length)* ((double)dic[item] / (double)length);
+            }
+            //return total;
+            indexer.documentDictionary[doc].W = total;
         }
 
 
