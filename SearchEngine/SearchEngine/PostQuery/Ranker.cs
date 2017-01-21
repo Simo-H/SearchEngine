@@ -265,7 +265,7 @@ namespace SearchEngine.PostQuery
             {
                 if (semanticQuery.ContainsKey(item))
                 {
-                total[item] = rank25[item] + bonuses[item] + 2;
+                total[item] = rank25[item] + bonuses[item] + 4;
                     
                 }
                 else
