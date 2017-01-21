@@ -108,3 +108,26 @@ F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchE
 D:\Git\SearchEngine\SearchEngine\SearchEngine\bin\Debug\NHunspell.dll
 D:\Git\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine_Content.g.cs
 F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.csprojResolveAssemblyReference.cache
+C:\Users\Stav\Desktop\SearchEngine\SearchEngine\SearchEngine\bin\Debug\SearchEngine.exe.config
+C:\Users\Stav\Desktop\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.exe
+C:\Users\Stav\Desktop\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.pdb
+C:\Users\Stav\Desktop\SearchEngine\SearchEngine\SearchEngine\bin\Debug\SearchEngine.exe
+C:\Users\Stav\Desktop\SearchEngine\SearchEngine\SearchEngine\bin\Debug\SearchEngine.pdb
+C:\Users\Stav\Desktop\SearchEngine\SearchEngine\SearchEngine\bin\Debug\NHunspell.dll
+C:\Users\Stav\Desktop\SearchEngine\SearchEngine\SearchEngine\bin\Debug\WordNetClasses.dll
+C:\Users\Stav\Desktop\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.csprojResolveAssemblyReference.cache
+C:\Users\Stav\Desktop\SearchEngine\SearchEngine\SearchEngine\obj\Debug\MainWindow.g.cs
+C:\Users\Stav\Desktop\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ResultsAllQueries.g.cs
+C:\Users\Stav\Desktop\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ResultsSingleQuery.g.cs
+C:\Users\Stav\Desktop\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ShowDictionary.g.cs
+C:\Users\Stav\Desktop\SearchEngine\SearchEngine\SearchEngine\obj\Debug\App.g.cs
+C:\Users\Stav\Desktop\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine_Content.g.cs
+C:\Users\Stav\Desktop\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine_MarkupCompile.cache
+C:\Users\Stav\Desktop\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine_MarkupCompile.lref
+C:\Users\Stav\Desktop\SearchEngine\SearchEngine\SearchEngine\obj\Debug\MainWindow.baml
+C:\Users\Stav\Desktop\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ResultsAllQueries.baml
+C:\Users\Stav\Desktop\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ResultsSingleQuery.baml
+C:\Users\Stav\Desktop\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ShowDictionary.baml
+C:\Users\Stav\Desktop\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.g.resources
+C:\Users\Stav\Desktop\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.Properties.Resources.resources
+C:\Users\Stav\Desktop\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.csproj.GenerateResource.Cache

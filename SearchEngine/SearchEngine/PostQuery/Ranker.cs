@@ -53,11 +53,14 @@ namespace SearchEngine.PostQuery
 
             }
             ConcurrentDictionary<string, double> docList = new ConcurrentDictionary<string, double>();
+            ConcurrentDictionary<string, double> bounus = new ConcurrentDictionary<string, double>();
+
             foreach (Dictionary<string, int> term in QueryPerformances.Values)
             {
                 foreach (string doc in term.Keys)
                 {
                     docList[doc] = 0;
+                    bounus[doc] = 0;
                 }
             }
             foreach (string doc in docList.Keys)
@@ -85,8 +88,9 @@ namespace SearchEngine.PostQuery
                         totalRankeForDoc += rankeTermAtDoc;
                     }
                 }
-                docList[doc] = totalRankeForDoc;//+Math.Pow(3, CheckingTitle(doc, q))+ Math.Pow(2,CounterTerminDoc);
-                
+                docList[doc] = totalRankeForDoc;//+10* CheckingTitle(doc, q)+ 20*CounterTerminDoc;
+                bounus[doc] += CounterTerminDoc*20+ 10 * CheckingTitle(doc, q);
+
             }
             return docList;
         }
@@ -252,8 +256,8 @@ namespace SearchEngine.PostQuery
             ConcurrentDictionary<string, double> rankSim = new ConcurrentDictionary<string, double>();
             ConcurrentDictionary<string, double> total = new ConcurrentDictionary<string, double>();
             ConcurrentDictionary<string, double> CosSimr = new ConcurrentDictionary<string, double>();
-            CosSimr = CosSim(q, QueryPerformances);
             rank25 = BM25(q, QueryPerformances);
+            CosSimr = CosSim(q, QueryPerformances);
             rankSim=Sim(q, QueryPerformances);
             foreach (string item in rank25.Keys)
             {
