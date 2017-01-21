@@ -202,8 +202,10 @@ namespace SearchEngine.PostQuery
         /// <returns></returns>
         public List<string> AddSemantic(List<string> query)
         {
+            WordNetClasses.WN wnc = new WordNetClasses.WN(Directory.GetCurrentDirectory().Substring(0, Directory.GetCurrentDirectory().Length - 9) + "PostQuery\\WordNet\\dict\\");
             List<string> Synonyms = new List<string>();
             query = query.Distinct().ToList();
+            //Synonyms.AddRange(WordNetExtraTerms(query));
             Synonyms.AddRange(HunspellSynonymsList(query));
             Synonyms.AddRange(WordNetSynonymsList(query));
             if (!Properties.Settings.Default.stemmer)
@@ -216,10 +218,9 @@ namespace SearchEngine.PostQuery
                     i++;
                 }
             }
-            Synonyms.AddRange(WordNetExtraTerms(query));
             Synonyms = Synonyms.Distinct().ToList();
             Synonyms = Synonyms.Except(query).ToList();
-            //Synonyms = Synonyms.Take(query.Count*2).ToList();
+            Synonyms = Synonyms.Take(query.Count+1).ToList();
             if (Properties.Settings.Default.stemmer)
             {
                 for (int i = 0; i < Synonyms.Count; i++)
@@ -288,7 +289,7 @@ namespace SearchEngine.PostQuery
 
         public List<string> WordNetSynonymsList(List<string> query)
         {
-            WordNetClasses.WN wnc = new WordNetClasses.WN(Directory.GetCurrentDirectory().Substring(0, Directory.GetCurrentDirectory().Length - 9) + "PostQuery\\WordNet\\dict\\");
+            
             List<string> WordNetSynonymsList = new List<string>();
             foreach (string term in query)
             {

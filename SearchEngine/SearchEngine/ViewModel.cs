@@ -22,8 +22,6 @@ namespace SearchEngine
     /// </summary>
     public class ViewModel : INotifyPropertyChanged
     {
-        
-        static int ReasultFileName = 1;
         private PreQueryEngine pq;
         PostQueryEngine postQuery;
         private Optimizer opt;
@@ -76,7 +74,6 @@ namespace SearchEngine
         {
             get
             {
-                
                 List<ResultsSingleQuery> resultList = new List<ResultsSingleQuery>();
                 foreach (int item in postQuery.QueriesResults.Keys)
                 {
@@ -84,6 +81,7 @@ namespace SearchEngine
                 }
                 return resultList;
             }
+            //set { postQuery.QueriesResults = new ObservableDictionary<int, List<string>>(); }
 
         }
 
@@ -294,9 +292,15 @@ namespace SearchEngine
             {
                 postQuery = new PostQueryEngine(ref pq.indexer);
             }
-            postQuery.userManualSingleQuery(Query, selectedLanguage, Path4 + "\\Result" + ReasultFileName + ".txt");
-            ReasultFileName++;
-
+            if (Path4 == null || (Directory.Exists(Path4)  ||Path4.Length==0 ))
+            {
+            postQuery.userManualSingleQuery(Query, selectedLanguage, Path4 + "\\Results.txt");
+                
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("Invalid save-to path.");
+            }
 
         }
 
@@ -312,28 +316,25 @@ namespace SearchEngine
         }
         public void SearchQueryFile()
         {
+            
             if (postQuery == null)
             {
                 postQuery = new PostQueryEngine(ref pq.indexer);
             }
-            if (File.Exists(Path3) && Directory.Exists(Path4))
+            if (Path4 != null && Directory.Exists(Path4))
             {
-                postQuery.queriesFile(Path3, SelectedLanguage, Path4 + "\\Results" + ReasultFileName+".txt");
-               postQuery.ranker.maxmin.Sort();
-
-                ReasultFileName++;
+                postQuery.queriesFile(Path3, SelectedLanguage, Path4 + "\\Results.txt");
+                
             }
             else
             {
-                System.Windows.MessageBox.Show("At least one illegal Path");
-
+                System.Windows.MessageBox.Show("Invalid save-to path.");
             }
-
         }
 
         public void Optimize()
         {
-            opt.findOptimizedParameters(Path4 + "\\Results" + ReasultFileName + ".txt");
+            opt.findOptimizedParameters(Path4 + "\\Results" + ".txt");
             //searcher.HunspellSynonymsList(new List<string>() {"car"});
             //opt.hasTitle();
         }
@@ -346,6 +347,27 @@ namespace SearchEngine
         public bool foundInTermDic(string term)
         {
             return pq.indexer.mainTermDictionary.ContainsKey(term);
+        }
+
+        public void resetQueries()
+        {
+            if (postQuery != null)
+            {
+            postQuery.QueriesResults = new ObservableDictionary<int, List<string>>();
+            if (File.Exists(Path4+"\\Results" + ".txt"))
+            {
+                File.Delete(Path4 + "\\Results" + ".txt");
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("Queries file was not found, In memory queries results were deleted.");
+            }
+                
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("Reset not available, please enter a query first.");
+            }
         }
     }
 }

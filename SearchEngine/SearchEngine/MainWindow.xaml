@@ -8,7 +8,7 @@
         xmlns:local="clr-namespace:SearchEngine"
         x:Class="SearchEngine.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="550" Width="500" ResizeMode="NoResize">
+        Title="MainWindow" Height="560" Width="510" ResizeMode="NoResize">
     <StackPanel Margin="10">
         <Label FontWeight="Bold" FontSize="14" Content="Pre query engine:"/>
 
@@ -26,7 +26,6 @@
 	    SelectionChanged="ComboBox_SelectionChanged" 
         SelectedItem="{Binding SelectedLanguage}"
             />
-            <Button x:Name="optimize" Content="Optimize" Width="75" Click="optimize_Click"/>
         </DockPanel>
         <DockPanel>
 
@@ -84,8 +83,8 @@
         </DockPanel>
 
 
-        <StackPanel   Margin="5,0,10,0" Height="49" Orientation="Horizontal"
-                      HorizontalAlignment="Center">
+        <StackPanel   Margin="53,0,47,0" Height="49" Orientation="Horizontal"
+                      HorizontalAlignment="Center" Width="374">
             <Button HorizontalAlignment="Left" x:Name="run_engine"                    
                     Content="Run query engine"
                     Height="30"
@@ -94,13 +93,13 @@
             <Button HorizontalAlignment="Center" x:Name="reset"
                     
                     
-                    Content="Reset"
+                    Content="Reset Posting and Dictionaries"
                     Height="30"
-                    Width="60" Click="reset_onClick"/>
+                    Width="171" Click="reset_onClick" Margin="0,10,0,9"/>
             <Button HorizontalAlignment="Right" x:Name="Cancel"
                     
                     
-                    Content="Cancel"
+                    Content="Exit"
                     Height="29"
                     Width="65" 
                     Margin="10" Click="Cancel_Click"/>
@@ -128,8 +127,10 @@
         <DockPanel Width="474" HorizontalAlignment="Left" Height="119" RenderTransformOrigin="0.425,0.535">
             <Label x:Name="search" Height="30" Margin="0,10,0,0" Content="Suggestions :" VerticalAlignment="Top" Width="87" HorizontalAlignment="Left"  FontWeight="Bold" RenderTransformOrigin="0.808,2.125"/>
 
-            <ListView x:Name="listView" Height="99" Margin="5,10,80,0" VerticalAlignment="Top" Width="240" ItemsSource="{Binding QueryAutoCompleteList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            <Button x:Name="button" Content="Button" Height="41" Margin="0,40,0,40" VerticalAlignment="Top" Width="55"/>
+            <ListView x:Name="listView" Height="99" Margin="5,10,0,0" VerticalAlignment="Top" Width="184" ItemsSource="{Binding QueryAutoCompleteList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button x:Name="button" Content="Show results" Height="58" VerticalAlignment="Top"  HorizontalAlignment="Left" Width="80" Margin="10,30,0,0" Click="ShowResults"/>
+            <Button x:Name="resetQueries" Content="Reset Queries" Height="58" VerticalAlignment="Top"  HorizontalAlignment="Left" Width="84" Margin="15,30,0,0" Click="ResetResults"/>
+
 
 
         </DockPanel>
@@ -138,7 +139,7 @@
                        Text="Read queries from file :" Height="28" Width="135"
                        />
             <TextBox x:Name="filePath"                     
-                     Width="204"
+                     Width="195"
                      Text="{Binding Path3, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Height="35" 
                      VerticalAlignment="Top"

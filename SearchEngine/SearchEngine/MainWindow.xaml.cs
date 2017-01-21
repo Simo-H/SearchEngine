@@ -30,6 +30,7 @@ namespace SearchEngine
     {
         private ViewModel vm;
         private ResultsAllQueries results;
+        private bool IsStem;
         public MainWindow()
         {
 
@@ -46,6 +47,7 @@ namespace SearchEngine
         }
         private void run_query_engine_onClick(object sender, RoutedEventArgs e)
         {
+            IsStem = (bool)stemmer.IsChecked;
             vm.RunQueryEngine();
         }
 
@@ -66,6 +68,7 @@ namespace SearchEngine
 
         private void LoadDictionary(object sender, RoutedEventArgs e)
         {
+            IsStem = (bool)stemmer.IsChecked;
             vm.LoadDictionaries();
         }
 
@@ -75,19 +78,30 @@ namespace SearchEngine
         }
         private void GO_onClick(object sender, RoutedEventArgs e)
         {
-            if (Directory.Exists(filePath4.Text))
+            if ((bool)stemmer.IsChecked!=IsStem)
             {
-                results = new ResultsAllQueries(ref vm);
-                vm.Search();
-                results.ShowDialog();
+                System.Windows.MessageBox.Show("The loaded dictionary does not match to the query requested, please load the correct dictionary.");
+                return;
+            }
+            if (Auto.Text.Length != 0)
+            {
+                string check = Auto.Text.Trim(new char[] { ' ' });
+                if (check.Length != 0)
+                {
+                    results = new ResultsAllQueries(ref vm);
+                    vm.Search();
+                    results.ShowDialog();
 
+                }
+                else
+                {
+                    System.Windows.MessageBox.Show("Query search line is empty. Please enter a query.");
+                }
             }
             else
             {
-                System.Windows.MessageBox.Show("The given paths is invalid");
-
+                System.Windows.MessageBox.Show("Query search line is empty. Please enter a query.");
             }
-
         }
 
         private void optimize_Click(object sender, RoutedEventArgs e)
@@ -99,17 +113,48 @@ namespace SearchEngine
 
         private void GOQueryFile_onClick(object sender, RoutedEventArgs e)
         {
+            if ((bool)stemmer.IsChecked != IsStem)
+            {
+                System.Windows.MessageBox.Show("The loaded dictionary does not match to the query requested, please load the correct dictionary.");
+                return;
+            }
+            if (File.Exists(filePath.Text) && Directory.Exists(filePath4.Text))
+            {
+                results = new ResultsAllQueries(ref vm);
+                vm.SearchQueryFile();
+                results.ShowDialog();
 
-            results = new ResultsAllQueries(ref vm);
-            vm.SearchQueryFile();
-            results.ShowDialog();
-            
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("Invalid path. please check the queries file path and the save-to path");
+            }
+
         }
 
         private void browseFile(object sender, RoutedEventArgs e)
         {
 
             vm.browseFile();
+        }
+
+        private void ShowResults(object sender, RoutedEventArgs e)
+        {
+            if (results != null)
+            {
+                results = new ResultsAllQueries(ref vm);
+                results.ShowDialog();
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("No results yet. please enter a query.");
+            }
+        }
+
+        private void ResetResults(object sender, RoutedEventArgs e)
+        {
+            vm.resetQueries();
+
         }
 
         //private void Populating(object sender, PopulatingEventArgs e)
