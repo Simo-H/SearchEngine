@@ -127,9 +127,9 @@
         </DockPanel>
         <DockPanel Width="474" HorizontalAlignment="Left" Height="119" RenderTransformOrigin="0.425,0.535">
             <Label x:Name="search" Height="30" Margin="0,10,0,0" Content="Suggestions :" VerticalAlignment="Top" Width="87" HorizontalAlignment="Left"  FontWeight="Bold" RenderTransformOrigin="0.808,2.125"/>
-            <ListView x:Name="listView" Height="99" Margin="5,10,80,0" VerticalAlignment="Top" Width="280" ItemsSource="{Binding QueryAutoCompleteList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
-                
-            </ListView>
+
+            <ListView x:Name="listView" Height="99" Margin="5,10,80,0" VerticalAlignment="Top" Width="240" ItemsSource="{Binding QueryAutoCompleteList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button x:Name="button" Content="Button" Height="41" Margin="0,40,0,40" VerticalAlignment="Top" Width="55"/>
 
 
         </DockPanel>
