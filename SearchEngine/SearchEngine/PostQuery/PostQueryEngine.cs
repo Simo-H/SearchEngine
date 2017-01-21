@@ -113,6 +113,8 @@ namespace SearchEngine.PostQuery
         /// <param name="ResultsFilePath"></param>
         public void queriesFile(string QueriesFilePath,string language, string ResultsFilePath)
         {
+            Stopwatch a = new Stopwatch();
+            a.Start();
             QueriesResults = new ObservableDictionary<int, List<string>>();
             using (FileStream queriesTextFileStream = new FileStream(QueriesFilePath, FileMode.Open))
             {
@@ -130,6 +132,8 @@ namespace SearchEngine.PostQuery
                 }
             }
             ranker.writeSingleQueryToFile(ResultsFilePath, QueriesResults);
+            a.Stop();
+            Debug.WriteLine(a.Elapsed.Seconds);
         }
 
 

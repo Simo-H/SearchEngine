@@ -2,10 +2,12 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualBasic;
 using Wnlib;
 using WnLexicon;
 using NHunspell;
@@ -214,9 +216,10 @@ namespace SearchEngine.PostQuery
                     i++;
                 }
             }
+            Synonyms.AddRange(WordNetExtraTerms(query));
             Synonyms = Synonyms.Distinct().ToList();
             Synonyms = Synonyms.Except(query).ToList();
-            Synonyms = Synonyms.Take(query.Count+1).ToList();
+            //Synonyms = Synonyms.Take(query.Count*2).ToList();
             if (Properties.Settings.Default.stemmer)
             {
                 for (int i = 0; i < Synonyms.Count; i++)
@@ -289,8 +292,6 @@ namespace SearchEngine.PostQuery
             List<string> WordNetSynonymsList = new List<string>();
             foreach (string term in query)
             {
-                Wnlib.Opt opt = Opt.at()
-                Wnlib.Search se = new Wnlib.Search(term, true, opt.pos, opt.sch, int.Parse(TextBox2.Text));
                 string[] a = Lexicon.FindSynonyms(term, PartsOfSpeech.Noun, true);
             if (a != null)
             {
@@ -332,7 +333,31 @@ namespace SearchEngine.PostQuery
             return a;
         }
 
-
+        public List<string> WordNetExtraTerms(List<string> query)
+        {
+            List<string> returnedList = new List<string>();
+            foreach (string term in query)
+            {
+            Wnlib.Search se = new Wnlib.Search(term, true, Wnlib.PartOfSpeech.of("noun"), new SearchType("DERIVATION"), 0);
+            string[] s = Strings.Split(se.buf, Constants.vbLf);
+            if (s.Length > 6)
+            {
+                string at5 = s[5];
+                string at6 = s[6];
+                at5 = at5.Split(new string[] {"--"}, StringSplitOptions.RemoveEmptyEntries)[0];
+                at6 = at6.Split(new string[] { "--" }, StringSplitOptions.RemoveEmptyEntries)[0];
+                string[] arrayAt5= at5.Split(new string[] {" ", "\t",","  },StringSplitOptions.RemoveEmptyEntries );
+                string[] arrayAt6 = at6.Split(new string[] { " ", "=>", "\t","," }, StringSplitOptions.RemoveEmptyEntries);
+                returnedList.AddRange(arrayAt5);
+                returnedList.AddRange(arrayAt6);
+                for (int i = 0; i < returnedList.Count; i++)
+                {
+                    returnedList[i] = returnedList[i].Trim(new char[] { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' });
+                }
+            }
+            }
+            return returnedList;
+        }
     }
 }
 
