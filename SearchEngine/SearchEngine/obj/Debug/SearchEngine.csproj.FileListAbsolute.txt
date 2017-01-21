@@ -121,7 +121,6 @@ F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\Org.Car
 F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\Org.Carrot2.Core.NET.dll
 F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\Org.Carrot2.Optional.Chinese.dll
 F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\bin\Debug\Org.Carrot2.Optional.Polish.dll
-F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.csprojResolveAssemblyReference.cache
 C:\Users\Stav\Desktop\SearchEngine\SearchEngine\SearchEngine\bin\Debug\SearchEngine.exe.config
 C:\Users\Stav\Desktop\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.exe
 C:\Users\Stav\Desktop\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.pdb
@@ -145,3 +144,4 @@ C:\Users\Stav\Desktop\SearchEngine\SearchEngine\SearchEngine\obj\Debug\ShowDicti
 C:\Users\Stav\Desktop\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.g.resources
 C:\Users\Stav\Desktop\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.Properties.Resources.resources
 C:\Users\Stav\Desktop\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.csproj.GenerateResource.Cache
+F:\Apps\Git Respository\SearchEngine\SearchEngine\SearchEngine\obj\Debug\SearchEngine.csprojResolveAssemblyReference.cache

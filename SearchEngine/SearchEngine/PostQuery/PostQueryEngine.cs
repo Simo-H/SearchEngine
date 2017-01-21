@@ -3,6 +3,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -78,9 +79,8 @@ namespace SearchEngine.PostQuery
             QueryTermsOccurrences = searcher.AllQueryOccurrences(queryList.ToArray(), language);
             SemanticQuery = searcher.AllQueryOccurrences(semanticQuery.ToArray(), language);
             //List<string> cluster = searcher.index.buildCarrot2(parseQuery, QueryPerformances);
-            ConcurrentDictionary<string, double> semanticRanking = ranker.CalculateTotalRank(semanticQuery.ToArray(), semanticQuery.ToArray(), SemanticQuery);
-            ConcurrentDictionary <string, double> ranking = ranker.CalculateTotalRank(queryList.ToArray(),parseQuery, QueryTermsOccurrences);
-            ranking = ranker.combineSemanticQuery(ranking, semanticRanking);
+            ConcurrentDictionary <string, double> ranking = ranker.CalculateTotalRank(queryList.ToArray(),semanticQuery, QueryTermsOccurrences, SemanticQuery);
+            
             QueriesResults[queryId]= ranker.sortRanking(ranking);
            
         }

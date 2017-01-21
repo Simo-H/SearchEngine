@@ -30,7 +30,7 @@ namespace SearchEngine.PostQuery
         double k2_BM25Parameter;
         double K_BM25Parameter;
         double b_BM25Parameter;
-        int N_TotalNumberOfDocuments;
+        double N_TotalNumberOfDocuments;
         double avgDocLenght;
         /// <summary>
         /// the amount different bonuses
@@ -81,7 +81,6 @@ namespace SearchEngine.PostQuery
                 foreach (string doc in term.Keys)
                 {
                     docList[doc] = 0;
-                    bounus[doc] = 0;
                 }
             }
             foreach (string doc in docList.Keys)
@@ -113,53 +112,13 @@ namespace SearchEngine.PostQuery
             return docList;
         }
 
-        /// <summary>
-        /// This method calculate the ranking by the inner product similarity equation
-        /// </summary>
-        /// <param name="q">query terms</param>
-        /// <param name="QueryOccurrences"></param>
-        /// <returns></returns>
-        public ConcurrentDictionary<string, double> Sim(string[] q, Dictionary<string, Dictionary<string, int>> QueryOccurrences)
-        {
-            N = indexer.documentDictionary.Count();
-
-            ConcurrentDictionary<string, double> docList = new ConcurrentDictionary<string, double>();
-            foreach (Dictionary<string, int> term in QueryOccurrences.Values)
-            {
-                foreach (string doc in term.Keys)
-                {
-                    docList[doc] = 0;
-                }
-            }
-
-
-            double rankeTermAtDoc = 0;
-            foreach (string doc in docList.Keys)
-            {
-
-                double maxfi = indexer.documentDictionary[doc].maxTF;
-                foreach (string term in QueryOccurrences.Keys)
-                {
-                    double qfi =1;
-                    if (QueryOccurrences[term].ContainsKey(doc))
-                    {
-                        double fi = (System.Convert.ToDouble(QueryOccurrences[term][doc]));
-                        double tfi = fi / maxfi;
-                        double idf = Math.Log(N_TotalNumberOfDocuments/indexer.mainTermDictionary[term].df);
-
-                        rankeTermAtDoc += tfi*idf* qfi;
-                    }
-                }
-                docList[doc]= rankeTermAtDoc;
-                
-            }
-            return docList;
-        }
+       
+    
 
 
         public ConcurrentDictionary<string, double> CosSim(string[] q, Dictionary<string, Dictionary<string, int>> QueryPerformances)
         {
-            N = indexer.documentDictionary.Count();
+            
 
             ConcurrentDictionary<string, double> docList = new ConcurrentDictionary<string, double>();
             foreach (Dictionary<string, int> term in QueryPerformances.Values)
@@ -187,7 +146,7 @@ namespace SearchEngine.PostQuery
                         double fi = (System.Convert.ToDouble(QueryPerformances[term][doc]));
                         double tfi = fi / maxfi;
 
-                        double idf =Math.Log (N / indexer.mainTermDictionary[term].df);
+                        double idf =Math.Log (N_TotalNumberOfDocuments / indexer.mainTermDictionary[term].df);
 
                         rankeTermAtDoc += (tfi * idf * qfi);
                         denominatorW += (tfi * idf)*(tfi * idf);
@@ -290,23 +249,30 @@ namespace SearchEngine.PostQuery
         /// <param name="q"></param>
         /// <param name="QueryPerformances"></param>
         /// <returns></returns>
-        public ConcurrentDictionary<string, double> CalculateTotalRank(string[] q,string[] originalQuery, Dictionary<string, Dictionary<string, int>> QueryPerformances)
+        public ConcurrentDictionary<string, double> CalculateTotalRank(string[] q,List<string> semantic, Dictionary<string, Dictionary<string, int>> QueryPerformances, Dictionary<string, Dictionary<string, int>> Semantic)
         {
             ConcurrentDictionary<string, double> rank25 = new ConcurrentDictionary<string, double>();
-            ConcurrentDictionary<string, double> rankSim = new ConcurrentDictionary<string, double>();
+            //ConcurrentDictionary<string, double> rankSim = new ConcurrentDictionary<string, double>();
             ConcurrentDictionary<string, double> total = new ConcurrentDictionary<string, double>();
-            ConcurrentDictionary<string, double> CosSimr = new ConcurrentDictionary<string, double>();
+            //ConcurrentDictionary<string, double> CosSimr = new ConcurrentDictionary<string, double>();
             ConcurrentDictionary<string, double> bonuses = new ConcurrentDictionary<string, double>();
             //CosSimr = CosSim(q, QueryOccurrences);
-            bonuses = addBonuses(originalQuery, QueryPerformances);
+            ConcurrentDictionary<string, double> semanticQuery = new ConcurrentDictionary<string, double>();
+            bonuses = addBonuses(q, QueryPerformances);
             rank25 = BM25(q, QueryPerformances);
-            //rankSim=Sim(q, QueryPerformances);
+            semanticQuery = BM25(semantic.ToArray(), Semantic);
             foreach (string item in rank25.Keys)
             {
-                total[item] = rank25[item] + bonuses[item];
+                if (semanticQuery.ContainsKey(item))
+                {
+                total[item] = rank25[item] + bonuses[item] + 2;
+                    
+                }
+                else
+                {
+                    total[item] = rank25[item] + bonuses[item];
+                }
             }
-
-            //+ Math.Pow(2, CheckingTitle(doc, q));//+ Math.Pow(2,CounterTerminDoc);
             return total;
         }
         /// <summary>
@@ -366,7 +332,7 @@ namespace SearchEngine.PostQuery
             {
                 if (SemanticQuery.Keys.Contains(originalQueryDoc))
                 {
-                    originalQuery[originalQueryDoc] += 1;
+                    originalQuery[originalQueryDoc] += 2;
                 }
             }
             return originalQuery;

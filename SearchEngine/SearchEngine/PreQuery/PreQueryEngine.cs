@@ -302,7 +302,7 @@ namespace SearchEngine.PreQuery
         /// <param name="term"></param>
         /// <param name="nextTerm"></param>
         /// <param name="TermsContinuingDicAtDoc"></param>
-        public void AddContinuingTerm( string term,string nextTerm, ConcurrentDictionary<string, Dictionary<string, int> > TermsContinuingDicAtDoc)
+        public void AddAutoCompletion( string term,string nextTerm, ConcurrentDictionary<string, Dictionary<string, int> > TermsContinuingDicAtDoc)
         {
             if (term != null)
             {
@@ -331,7 +331,7 @@ namespace SearchEngine.PreQuery
         /// This method 
         /// </summary>
         /// <param name="TermsContinuingDicAtDoc"></param>
-        public void AddContinuingDicToMain(ConcurrentDictionary<string, Dictionary<string, int>> TermsContinuingDicAtDoc)
+        public void AddCompletionDicToMain(ConcurrentDictionary<string, Dictionary<string, int>> TermsContinuingDicAtDoc)
         {
             int numOfMembers;
             List<KeyValuePair<string, int>> mergeList;

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Wnlib;
 using WnLexicon;
 using NHunspell;
+using WordNetClasses;
 
 namespace SearchEngine.PostQuery
 {
@@ -288,8 +289,9 @@ namespace SearchEngine.PostQuery
             List<string> WordNetSynonymsList = new List<string>();
             foreach (string term in query)
             {
-                
-            string[] a = Lexicon.FindSynonyms(term, PartsOfSpeech.Noun, true);
+                Wnlib.Opt opt = Opt.at()
+                Wnlib.Search se = new Wnlib.Search(term, true, opt.pos, opt.sch, int.Parse(TextBox2.Text));
+                string[] a = Lexicon.FindSynonyms(term, PartsOfSpeech.Noun, true);
             if (a != null)
             {
                 WordNetSynonymsList.AddRange(a);
