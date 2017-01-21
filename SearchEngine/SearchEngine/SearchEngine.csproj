@@ -35,52 +35,66 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="IKVM.OpenJDK.Beans">
-      <HintPath>..\..\..\..\..\My Documents\Visual Studio 2015\Projects\CarrotTest\CarrotTest\IKVM.OpenJDK.Beans.dll</HintPath>
+    <Reference Include="IKVM.OpenJDK.Beans, Version=7.2.4630.5, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>PostQuery\DataMining\IKVM.OpenJDK.Beans.dll</HintPath>
     </Reference>
-    <Reference Include="IKVM.OpenJDK.Charsets">
-      <HintPath>..\..\..\..\..\My Documents\Visual Studio 2015\Projects\CarrotTest\CarrotTest\IKVM.OpenJDK.Charsets.dll</HintPath>
+    <Reference Include="IKVM.OpenJDK.Charsets, Version=7.2.4630.5, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>PostQuery\DataMining\IKVM.OpenJDK.Charsets.dll</HintPath>
     </Reference>
-    <Reference Include="IKVM.OpenJDK.Core">
-      <HintPath>..\..\..\..\..\My Documents\Visual Studio 2015\Projects\CarrotTest\CarrotTest\IKVM.OpenJDK.Core.dll</HintPath>
+    <Reference Include="IKVM.OpenJDK.Core, Version=7.2.4630.5, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>PostQuery\DataMining\IKVM.OpenJDK.Core.dll</HintPath>
     </Reference>
-    <Reference Include="IKVM.OpenJDK.Management">
-      <HintPath>..\..\..\..\..\My Documents\Visual Studio 2015\Projects\CarrotTest\CarrotTest\IKVM.OpenJDK.Management.dll</HintPath>
+    <Reference Include="IKVM.OpenJDK.Management, Version=7.2.4630.5, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>PostQuery\DataMining\IKVM.OpenJDK.Management.dll</HintPath>
     </Reference>
-    <Reference Include="IKVM.OpenJDK.Security">
-      <HintPath>..\..\..\..\..\My Documents\Visual Studio 2015\Projects\CarrotTest\CarrotTest\IKVM.OpenJDK.Security.dll</HintPath>
+    <Reference Include="IKVM.OpenJDK.Security, Version=7.2.4630.5, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>PostQuery\DataMining\IKVM.OpenJDK.Security.dll</HintPath>
     </Reference>
-    <Reference Include="IKVM.OpenJDK.Text">
-      <HintPath>..\..\..\..\..\My Documents\Visual Studio 2015\Projects\CarrotTest\CarrotTest\IKVM.OpenJDK.Text.dll</HintPath>
+    <Reference Include="IKVM.OpenJDK.Text, Version=7.2.4630.5, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>PostQuery\DataMining\IKVM.OpenJDK.Text.dll</HintPath>
     </Reference>
-    <Reference Include="IKVM.OpenJDK.Util">
-      <HintPath>..\..\..\..\..\My Documents\Visual Studio 2015\Projects\CarrotTest\CarrotTest\IKVM.OpenJDK.Util.dll</HintPath>
+    <Reference Include="IKVM.OpenJDK.Util, Version=7.2.4630.5, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>PostQuery\DataMining\IKVM.OpenJDK.Util.dll</HintPath>
     </Reference>
-    <Reference Include="IKVM.OpenJDK.XML.API">
-      <HintPath>..\..\..\..\..\My Documents\Visual Studio 2015\Projects\CarrotTest\CarrotTest\IKVM.OpenJDK.XML.API.dll</HintPath>
+    <Reference Include="IKVM.OpenJDK.XML.API, Version=7.2.4630.5, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>PostQuery\DataMining\IKVM.OpenJDK.XML.API.dll</HintPath>
     </Reference>
-    <Reference Include="IKVM.OpenJDK.XML.Parse">
-      <HintPath>..\..\..\..\..\My Documents\Visual Studio 2015\Projects\CarrotTest\CarrotTest\IKVM.OpenJDK.XML.Parse.dll</HintPath>
+    <Reference Include="IKVM.OpenJDK.XML.Parse, Version=7.2.4630.5, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>PostQuery\DataMining\IKVM.OpenJDK.XML.Parse.dll</HintPath>
     </Reference>
-    <Reference Include="IKVM.Runtime">
-      <HintPath>..\..\..\..\..\My Documents\Visual Studio 2015\Projects\CarrotTest\CarrotTest\IKVM.Runtime.dll</HintPath>
+    <Reference Include="IKVM.Runtime, Version=7.2.4630.5, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>PostQuery\DataMining\IKVM.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="NHunspell, Version=1.2.5359.26126, Culture=neutral, PublicKeyToken=1ac793ea843b4366, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>PostQuery\NHunspell.dll</HintPath>
     </Reference>
-    <Reference Include="Org.Carrot2.Core">
-      <HintPath>..\..\..\..\..\My Documents\Visual Studio 2015\Projects\CarrotTest\CarrotTest\Org.Carrot2.Core.dll</HintPath>
+    <Reference Include="Org.Carrot2.Core, Version=3.15.0.0, Culture=neutral, PublicKeyToken=bc4ebdb74ca961ea, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>PostQuery\DataMining\Org.Carrot2.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Org.Carrot2.Core.NET">
-      <HintPath>..\..\..\..\..\My Documents\Visual Studio 2015\Projects\CarrotTest\CarrotTest\Org.Carrot2.Core.NET.dll</HintPath>
+    <Reference Include="Org.Carrot2.Core.NET, Version=1.15.0.0, Culture=neutral, PublicKeyToken=bc4ebdb74ca961ea, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>PostQuery\DataMining\Org.Carrot2.Core.NET.dll</HintPath>
     </Reference>
-    <Reference Include="Org.Carrot2.Optional.Chinese">
-      <HintPath>..\..\..\..\..\My Documents\Visual Studio 2015\Projects\CarrotTest\CarrotTest\Org.Carrot2.Optional.Chinese.dll</HintPath>
+    <Reference Include="Org.Carrot2.Optional.Chinese, Version=1.15.0.0, Culture=neutral, PublicKeyToken=bc4ebdb74ca961ea, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>PostQuery\DataMining\Org.Carrot2.Optional.Chinese.dll</HintPath>
     </Reference>
-    <Reference Include="Org.Carrot2.Optional.Polish">
-      <HintPath>..\..\..\..\..\My Documents\Visual Studio 2015\Projects\CarrotTest\CarrotTest\Org.Carrot2.Optional.Polish.dll</HintPath>
+    <Reference Include="Org.Carrot2.Optional.Polish, Version=1.15.0.0, Culture=neutral, PublicKeyToken=bc4ebdb74ca961ea, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>PostQuery\DataMining\Org.Carrot2.Optional.Polish.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
