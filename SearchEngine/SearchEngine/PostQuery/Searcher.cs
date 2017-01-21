@@ -1,5 +1,6 @@
 ﻿using SearchEngine.PreQuery;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -198,51 +199,23 @@ namespace SearchEngine.PostQuery
         /// <returns></returns>
         public List<string> AddSemantic(List<string> query)
         {
-            WordNetClasses.WN wnc = new WordNetClasses.WN(Directory.GetCurrentDirectory().Substring(0, Directory.GetCurrentDirectory().Length - 9) + "PostQuery\\WordNet\\dict\\");
             List<string> Synonyms = new List<string>();
-            if (Properties.Settings.Default.stemmer)
-            {
-                List<string> stemmedQuery = new List<string>();
-                foreach (string term in query)
-                {
-                    stemmedQuery.Add(stemmer.stemTerm(term));
-                }
-                query = stemmedQuery;
-            }
-            else
+            query = query.Distinct().ToList();
+            Synonyms.AddRange(HunspellSynonymsList(query));
+            Synonyms.AddRange(WordNetSynonymsList(query));
+            if (!Properties.Settings.Default.stemmer)
             {
                 int i = 0;
                 int count = query.Count;
                 while (i< count)
                 {
-                    query.Add(stemmer.stemTerm(query[i]));
+                    Synonyms.Add(stemmer.stemTerm(query[i]));
                     i++;
                 }
             }
-            //foreach (string queryTerm in query)
-            //{
-            //    string[] a = Lexicon.FindSynonyms(queryTerm, PartsOfSpeech.Noun, true);
-            //    if (a != null)
-            //    {
-            //        Synonyms.AddRange(a);
-
-            //    }
-                //string[] b = Lexicon.FindSynonyms(queryTerm, PartsOfSpeech.Verb, true);
-                //if (b != null)
-                //{
-                //    Synonyms.AddRange(b);
-
-                //}
-                //string[] c = Lexicon.FindSynonyms(queryTerm, PartsOfSpeech.Adj, true);
-                //if (c != null)
-                //{
-                //    Synonyms.AddRange(c);
-
-                //}
-
-            //new semnatic function also add synonyms
-            //}
-            Synonyms.AddRange(HunspellSynonymsList(query));
+            Synonyms = Synonyms.Distinct().ToList();
+            Synonyms = Synonyms.Except(query).ToList();
+            Synonyms = Synonyms.Take(query.Count+1).ToList();
             if (Properties.Settings.Default.stemmer)
             {
                 for (int i = 0; i < Synonyms.Count; i++)
@@ -250,8 +223,15 @@ namespace SearchEngine.PostQuery
                     Synonyms[i] = stemmer.stemTerm(Synonyms[i]);
                 }
             }
-            query.AddRange(Synonyms.Distinct<string>());
-            return query;
+            List<string> synonymsAfterSplit = new List<string>();
+            foreach (var VARIABLE in Synonyms)
+            {
+                synonymsAfterSplit.AddRange(VARIABLE.Split(new char[] {' ','-'},StringSplitOptions.RemoveEmptyEntries));
+            }
+            Synonyms = synonymsAfterSplit.Distinct().ToList();
+            //Synonyms = Synonyms.Except(query).ToList();
+            Synonyms = RemoveDuplicatesAndQueryTerms(Synonyms,query);
+            return Synonyms;
         }
         /// <summary>
         /// this method return a list of synonyms from the hunspell thesaraus dictionary.
@@ -264,8 +244,9 @@ namespace SearchEngine.PostQuery
             MyThes thes = new MyThes(Directory.GetCurrentDirectory().Substring(0, Directory.GetCurrentDirectory().Length - 9)+"th_en_US_new.dat");
             using (Hunspell hunspell = new Hunspell(Directory.GetCurrentDirectory().Substring(0, Directory.GetCurrentDirectory().Length - 9)+"en_us.aff", Directory.GetCurrentDirectory().Substring(0, Directory.GetCurrentDirectory().Length - 9)+"en_US.dic"))
             {
-                foreach (string queryTerm in query)
+                for (int i = 0; i < query.Count-1;  i++)
                 {
+                    string queryTerm = query[i]+" "+query[i+1];
                     ThesResult tr = thes.Lookup(queryTerm, hunspell);
                     if (tr == null)
                     {
@@ -275,11 +256,81 @@ namespace SearchEngine.PostQuery
                     {
                         listOfSynonyms.AddRange(meaning.Synonyms);
                     }
-
                 }
+                if (listOfSynonyms.Count == 0)
+                {
+                    foreach (string queryTerm in query)
+                    {
+                        ThesResult tr = thes.Lookup(queryTerm, hunspell);
+                        if (tr == null)
+                        {
+                            continue;
+                        }
+                        foreach (ThesMeaning meaning in tr.Meanings)
+                        {
+                            listOfSynonyms.AddRange(meaning.Synonyms);
+                        }
+                        listOfSynonyms = listOfSynonyms.Take(2).ToList();
+                    }
+                }
+                    foreach (var VARIABLE in listOfSynonyms)
+                    {
+                        VARIABLE.Trim(' ');
+                    }
+                
                 return listOfSynonyms;
             }
         }
+
+        public List<string> WordNetSynonymsList(List<string> query)
+        {
+            WordNetClasses.WN wnc = new WordNetClasses.WN(Directory.GetCurrentDirectory().Substring(0, Directory.GetCurrentDirectory().Length - 9) + "PostQuery\\WordNet\\dict\\");
+            List<string> WordNetSynonymsList = new List<string>();
+            foreach (string term in query)
+            {
+                
+            string[] a = Lexicon.FindSynonyms(term, PartsOfSpeech.Noun, true);
+            if (a != null)
+            {
+                WordNetSynonymsList.AddRange(a);
+
+            }
+            string[] b = Lexicon.FindSynonyms(term, PartsOfSpeech.Verb, true);
+            if (b != null)
+            {
+                WordNetSynonymsList.AddRange(b);
+
+            }
+            string[] c = Lexicon.FindSynonyms(term, PartsOfSpeech.Adj, true);
+            if (c != null)
+            {
+                WordNetSynonymsList.AddRange(c);
+
+            }
+                WordNetSynonymsList = WordNetSynonymsList.Take(2).ToList();
+                foreach (var VARIABLE in WordNetSynonymsList)
+                {
+                    VARIABLE.Trim(' ');
+                }
+            }
+            return WordNetSynonymsList.Distinct().ToList();
+            
+        }
+
+        public List<string> RemoveDuplicatesAndQueryTerms(List<string> list,List<string> query)
+        {
+            List<string> a = new List<string>();
+            foreach (string var in list)
+            {
+                if (!a.Contains(var) && !query.Contains(var))
+                {
+                    a.Add(var);
+                }
+            }
+            return a;
+        }
+
+
     }
 }
 

@@ -290,7 +290,7 @@ namespace SearchEngine
 
         public void Search()
         {
-            if (postQuery != null)
+            if (postQuery == null)
             {
                 postQuery = new PostQueryEngine(ref pq.indexer);
             }
@@ -312,7 +312,7 @@ namespace SearchEngine
         }
         public void SearchQueryFile()
         {
-            if (postQuery != null)
+            if (postQuery == null)
             {
                 postQuery = new PostQueryEngine(ref pq.indexer);
             }

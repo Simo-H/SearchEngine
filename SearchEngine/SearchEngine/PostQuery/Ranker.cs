@@ -28,17 +28,15 @@ namespace SearchEngine.PostQuery
         /// </summary>
         double k1_BM25Parameter;
         double k2_BM25Parameter;
-        double K;
-        double b;
-        int N;
-        int ri;
-        int R;
+        double K_BM25Parameter;
+        double b_BM25Parameter;
+        int N_TotalNumberOfDocuments;
         double avgDocLenght;
         /// <summary>
         /// the amount different bonuses
         /// </summary>
-        int BonusAllQueryInDocument;
-        int BonusTermInTitle;
+        int Bonus_AllQueryTermsInDocument;
+        int BonusQueryTermInTitle;
         /// <summary>
         /// an analasys varaible, return the max and min ranking. used for normalizing the rankings.
         /// </summary>
@@ -50,21 +48,23 @@ namespace SearchEngine.PostQuery
         /// <param name="search"></param>
         /// <param name="k1Bm25Parameter">bm25 var</param>
         /// <param name="k2Bm25Parameter">bm25 var</param>
-        /// <param name="b">bm25 var</param>
-        public Ranker(ref Indexer indexer, ref Searcher search, double k1Bm25Parameter, double k2Bm25Parameter, double b)
+        /// <param name="bBm25Parameter">bm25 var</param>
+        public Ranker(ref Indexer indexer, ref Searcher search, double k1Bm25Parameter, double k2Bm25Parameter, double bBm25Parameter)
         {
             this.indexer = indexer;
             this.search = search;
             maxmin = new List<double>();
-            BonusAllQueryInDocument = 10;
-            BonusTermInTitle = 2;
-            N = 0;
-            ri = 0;
-            R = 0;
+            Bonus_AllQueryTermsInDocument = 20;
+            BonusQueryTermInTitle = 10;
             this.k1_BM25Parameter = k1Bm25Parameter;
             this.k2_BM25Parameter = k2Bm25Parameter;
-            this.b = b;
-            avgDocLenght = 0;
+            this.b_BM25Parameter = bBm25Parameter;
+            N_TotalNumberOfDocuments = indexer.documentDictionary.Count();
+            foreach (string item in indexer.documentDictionary.Keys)
+            {
+                avgDocLenght += indexer.documentDictionary[item].totalNumberInDoc;
+            }
+            avgDocLenght = avgDocLenght / N_TotalNumberOfDocuments;
 
         }
         /// <summary>
@@ -75,15 +75,6 @@ namespace SearchEngine.PostQuery
         /// <returns></returns>
         public ConcurrentDictionary<string, double>  BM25(string[] q, Dictionary<string, Dictionary<string, int>> QueryOccurrences)
         {
-            if (N == 0)
-            {
-                N = indexer.documentDictionary.Count();
-                foreach (string item in indexer.documentDictionary.Keys)
-                {
-                    avgDocLenght += indexer.documentDictionary[item].totalNumberInDoc;
-                }
-                avgDocLenght = avgDocLenght / N;
-            }
             ConcurrentDictionary<string, double> docList = new ConcurrentDictionary<string, double>();
             foreach (Dictionary<string, int> term in QueryOccurrences.Values)
             {
@@ -95,22 +86,20 @@ namespace SearchEngine.PostQuery
             foreach (string doc in docList.Keys)
             {
                 //DocumentInfo f = indexer.documentDictionary[doc];
-                int dl = indexer.documentDictionary[doc].totalNumberInDoc;
+                int documentLength = indexer.documentDictionary[doc].totalNumberInDoc;
                 double totalRankeForDoc=0;
                 double rankeTermAtDoc = 0;
-                int CounterTerminDoc = 0;
                 foreach (string term in QueryOccurrences.Keys)
                 {
                   double qfi = System.Convert.ToDouble(countNumberOfoccurencesInQuery(q,term));
                     double df = indexer.mainTermDictionary[term].df;
                     if (QueryOccurrences[term].ContainsKey(doc))
                     {
-                        CounterTerminDoc++;
                         double tf =( System.Convert.ToDouble(QueryOccurrences[term][doc]));
-                        //double firstPart = Math.Log(((ri + 0.5) / (R - ri + 0.5)) / ((ni - ri + 0.5) / (N - ni - R + ri + 0.5)));
-                        double firstPart = Math.Log((N - df + 0.5) / (df + 0.5));
-                        K = k1_BM25Parameter * ((1 - b) + b * (dl / avgDocLenght));
-                        double secondPart = ((k1_BM25Parameter + 1) * tf) / (K + tf);
+                        //double firstPart = Math.Log(((ri + 0.5) / (R - ri + 0.5)) / ((ni - ri + 0.5) / (N_TotalNumberOfDocuments - ni - R + ri + 0.5)));
+                        double firstPart = Math.Log((N_TotalNumberOfDocuments - df + 0.5) / (df + 0.5));
+                        K_BM25Parameter = k1_BM25Parameter * ((1 - b_BM25Parameter) + b_BM25Parameter * (documentLength / avgDocLenght));
+                        double secondPart = ((k1_BM25Parameter + 1) * tf) / (K_BM25Parameter + tf);
                         double third = ((k2_BM25Parameter + 1) * qfi) / (k2_BM25Parameter + qfi);
                         rankeTermAtDoc = firstPart * secondPart * third;
                         maxmin.Add(rankeTermAtDoc);/////////////////////////////////////
@@ -118,8 +107,7 @@ namespace SearchEngine.PostQuery
                     }
                 }
                 docList[doc] = totalRankeForDoc;
-                    //+ Math.Pow(2, CheckingTitle(doc, q));//+ Math.Pow(2,CounterTerminDoc);
-
+                    
             }
             return docList;
         }
@@ -155,7 +143,7 @@ namespace SearchEngine.PostQuery
                     {
                         double fi = (System.Convert.ToDouble(QueryOccurrences[term][doc]));
                         double tfi = fi / maxfi;
-                        double idf = Math.Log(N/indexer.mainTermDictionary[term].df);
+                        double idf = Math.Log(N_TotalNumberOfDocuments/indexer.mainTermDictionary[term].df);
 
                         rankeTermAtDoc += tfi*idf* qfi;
                     }
@@ -199,7 +187,7 @@ namespace SearchEngine.PostQuery
             {
                 sortedRanking.Add(result.Key);
             }
-            sortedRanking = top50Results(sortedRanking);
+            //sortedRanking = top50Results(sortedRanking);
             return sortedRanking;
         }
 
@@ -259,22 +247,24 @@ namespace SearchEngine.PostQuery
         /// <param name="q"></param>
         /// <param name="QueryPerformances"></param>
         /// <returns></returns>
-        public ConcurrentDictionary<string, double> Ranke(string[] q, Dictionary<string, Dictionary<string, int>> QueryPerformances)
+        public ConcurrentDictionary<string, double> CalculateTotalRank(string[] q,string[] originalQuery, Dictionary<string, Dictionary<string, int>> QueryPerformances)
         {
             ConcurrentDictionary<string, double> rank25 = new ConcurrentDictionary<string, double>();
             ConcurrentDictionary<string, double> rankSim = new ConcurrentDictionary<string, double>();
             ConcurrentDictionary<string, double> total = new ConcurrentDictionary<string, double>();
             ConcurrentDictionary<string, double> CosSimr = new ConcurrentDictionary<string, double>();
-            //CosSimr = CosSim(q, QueryPerformances);
+            ConcurrentDictionary<string, double> bonuses = new ConcurrentDictionary<string, double>();
+            //CosSimr = CosSim(q, QueryOccurrences);
+            bonuses = addBonuses(originalQuery, QueryPerformances);
             rank25 = BM25(q, QueryPerformances);
-            rankSim=Sim(q, QueryPerformances);
+            //rankSim=Sim(q, QueryPerformances);
             foreach (string item in rank25.Keys)
             {
-                total[item]=0.5*rank25[item]+0.5*rankSim[item];
+                total[item] = rank25[item] + bonuses[item];
             }
 
             //+ Math.Pow(2, CheckingTitle(doc, q));//+ Math.Pow(2,CounterTerminDoc);
-            return rank25;
+            return total;
         }
         /// <summary>
         /// This methods calculate the number of occurrences of a specific term in the query. this calculation is needed for the various
@@ -301,12 +291,43 @@ namespace SearchEngine.PostQuery
         //    //double tf = (System.Convert.ToDouble(QueryOccurrences[term][doc]));
 
         //}
-        //public double addBonuses(string[] q, Dictionary<string, Dictionary<string, int>> QueryPerformances)
-        //{
-        //    foreach (var VARIABLE in COLLECTION)
-        //    {
-                
-        //    }
-        //}
+        public ConcurrentDictionary<string,double> addBonuses(string[] q, Dictionary<string, Dictionary<string, int>> QueryOccurrences)
+        {
+            double Bonus = 0;
+            ConcurrentDictionary<string,double> DocumentBonuses = new ConcurrentDictionary<string, double>();
+
+            foreach (var termResult in QueryOccurrences)
+            {
+                foreach (string doc in termResult.Value.Keys)
+                {
+                    if (!DocumentBonuses.ContainsKey(doc))
+                    {
+                        DocumentBonuses[doc] = 0;
+                    }
+                    DocumentBonuses[doc] += Bonus_AllQueryTermsInDocument;
+                }
+
+            }
+
+            foreach (string doc in DocumentBonuses.Keys)
+            {
+                DocumentBonuses[doc] += CheckingTitle(doc, q) * BonusQueryTermInTitle;
+
+            }
+            return DocumentBonuses;
+            }
+
+        public ConcurrentDictionary<string, double> combineSemanticQuery(ConcurrentDictionary<string, double> originalQuery, ConcurrentDictionary<string, double> SemanticQuery)
+        {
+            foreach (string originalQueryDoc in originalQuery.Keys)
+            {
+                if (SemanticQuery.Keys.Contains(originalQueryDoc))
+                {
+                    originalQuery[originalQueryDoc] += 1;
+                }
+            }
+            return originalQuery;
+        }
     }
-}
+    }
+

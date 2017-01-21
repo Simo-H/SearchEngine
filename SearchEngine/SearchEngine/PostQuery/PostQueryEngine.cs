@@ -71,15 +71,16 @@ namespace SearchEngine.PostQuery
         public  void retriveSingleQuery(string query, string language,int queryId)
         {
             string[] parseQuery = searcher.ParseQuery(query);
-            //List<string> queryList = searcher.AddSemantic(parseQuery.ToList());
+            List<string> semanticQuery = searcher.AddSemantic(parseQuery.ToList());
             List<string> queryList = parseQuery.ToList();
-            Dictionary<string, Dictionary<string, int>> QueryPerformances =new Dictionary<string, Dictionary<string, int>>();
-            QueryPerformances= searcher.AllQueryOccurrences(queryList.ToArray(), language);
+            Dictionary<string, Dictionary<string, int>> QueryTermsOccurrences =new Dictionary<string, Dictionary<string, int>>();
+            Dictionary<string, Dictionary<string, int>> SemanticQuery = new Dictionary<string, Dictionary<string, int>>();
+            QueryTermsOccurrences = searcher.AllQueryOccurrences(queryList.ToArray(), language);
+            SemanticQuery = searcher.AllQueryOccurrences(semanticQuery.ToArray(), language);
             //List<string> cluster = searcher.index.buildCarrot2(parseQuery, QueryPerformances);
-            //ObservableDictionary<int,List<string>> a = new ObservableDictionary<int, List<string>>();
-            //a[11] = cluster;
-            //ranker.writeSingleQueryToFile("C:\\Users\\Simo\\Desktop\\test.txt",a);
-            ConcurrentDictionary <string, double> ranking = ranker.Ranke(queryList.ToArray(), QueryPerformances);
+            ConcurrentDictionary<string, double> semanticRanking = ranker.CalculateTotalRank(semanticQuery.ToArray(), semanticQuery.ToArray(), SemanticQuery);
+            ConcurrentDictionary <string, double> ranking = ranker.CalculateTotalRank(queryList.ToArray(),parseQuery, QueryTermsOccurrences);
+            ranking = ranker.combineSemanticQuery(ranking, semanticRanking);
             QueriesResults[queryId]= ranker.sortRanking(ranking);
            
         }
