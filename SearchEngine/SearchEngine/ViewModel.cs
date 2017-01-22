@@ -36,14 +36,22 @@ namespace SearchEngine
             get { return query; }
             set
             {
+                try
+                {
                 query = value;
                 query = query.ToLower();
                 QueryAutoCompleteList = new ObservableCollection<string>();
-                if ( query[query.Length-1].Equals(' ')&& foundInTermDic(query.Substring(0,query.Length-1)) && query.Split(new char[] {' '} ,StringSplitOptions.RemoveEmptyEntries).Length==1)
+                if (query.Length>=0 && query[query.Length-1].Equals(' ')&& foundInTermDic(query.Substring(0,query.Length-1)) && query.Split(new char[] {' '} ,StringSplitOptions.RemoveEmptyEntries).Length==1)
                 {
                     List<string> a = new List<string>(getPopulating(query.Substring(0, query.Length - 1)));
                     QueryAutoCompleteList = new ObservableCollection<string>(a);
                     //NotifyPropertyChanged("QueryAutoCompleteList");
+                }
+
+                }
+                catch (Exception e)
+                {
+                    
                 }
             }
         }
@@ -349,6 +357,17 @@ namespace SearchEngine
             }
         }
 
+        public bool checkIfDictionaryIsLoaded()
+        {
+            if (pq.indexer.mainTermDictionary.Count !=0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         public void Optimize()
         {
             opt.findOptimizedParameters(Path4 + "\\Results" + ".txt");

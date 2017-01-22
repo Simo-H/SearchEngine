@@ -83,6 +83,11 @@ namespace SearchEngine
                 System.Windows.MessageBox.Show("The loaded dictionary does not match to the query requested, please load the correct dictionary.");
                 return;
             }
+            if (!vm.checkIfDictionaryIsLoaded())
+            {
+                System.Windows.MessageBox.Show("Dictionary not loaded. Please load a dictionary before search a query.");
+                return;
+            }
             if (Auto.Text.Length != 0)
             {
                 string check = Auto.Text.Trim(new char[] { ' ' });
@@ -116,6 +121,11 @@ namespace SearchEngine
             if ((bool)stemmer.IsChecked != IsStem)
             {
                 System.Windows.MessageBox.Show("The loaded dictionary does not match to the query requested, please load the correct dictionary.");
+                return;
+            }
+            if (!vm.checkIfDictionaryIsLoaded())
+            {
+                System.Windows.MessageBox.Show("Dictionary not loaded. Please load a dictionary before search a query.");
                 return;
             }
             if (File.Exists(filePath.Text) && Directory.Exists(filePath4.Text))
