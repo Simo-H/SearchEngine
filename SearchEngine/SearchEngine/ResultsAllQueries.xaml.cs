@@ -22,6 +22,7 @@ namespace SearchEngine
         
         public ResultsAllQueries(ref ViewModel vm)
         {
+            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             InitializeComponent();            
             DataContext = vm;
         }

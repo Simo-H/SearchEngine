@@ -85,7 +85,7 @@ namespace SearchEngine.PostQuery
             double bestb = 0;
             for (double k1 = 1.2; k1 <= 1.2; k1+=0.01)
             {
-                for (double k2 = 40; k2 <= 60; k2+=2)
+                for (double k2 = 46; k2 <= 60; k2+=2)
                 {
                     for (double b = 0.5; b <= 1; b+=0.05)
                     {

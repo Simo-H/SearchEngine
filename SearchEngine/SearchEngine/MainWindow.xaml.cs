@@ -33,7 +33,7 @@ namespace SearchEngine
         private bool IsStem;
         public MainWindow()
         {
-
+            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             InitializeComponent();
             vm = new ViewModel();
             DataContext = vm;
