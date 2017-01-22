@@ -59,7 +59,7 @@ namespace SearchEngine.PostQuery
         public PostQueryEngine(ref Indexer indexer)
         {
             searcher = new Searcher(ref indexer, 3);
-            ranker = new Ranker(ref indexer, ref searcher, 1.2, 100, 0.75);
+            ranker = new Ranker(ref indexer, ref searcher, 1.2, 40, 0.5);
             //opt = new Optimizer(ref indexer);
             //opt.Optimize(Properties.Settings.Default.postingFiles+"\\qrels.txt");
         }
@@ -71,11 +71,19 @@ namespace SearchEngine.PostQuery
         /// <param name="queryId"></param>
         public void retriveSingleQuery(string query, string language, int queryId)
         {
+            Stemmer stemmer = new Stemmer();
             string[] parseQuery = searcher.ParseQuery(query);
             List<string> semanticQuery = searcher.AddSemantic(parseQuery.ToList());
             List<string> queryList = parseQuery.ToList();
             Dictionary<string, Dictionary<string, int>> QueryTermsOccurrences = new Dictionary<string, Dictionary<string, int>>();
             Dictionary<string, Dictionary<string, int>> SemanticQuery = new Dictionary<string, Dictionary<string, int>>();
+            if (Properties.Settings.Default.stemmer)
+            {
+                for (int i = 0; i < queryList.Count; i++)
+                {
+                    queryList[i] = stemmer.stemTerm(queryList[i]);
+                }
+            }
             QueryTermsOccurrences = searcher.AllQueryOccurrences(queryList.ToArray(), language);
             SemanticQuery = searcher.AllQueryOccurrences(semanticQuery.ToArray(), language);
             //List<string> cluster = searcher.index.buildCarrot2(parseQuery, QueryPerformances);

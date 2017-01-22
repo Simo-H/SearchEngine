@@ -41,6 +41,7 @@
                     Height="25"
                     Width="90"
                     Margin =" 5" Click="showDictionary_onClick"/>
+            <Button x:Name="opt" Content="optimize" Width="75" Click="optimize_Click"/>
         </DockPanel>
 
         <Label FontWeight="Bold" FontSize="14" Content="Please select file paths :"/>

@@ -37,6 +37,7 @@ namespace SearchEngine
             set
             {
                 query = value;
+                query = query.ToLower();
                 QueryAutoCompleteList = new ObservableCollection<string>();
                 if ( query[query.Length-1].Equals(' ')&& foundInTermDic(query.Substring(0,query.Length-1)) && query.Split(new char[] {' '} ,StringSplitOptions.RemoveEmptyEntries).Length==1)
                 {

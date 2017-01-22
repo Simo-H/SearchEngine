@@ -87,19 +87,12 @@ namespace SearchEngine.PostQuery
                     if (jump >= 0)
                     {
                         i += jump;
-                        //stemmer
-                        if (Properties.Settings.Default.stemmer)
-                        {
-                            parsedTerm1 = stemmer.stemTerm(parsedTerm1);
-                        }
+                        
+                        
                         parseQuery.Add(parsedTerm1);
                         // AddTermUniqe(parsedTerm1, uniqeTermsAtDoc);
                         if (parsedTerm2 != null)
                         {
-                            if (Properties.Settings.Default.stemmer)
-                            {
-                                parsedTerm2 = stemmer.stemTerm(parsedTerm2);
-                            }
                             parseQuery.Add(parsedTerm2);
 
                             //AddTermUniqe(parsedTerm2, uniqeTermsAtDoc);
@@ -109,10 +102,6 @@ namespace SearchEngine.PostQuery
                     {
                         if (parsedTerm1 != null && !textArrayList[i].Equals("between") && !parsedTerm1.Equals(""))
                         {
-                            if (Properties.Settings.Default.stemmer)
-                            {
-                                parsedTerm1 = stemmer.stemTerm(parsedTerm1);
-                            }
                             parseQuery.Add(parsedTerm1);
                         }
                     }
@@ -221,6 +210,16 @@ namespace SearchEngine.PostQuery
             Synonyms = Synonyms.Distinct().ToList();
             Synonyms = Synonyms.Except(query).ToList();
             Synonyms = Synonyms.Take(query.Count+1).ToList();
+            List<string> synonymsAfterSplit = new List<string>();
+            foreach (var VARIABLE in Synonyms)
+            {
+                synonymsAfterSplit.AddRange(VARIABLE.Split(new char[] {' ','-'},StringSplitOptions.RemoveEmptyEntries));
+            }
+            Synonyms = synonymsAfterSplit.Distinct().ToList();
+            for (int i = 0; i < Synonyms.Count; i++)
+            {
+                Synonyms[i] = Synonyms[i].ToLower();
+            }
             if (Properties.Settings.Default.stemmer)
             {
                 for (int i = 0; i < Synonyms.Count; i++)
@@ -228,12 +227,7 @@ namespace SearchEngine.PostQuery
                     Synonyms[i] = stemmer.stemTerm(Synonyms[i]);
                 }
             }
-            List<string> synonymsAfterSplit = new List<string>();
-            foreach (var VARIABLE in Synonyms)
-            {
-                synonymsAfterSplit.AddRange(VARIABLE.Split(new char[] {' ','-'},StringSplitOptions.RemoveEmptyEntries));
-            }
-            Synonyms = synonymsAfterSplit.Distinct().ToList();
+            
             //Synonyms = Synonyms.Except(query).ToList();
             Synonyms = RemoveDuplicatesAndQueryTerms(Synonyms,query);
             return Synonyms;
