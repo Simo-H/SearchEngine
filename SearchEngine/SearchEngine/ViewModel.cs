@@ -295,7 +295,15 @@ namespace SearchEngine
             }
             if (Path4 == null || (Directory.Exists(Path4)  ||Path4.Length==0 ))
             {
-            postQuery.userManualSingleQuery(Query, selectedLanguage, Path4 + "\\Results.txt");
+                if (pq.indexer.mainTermDictionary.Count != 0)
+                {
+                    postQuery.userManualSingleQuery(Query, selectedLanguage, Path4 + "\\Results.txt");
+                    
+                }
+                else
+                {
+                    System.Windows.MessageBox.Show("Dictionary not loaded. Please load a dictionary before search a query.");
+                }
                 
             }
             else
@@ -324,8 +332,16 @@ namespace SearchEngine
             }
             if (Path4 != null && Directory.Exists(Path4))
             {
+                if (pq.indexer.mainTermDictionary.Count != 0)
+                {
                 postQuery.queriesFile(Path3, SelectedLanguage, Path4 + "\\Results.txt");
-                
+                    
+
+                }
+                else
+                {
+                    System.Windows.MessageBox.Show("Dictionary not loaded. Please load a dictionary before search a query.");
+                }
             }
             else
             {
